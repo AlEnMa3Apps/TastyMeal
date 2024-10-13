@@ -21,9 +21,3 @@ This project is the mobile version of the Recipe App, developed using **React Na
 - **AsyncStorage**: For storing user data locally.
 - **Backend**: Spring Boot server for API requests and database management (MySQL).
 
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/recipe-app-mobile.git
-   cd recipe-app-mobile
