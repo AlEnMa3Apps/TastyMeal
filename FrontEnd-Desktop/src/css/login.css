@@ -1,0 +1,23 @@
+/* login.css */
+
+.form_login {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Ancho fijo para la columna de los labels y el resto para los inputs */
+    gap: 25px; /* Espacio entre columnas */
+    align-items: center;
+    padding-bottom: 5%;
+  }
+  
+  .form_login label {
+    justify-self: end; 
+    color:black;
+  }
+  
+  .form_login input {
+    width: 50%; /* Para que los inputs ocupen todo el espacio disponible */
+  }
+  
+  .card_login {
+    color: black;
+  }
+  
