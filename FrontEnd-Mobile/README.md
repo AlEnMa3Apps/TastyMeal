@@ -1,4 +1,6 @@
-# Recipe App - Mobile Version (React Native)
+# Recipe App TastyMeal - Mobile Version (React Native)
+
+<img src="https://i.ibb.co/sthfHyV/Captura-de-pantalla-2024-10-13-a-las-1-05-49.png" alt="Project Image" width="500"/>
 
 ## Overview
 
