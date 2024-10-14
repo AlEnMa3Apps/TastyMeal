@@ -37,13 +37,12 @@ public class AuthController {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
 
         if(!userOptional.isPresent()){
-            return ResponseEntity.ok(authService.login(request));
+            return ResponseEntity.badRequest().build();
         }
         String passwordRequest = request.getPassword();
         String userPassword = userOptional.get().getPassword();
          if(!passwordEncoder.matches(passwordRequest,userPassword))
-             return ResponseEntity.ok(authService.login(request));
-
+             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(authService.login(request));
     }
