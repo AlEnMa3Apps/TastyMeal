@@ -1,20 +1,46 @@
 package com.alenma3apps.backendTastyMeal.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 import java.util.Date;
 import java.util.Map;
+
+import javax.crypto.SecretKey;
+
 import java.util.HashMap;
 
 @Service
 public class AuthService {
 
-    private String SECRET_KEY = "secret";
+     @Autowired
+    private AuthenticationManager authenticationManager;
+
     private long expirationTime = 1000 * 60 * 60 * 10; // 10 hours
+
+    private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    
+
+    public String login(LoginRequest request) {
+        Authentication authentication = this.authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        
+        if (authentication.isAuthenticated()) {
+            return this.generateToken(request.getUsername());
+        } else {
+            throw new RuntimeException("Invalid login");
+        }
+    }
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -27,7 +53,7 @@ public class AuthService {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(key)
                 .compact();
     }
 
@@ -41,7 +67,7 @@ public class AuthService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {

@@ -1,13 +1,9 @@
 package com.alenma3apps.backendTastyMeal.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
@@ -22,12 +18,6 @@ public class UserService {
 
     @Autowired
     IUserRepository userRepository;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private AuthService authService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -46,17 +36,6 @@ public class UserService {
         user.setActive(true);
 
         return userRepository.save(user);
-    }
-
-    public String login(LoginRequest request) {
-        Authentication authentication = this.authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        
-        if (authentication.isAuthenticated()) {
-            return this.authService.generateToken(request.getUsername());
-        } else {
-            throw new RuntimeException("Invalid login");
-        }
     }
 
     public UserModel findByUsername(String username) {

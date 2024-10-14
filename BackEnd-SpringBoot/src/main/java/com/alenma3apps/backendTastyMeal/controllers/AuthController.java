@@ -12,6 +12,7 @@ import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
+import com.alenma3apps.backendTastyMeal.services.AuthService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
 
 import java.util.Optional;
@@ -24,6 +25,9 @@ public class AuthController {
     private IUserRepository userRepository;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserService userService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -33,15 +37,15 @@ public class AuthController {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
 
         if(!userOptional.isPresent()){
-            return ResponseEntity.ok(userService.login(request));
+            return ResponseEntity.ok(authService.login(request));
         }
         String passwordRequest = request.getPassword();
         String userPassword = userOptional.get().getPassword();
          if(!passwordEncoder.matches(passwordRequest,userPassword))
-             return ResponseEntity.ok(userService.login(request));
+             return ResponseEntity.ok(authService.login(request));
 
 
-        return ResponseEntity.ok(userService.login(request));
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping(path = "/register")

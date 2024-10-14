@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/")
 public class UserController {
 
     @Autowired
@@ -25,12 +25,12 @@ public class UserController {
         return this.userService.getUsers();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "user/{id}")
     public Optional<UserModel> getUserById(@PathVariable("id") Long id) {
         return this.userService.getUserById(id);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "user/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
         boolean ok = this.userService.deleteUser(id);
 
