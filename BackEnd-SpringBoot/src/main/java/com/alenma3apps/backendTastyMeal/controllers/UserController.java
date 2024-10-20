@@ -13,6 +13,9 @@ import com.alenma3apps.backendTastyMeal.services.UserService;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * @author Albert Borras
+ */
 @RestController
 @RequestMapping("/api/")
 public class UserController {
@@ -20,11 +23,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @return Devuelve una lista de todos los usuarios.
+     */
     @GetMapping
     public ArrayList<UserModel> getUsers() {
         return this.userService.getUsers();
     }
 
+    /**
+     * 
+     * @param id Id del usuario
+     * @return El usuario 
+     */
     @GetMapping(path = "user/{id}")
     public Optional<UserModel> getUserById(@PathVariable("id") Long id) {
         return this.userService.getUserById(id);

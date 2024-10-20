@@ -37,14 +37,14 @@ public class AuthController {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
 
         if(!userOptional.isPresent()){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         String passwordRequest = request.getPassword();
         String userPassword = userOptional.get().getPassword();
          if(!passwordEncoder.matches(passwordRequest,userPassword))
              return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(authService.login(request));
+        return ResponseEntity.ok(authService.login(request, userOptional.get().getRole().toString()));
     }
 
     @PostMapping(path = "/register")
