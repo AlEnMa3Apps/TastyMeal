@@ -48,21 +48,15 @@ export default function SignUpForm() {
 				lastName
 			})
 
-			// Manejar la respuesta
-			const { token, role } = response.data
+			console.log(response.data)
+			console.log(response.status)
 
-			// Almacenar el token y el rol
-			await AsyncStorage.setItem('token', token)
-			await AsyncStorage.setItem('role', role)
+			if (response.status === 200 || response.status === 201) {
+				Alert.alert('Successful registration, Your account has been created. Please log in.')
 
-			// Actualizar el contexto de autenticación
-			login(token, role)
-
-			// Navegar según el rol
-			if (role === 'VIP') {
-				router.replace('/(main)/home-vip')
+				router.replace('/(auth)/login')
 			} else {
-				router.replace('/(main)/home')
+				Alert.alert('Error', 'Sign Up failed. Please try again!')
 			}
 		} catch (error) {
 			// Error handling
