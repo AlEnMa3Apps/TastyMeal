@@ -1,9 +1,19 @@
-import React from 'react'
-import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, Image, Button, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
 import { Link, useRouter } from 'expo-router'
 
 export default function WelcomeScreen() {
 	const router = useRouter()
+
+	useEffect(() => {
+		const backAction = () => {
+			return true
+		}
+
+		const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
+
+		return () => backHandler.remove()
+	}, [])
 
 	const handleRegister = () => {
 		router.push('/(auth)/signUp')
@@ -54,13 +64,12 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		alignItems: 'center',
 		// Sombra para iOS
-    shadowColor: '#000', // Color de la sombra
-    shadowOffset: { width: 0, height: 4 }, // Desplazamiento de la sombra
-    shadowOpacity: 0.3, // Opacidad de la sombra
-    shadowRadius: 4.65, // Radio de la sombra
-    // Sombra para Android
-    elevation: 8, // Nivel de elevación para Android
-		
+		shadowColor: '#000', // Color de la sombra
+		shadowOffset: { width: 0, height: 4 }, // Desplazamiento de la sombra
+		shadowOpacity: 0.3, // Opacidad de la sombra
+		shadowRadius: 4.65, // Radio de la sombra
+		// Sombra para Android
+		elevation: 8 // Nivel de elevación para Android
 	},
 	buttonText: {
 		color: '#FFFFFF',

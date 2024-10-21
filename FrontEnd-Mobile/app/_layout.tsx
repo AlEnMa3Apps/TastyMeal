@@ -11,10 +11,9 @@ export default function RootLayout() {
 
 	return (
 		<Stack>
-			<Stack.Screen name='index' options={{ headerTitle: 'Welcome', headerTintColor: '#fff', headerStyle: { backgroundColor: '#000' } }} />
+			<Stack.Screen name='index' options={{ headerTitle: 'Welcome', headerTintColor: '#fff', headerStyle: { backgroundColor: '#000' }, headerBackVisible: false, gestureEnabled: false }} />
 			<Stack.Screen name='(auth)' options={{ headerShown: false }} />
 			<Stack.Screen name='(main)' options={{ headerShown: false }} />
-
 		</Stack>
 	)
 }

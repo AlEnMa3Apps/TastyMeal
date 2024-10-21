@@ -40,10 +40,10 @@ export default function HomeScreen() {
 
 	return (
 		<View className='flex-1 bg-green-500 items-center justify-center'>
-			<View className='pt-10 px-4 flex-row justify-between items-center'>
+			<View className='pt-10 px-4 flex-col justify-center items-center'>
 				<Text className='text-4xl text-white font-bold'>Tasty Meal Recipes</Text>
 				<TouchableOpacity onPress={handleLogout} className='py-2 px-3 mt-52 bg-red-600 rounded-lg'>
-					<Text className='text-white font-semibold'>Log Out</Text>
+					<Text className='text-white font-semibold text-lg shadow-lg shadow-black'>Log Out</Text>
 				</TouchableOpacity>
 			</View>
 			{/* <FlatList data={recipes} renderItem={renderItem} keyExtractor={(item) => item.id} contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 20 }} /> */}
