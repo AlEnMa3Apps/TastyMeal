@@ -1,17 +1,16 @@
-// app/welcome.jsx
 import React from 'react'
 import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from 'react-native'
-import { useRouter } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 
 export default function WelcomeScreen() {
 	const router = useRouter()
 
 	const handleRegister = () => {
-		//router.push('/register');
+		router.push('/(auth)/signUp')
 	}
 
 	const handleLogin = () => {
-		//router.push('/login');
+		router.push('/(auth)/login')
 	}
 
 	return (
@@ -27,7 +26,9 @@ export default function WelcomeScreen() {
 			</TouchableOpacity>
 
 			<TouchableOpacity onPress={handleLogin}>
-				<Text className='text-slate-800 text-center mb-12 text-lg'>Already have an account? Login</Text>
+				<Text className='text-slate-800 text-center mb-12 text-lg'>
+					Already have an account? <Text className='font-bold'> Login</Text>
+				</Text>
 			</TouchableOpacity>
 		</View>
 	)
@@ -49,9 +50,17 @@ const styles = StyleSheet.create({
 		width: '80%',
 		backgroundColor: '#000000',
 		paddingVertical: 15,
-		borderRadius: 8,
+		borderRadius: 30,
 		marginBottom: 20,
-		alignItems: 'center'
+		alignItems: 'center',
+		// Sombra para iOS
+    shadowColor: '#000', // Color de la sombra
+    shadowOffset: { width: 0, height: 4 }, // Desplazamiento de la sombra
+    shadowOpacity: 0.3, // Opacidad de la sombra
+    shadowRadius: 4.65, // Radio de la sombra
+    // Sombra para Android
+    elevation: 8, // Nivel de elevación para Android
+		
 	},
 	buttonText: {
 		color: '#FFFFFF',
