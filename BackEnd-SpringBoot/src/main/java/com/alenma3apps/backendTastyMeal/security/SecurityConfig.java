@@ -15,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.alenma3apps.backendTastyMeal.models.UserModel;
-import com.alenma3apps.backendTastyMeal.services.UserService;
+import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
+
+import java.util.Optional;
 
 
 @Configuration
@@ -23,7 +25,7 @@ import com.alenma3apps.backendTastyMeal.services.UserService;
 public class SecurityConfig {
 
     @Autowired
-    private UserService userService;
+    private IUserRepository userRepository;
 
     // Configura la autenticación
     @Bean
@@ -53,11 +55,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            UserModel user = userService.findByUsername(username);
+            Optional<UserModel> user = userRepository.findByUsername(username);
             if (user != null) {
                 return org.springframework.security.core.userdetails.User
-                        .withUsername(user.getUsername())
-                        .password(user.getPassword())
+                        .withUsername(user.get().getUsername())
+                        .password(user.get().getPassword())
                         .roles("USER") // Puedes configurar los roles y permisos aquí
                         .build();
             } else {

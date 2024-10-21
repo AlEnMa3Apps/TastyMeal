@@ -35,6 +35,7 @@ public class AuthController {
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
+         System.out.println(userOptional.get().getUsername());
 
         if(!userOptional.isPresent()){
             return ResponseEntity.notFound().build();

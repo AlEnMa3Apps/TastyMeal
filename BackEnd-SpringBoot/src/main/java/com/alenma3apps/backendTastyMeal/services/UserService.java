@@ -12,7 +12,6 @@ import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -37,17 +36,6 @@ public class UserService {
         user.setActive(true);
 
         return userRepository.save(user);
-    }
-
-    public UserModel findByUsername(String username) {
-        UserModel user = null;
-        List<UserModel> users = userRepository.findAll();
-        for (int i = 0; i < users.size(); i++) {
-            if ((user = users.get(i)).getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
     }
 
     public Optional<UserModel> getUserById(Long id) {
