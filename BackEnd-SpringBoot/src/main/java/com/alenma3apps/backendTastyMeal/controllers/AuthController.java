@@ -17,6 +17,9 @@ import com.alenma3apps.backendTastyMeal.services.UserService;
 
 import java.util.Optional;
 
+/**
+ * Classe que conté els endpoints per iniciar sessió i registre d'usuari.
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -32,6 +35,12 @@ public class AuthController {
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
+    /**
+     * Endpoint per iniciar sessió.
+     * @param request conté l'usuari i contrasenya per iniciar sessió.
+     * @return Codi de l'estat de la petició i si és correcte s'adjunta 
+     * el token i el rol de l'usuari.
+     */
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
@@ -48,9 +57,13 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request, userOptional.get().getRole().toString()));
     }
 
+    /**
+     * Endpoint per registrar un nou usuari.
+     * @param request usuari a registrar.
+     * @return Usuari registrat.
+     */
     @PostMapping(path = "/register")
     public UserModel registerUser(@RequestBody RegisterRequest request) {
         return this.userService.registerUser(request);
     }
-
 }

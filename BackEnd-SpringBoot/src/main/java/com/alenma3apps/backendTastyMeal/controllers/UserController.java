@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
+ * Clase controladora que conté els endpoints de gestió d'usuaris.
  * @author Albert Borras
  */
 @RestController
@@ -24,7 +25,8 @@ public class UserController {
     private UserService userService;
 
     /**
-     * @return Devuelve una lista de todos los usuarios.
+     * Endpoint per obtenir tots els usuaris registrats.
+     * @return Una llista amb tots els usuaris
      */
     @GetMapping
     public ArrayList<UserModel> getUsers() {
@@ -32,15 +34,20 @@ public class UserController {
     }
 
     /**
-     * 
-     * @param id Id del usuario
-     * @return El usuario 
+     * Endpoint per obtenir l'usuari a través del seu id.
+     * @param id Id de l'usuari
+     * @return L'usuari
      */
     @GetMapping(path = "user/{id}")
     public Optional<UserModel> getUserById(@PathVariable("id") Long id) {
         return this.userService.getUserById(id);
     }
 
+    /**
+     * Endpoint per eliminar l'usuari.
+     * @param id Id de l'usuari a eliminar.
+     * @return Missatge notificant si s'ha eliminat o no l'usuari.
+     */
     @DeleteMapping(path = "user/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
         boolean ok = this.userService.deleteUser(id);

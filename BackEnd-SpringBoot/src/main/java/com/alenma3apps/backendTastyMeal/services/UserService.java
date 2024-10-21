@@ -9,10 +9,13 @@ import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 
-
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Classe que gestiona la lògica dels usuaris.
+ * @author Albert Borras
+ */
 @Service
 public class UserService {
 
@@ -25,6 +28,7 @@ public class UserService {
         return (ArrayList<UserModel>) userRepository.findAll();
     }
 
+    
     public UserModel registerUser(RegisterRequest request) {
         UserModel user = new UserModel();
         user.setUsername(request.getUsername());

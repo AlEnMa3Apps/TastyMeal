@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Petición de registro de usuario.
+ * Classe que conté les dades per la petició de registre d'usuari.
  * @author Albert Borras
  */
 @Getter @Setter
@@ -15,7 +15,7 @@ import lombok.Setter;
 public class RegisterRequest {
 
     /**
-     * Parámetros de entrada para la petición de registro de usuario.
+     * Paràmetres d'entrada per la petició de registre d'usuari.
      */
     private String username;
     private String password;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Respuesta a la petición de inicio de sesión.
+ * Classe que conté les dades de resposta a la petició d'inici de sessió.
  * @author Albert Borras
  */
 @Builder

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Petición de inicio de sesión de usuario.
+ * Classe que conté les dades per la petició d'inici de sessió.
  * @author Albert Borras
  */
 @Getter @ Setter
@@ -15,7 +15,7 @@ import lombok.Setter;
 public class LoginRequest {
 
     /**
-     * Parámetros de entrada de la petición para iniciar el usuario
+     * Paràmetres d'entrada de la petició per iniciar l'usuari.
      */
     private String username;
     private String password;
