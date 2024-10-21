@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <View className='flex-1 bg-green-500 items-center justify-center'>
-      <Text className='text-4xl mt-52 text-white' >Recetas de Tasty Meal</Text>
+      <Text className='text-4xl mt-52 text-white font-bold' >Recetas de Tasty Meal</Text>
       <FlatList
         // data={recipes}
         renderItem={renderItem}
