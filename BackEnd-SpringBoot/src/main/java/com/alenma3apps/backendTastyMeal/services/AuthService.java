@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
+import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,12 +32,16 @@ public class AuthService {
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request, String role) {
         Authentication authentication = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         
         if (authentication.isAuthenticated()) {
-            return this.generateToken(request.getUsername());
+            return LoginResponse.builder()
+            .token(this.generateToken(request.getUsername()))
+            .role(role)
+            .build();
+            
         } else {
             throw new RuntimeException("Invalid login");
         }

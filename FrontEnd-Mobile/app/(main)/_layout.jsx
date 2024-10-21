@@ -1,11 +1,20 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { Stack } from 'expo-router'
+import { useEffect } from 'react'
+import { setStatusBarStyle } from 'expo-status-bar'
 
 const MainLayout = () => {
+	useEffect(() => {
+		setTimeout(() => {
+			setStatusBarStyle('dark')
+		}, 0)
+	}, [])
 	return (
-		<View>
-			<Text>MainLayuout</Text>
-		</View>
+		<>
+			<Stack>
+				<Stack.Screen name='home' options={{ headerShown: false }} />
+			</Stack>
+		</>
 	)
 }
 

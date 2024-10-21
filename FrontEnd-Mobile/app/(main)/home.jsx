@@ -28,10 +28,10 @@ export default function Home() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Recetas</Text>
+    <View className='flex-1 bg-green-500 items-center justify-center'>
+      <Text className='text-4xl mt-52 text-white' >Recetas de Tasty Meal</Text>
       <FlatList
-        data={recipes}
+        // data={recipes}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 40,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F',
   },
   header: {
     fontSize: 28,

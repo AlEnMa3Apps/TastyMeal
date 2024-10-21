@@ -5,13 +5,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
+import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -32,21 +32,10 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-        user.setRole("USER");
+        user.setRole(RoleModel.USER);
         user.setActive(true);
 
         return userRepository.save(user);
-    }
-
-    public UserModel findByUsername(String username) {
-        UserModel user = null;
-        List<UserModel> users = userRepository.findAll();
-        for (int i = 0; i < users.size(); i++) {
-            if ((user = users.get(i)).getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
     }
 
     public Optional<UserModel> getUserById(Long id) {

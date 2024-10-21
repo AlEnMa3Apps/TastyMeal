@@ -6,34 +6,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name="users")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name="users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email"})})
 public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 45, nullable = false)
     private String username;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String password;
 
-    @Column
+    @Column(length = 45, nullable = false)
     private String email;
 
-    @Column
+    @Column(length = 45, nullable = true)
     private String firstName;
 
-    @Column
+    @Column(length = 45, nullable = true)
     private String lastName;
 
-    @Column
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RoleModel role;
 
     @Column
     private Boolean active;

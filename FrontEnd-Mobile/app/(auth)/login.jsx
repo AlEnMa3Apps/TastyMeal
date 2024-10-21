@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Aquí puedes agregar la lógica para el inicio de sesión
     console.log('Email:', email);
     console.log('Password:', password);
+    router.push('/(main)/home');
   };
 
   return (
@@ -20,7 +20,7 @@ export default function LoginForm() {
 
       <TextInput
         style={styles.input}
-        placeholder="Enter your email"
+        placeholder="Enter your username"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
