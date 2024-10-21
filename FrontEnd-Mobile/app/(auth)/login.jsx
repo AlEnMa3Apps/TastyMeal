@@ -1,19 +1,60 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Link, router } from 'expo-router'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useAuth } from '../../context/AuthContext'
+import api from '../../api/api'
 
 export default function LoginForm() {
+	const { login } = useAuth()
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
-	const handleLogin = () => {
-		// if (!username || !password) {
-		// 	Alert.alert('Error', 'Please fill in all the fields.')
-		// 	return
-		// }
-		console.log('Username:', username)
-		console.log('Password:', password)
-		router.push('/(main)/home')
+	const handleLogin = async () => {
+		if (!username || !password) {
+			Alert.alert('Error', 'Please fill in all the fields.')
+			return
+		}
+
+		if (password.length < 4) {
+			Alert.alert('Error', 'Password must be at least 4 characters long.')
+			return
+		}
+
+		try {
+			const response = await api.post('/auth/login', {
+				username,
+				password
+			})
+
+			// Manejar la respuesta
+			const { token, role } = response.data
+			console.log(response.data)
+			console.log('Username:', username)
+			console.log('Password:', password)
+
+			// Almacenar el token y el rol
+			await AsyncStorage.setItem('token', token)
+			await AsyncStorage.setItem('role', role)
+
+			// Actualizar el contexto de autenticación
+			login(token, role)
+
+			// Navegar según el rol
+			if (role === 'USER_VIP') {
+				router.replace('/(main)/homeVIP')
+			} else {
+				router.replace('/(main)/home')
+			}
+		} catch (error) {
+			// Manejar errores
+			if (error.response && error.response.data && error.response.data.error) {
+				Alert.alert('Error', error.response.data.error)
+			} else {
+				Alert.alert('Error', 'Wrong credentials, try again!')
+			}
+			console.error('Error loging in:', error)
+		}
 	}
 
 	return (

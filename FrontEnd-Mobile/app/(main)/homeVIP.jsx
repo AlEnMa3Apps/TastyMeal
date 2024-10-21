@@ -21,9 +21,9 @@ import { useAuth } from '../../context/AuthContext'
 // 	}
 // ]
 
-export default function HomeScreen() {
+export default function HomeScreenVIP() {
 	const router = useRouter()
-	const { logout, token, role } = useAuth()
+	const { logout } = useAuth()
 
 	const handleLogout = () => {
 		logout()
@@ -41,9 +41,7 @@ export default function HomeScreen() {
 		<View className='flex-1 bg-green-500 items-center justify-center'>
 			<View className='pt-10 px-4 flex-col justify-center items-center'>
 				<Text className='text-4xl text-white font-bold mb-5'>Tasty Meal Recipes</Text>
-				<Text className='text-4xl text-black font-bold'>Normal User</Text>
-				<Text className='text-base text-white' >Token: {token}</Text>
-				<Text className='text-lg text-white' >Role: {role}</Text>
+				<Text className='text-4xl text-black font-bold'>VIP User</Text>
 				<TouchableOpacity onPress={handleLogout} className='py-2 px-3 mt-52 bg-red-600 rounded-lg'>
 					<Text className='text-white font-semibold text-lg shadow-lg shadow-black'>Log Out</Text>
 				</TouchableOpacity>
