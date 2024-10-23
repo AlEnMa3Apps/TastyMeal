@@ -19,6 +19,7 @@ import java.util.Optional;
 
 /**
  * Classe que conté els endpoints per iniciar sessió i registre d'usuari.
+ * @author Albert Borras
  */
 @RestController
 @RequestMapping("/auth")
@@ -40,6 +41,7 @@ public class AuthController {
      * @param request conté l'usuari i contrasenya per iniciar sessió.
      * @return Codi de l'estat de la petició i si és correcte s'adjunta 
      * el token i el rol de l'usuari.
+     * @author Albert Borras
      */
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
@@ -61,6 +63,7 @@ public class AuthController {
      * Endpoint per registrar un nou usuari.
      * @param request usuari a registrar.
      * @return Usuari registrat.
+     * @author Albert Borras
      */
     @PostMapping(path = "/register")
     public UserModel registerUser(@RequestBody RegisterRequest request) {

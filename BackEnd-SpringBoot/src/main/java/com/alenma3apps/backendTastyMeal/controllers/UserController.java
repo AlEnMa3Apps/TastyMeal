@@ -27,6 +27,7 @@ public class UserController {
     /**
      * Endpoint per obtenir tots els usuaris registrats.
      * @return Una llista amb tots els usuaris
+     * @author Albert Borras
      */
     @GetMapping
     public ArrayList<UserModel> getUsers() {
@@ -37,6 +38,7 @@ public class UserController {
      * Endpoint per obtenir l'usuari a través del seu id.
      * @param id Id de l'usuari
      * @return L'usuari
+     * @author Albert Borras
      */
     @GetMapping(path = "user/{id}")
     public Optional<UserModel> getUserById(@PathVariable("id") Long id) {
@@ -47,10 +49,11 @@ public class UserController {
      * Endpoint per eliminar l'usuari.
      * @param id Id de l'usuari a eliminar.
      * @return Missatge notificant si s'ha eliminat o no l'usuari.
+     * @author Albert Borras
      */
     @DeleteMapping(path = "user/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
-        boolean ok = this.userService.deleteUser(id);
+        boolean ok = this.userService.deleteUserById(id);
 
         if (ok) {
             return "User with id " + id + " deleted";

@@ -20,15 +20,25 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    IUserRepository userRepository;
+    private IUserRepository userRepository;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    /**
+     * Retorna tots els usuaris de la base de dades.
+     * @return Llista amb els usuaris de la base de dades.
+     * @author Albert Borras
+     */
     public ArrayList<UserModel> getUsers() {
         return (ArrayList<UserModel>) userRepository.findAll();
     }
 
-    
+    /**
+     * Registra l'usuari del paràmetre d'entrada a la base de dades.
+     * @param request Usuari a registrar
+     * @return Usuari registrat a la base de dades.
+     * @author Albert Borras
+     */
     public UserModel registerUser(RegisterRequest request) {
         UserModel user = new UserModel();
         user.setUsername(request.getUsername());
@@ -42,11 +52,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Retorna l'usuari de la base de dades que conté el id passat per paràmetre.
+     * @param id id de l'usuari a buscar a la la base de dades.
+     * @return L'usuari de la base de dades que té l'id corresponent.
+     * @author Albert Borras
+     */
     public Optional<UserModel> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public boolean deleteUser(Long id) {
+    /**
+     * Elimina l'usuari de la base de dsdes que conté el id passat per paràmetre.
+     * @param id id de l'usuari a eliminar a la base de dades.
+     * @return true si l'usuari s'ha eliminat de la base de dades, del contrari retorna false.
+     * @author Albert Borras
+     */
+    public boolean deleteUserById(Long id) {
         try {
             userRepository.deleteById(id);
             return true;

@@ -27,7 +27,6 @@ public class SecurityConfig {
     @Autowired
     private IUserRepository userRepository;
 
-    // Configura la autenticación
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 
@@ -40,18 +39,16 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-    // Configura las reglas de seguridad para las solicitudes HTTP
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/auth/**").permitAll() // Permite acceso a las rutas de autenticación
-                .anyRequest().authenticated() // Requiere autenticación para cualquier otra solicitud
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
             );
         return http.build();
     }
 
-    // Servicio de usuarios personalizado para la autenticación
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
@@ -60,7 +57,7 @@ public class SecurityConfig {
                 return org.springframework.security.core.userdetails.User
                         .withUsername(user.get().getUsername())
                         .password(user.get().getPassword())
-                        .roles("USER") // Puedes configurar los roles y permisos aquí
+                        .roles("USER")
                         .build();
             } else {
                 throw new UsernameNotFoundException("User not found");
@@ -68,7 +65,6 @@ public class SecurityConfig {
         };
     }
 
-    // Definición del codificador de contraseñas (BCrypt en este caso)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
