@@ -30,6 +30,7 @@ public class DataInitializer {
             admin.setPassword(passwordEncoder.encode("root"));
             admin.setEmail("enric_admin@gmail.com");
             admin.setRole(RoleModel.ADMIN);
+            admin.setActive(true);
 
             userRepository.save(admin);
         }
