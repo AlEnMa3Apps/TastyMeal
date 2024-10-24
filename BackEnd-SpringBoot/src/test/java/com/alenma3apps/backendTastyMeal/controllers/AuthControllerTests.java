@@ -31,6 +31,10 @@ import com.alenma3apps.backendTastyMeal.services.AuthService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Classe test per testejar les funcions 
+ * implementades a la classe AuthController.
+ */
 @WebMvcTest(controllers = AuthController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
@@ -85,6 +89,11 @@ public class AuthControllerTests {
         loginResponse.setRole("USER");
     }
 
+    /**
+     * Test per comprovar el correcte funcionament 
+     * de l'endpoint per iniciar sessió.
+     * @throws Exception
+     */
     @Test
     public void AuthControllerTest_login_responseOk() throws Exception {
 
@@ -103,6 +112,11 @@ public class AuthControllerTests {
         
     }
 
+    /**
+     * Test per comprovar el funcionament 
+     * de l'endpoint per iniciar sessió quan no troba l'usuari.
+     * @throws Exception
+     */
     @Test
     public void AuthControllerTest_login_responseNotFound() throws Exception {
 
@@ -115,6 +129,11 @@ public class AuthControllerTests {
         response.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
+    /**
+     * Test per comprovar el funcionament 
+     * de l'endpoint per iniciar sessió quan la contrasenya és incorrecte.
+     * @throws Exception
+     */
     @Test
     public void AuthControllerTest_login_responseBadRequest() throws Exception {
 
@@ -127,6 +146,11 @@ public class AuthControllerTests {
         response.andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    /**
+     * Test per comprovar el funcionament 
+     * de l'endpoint per registrar un usuari.
+     * @throws Exception
+     */
     @Test
     public void AuthControllerTest_registerUser() throws Exception {
 

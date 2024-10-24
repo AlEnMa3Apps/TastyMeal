@@ -18,6 +18,10 @@ import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 
+/**
+ * Classe test per testejar les funcions 
+ * implementades a la classe UserService.
+ */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
 
@@ -27,6 +31,9 @@ public class UserServiceTests {
     @InjectMocks
     private UserService userService;
 
+    /**
+     * Test per comprvar que s'obté el llistat de tots els usuaris.
+     */
     @Test
     public void UserServiceTest_getUsers() {
         UserModel user = new UserModel();
@@ -48,6 +55,9 @@ public class UserServiceTests {
         Assertions.assertThat(userListReturn).isNotNull();
     }
 
+    /**
+     * Test per comprovar que es registra l'usuari.
+     */
     @Test
     public void UserServiceTest_registerUser() {
         RegisterRequest request = new RegisterRequest();
@@ -73,6 +83,10 @@ public class UserServiceTests {
         Assertions.assertThat(result).isNotNull();
     }
 
+    /**
+     * Test per comprovar que s'obté un usuari específic  
+     * a través del seu paràmetre id.
+     */
     @Test
     public void UserServiceTest_getUserById() {
         UserModel user = new UserModel();
@@ -91,6 +105,10 @@ public class UserServiceTests {
         Assertions.assertThat(userReturn).isNotNull();
     }
 
+    /**
+     * Test per comprovar que s'elimina l'usuari amb el 
+     * paràmetre id especificat.
+     */
     @Test
     public void UserServiceTest_deleteUserById() {
 

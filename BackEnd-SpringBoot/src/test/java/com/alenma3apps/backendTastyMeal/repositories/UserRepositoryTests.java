@@ -12,6 +12,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 
+/**
+ * Classe test per testejar les funcions utilitzades de 
+ * la interfície IUserRepository per interactuar amb 
+ * la base de dades.
+ * @author Albert Borras
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class UserRepositoryTests {
@@ -19,6 +25,9 @@ public class UserRepositoryTests {
     @Autowired
     private IUserRepository userRepository;
 
+    /**
+     * Test per comprovar que l'usuari es guarda a a la base de dades.
+     */
     @Test
     public void UserRepositoryTest_saveUser() {
         
@@ -37,6 +46,10 @@ public class UserRepositoryTests {
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
     }
 
+    /**
+     * Test per comprovar que s'obté l'usuari demanat per 
+     * id a la base de dades.
+     */
     @Test
     public void UserRepositoryTest_findUserById() {
         
@@ -56,6 +69,10 @@ public class UserRepositoryTests {
         Assertions.assertThat(userReturn).isNotNull();
     }
 
+    /**
+     * Test per comprovar que s'obté l'usuari demanat per 
+     * nom d'usuari a la base de dades.
+     */
     @Test
     public void UserRepositoryTest_findUserByUsername() {
 
@@ -75,6 +92,10 @@ public class UserRepositoryTests {
         Assertions.assertThat(userReturn).isNotNull();
     }
 
+    /**
+     * Test per comprovar que s'ha eliminat l'usuari 
+     * especificat per id de la base de dades.
+     */
     @Test
     public void UserRepositoryTest_deleteUserById() {
 

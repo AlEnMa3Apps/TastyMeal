@@ -16,6 +16,10 @@ import org.springframework.security.core.Authentication;
 import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
 
+/**
+ * Classe test per testejar les funcions 
+ * implementades a la classe AuthService.
+ */
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTests {
 
@@ -28,6 +32,9 @@ public class AuthServiceTests {
     @InjectMocks
     private AuthService authService;
 
+    /**
+     * Test per comprovar que l'inici de sessió és correcte.
+     */
     @Test
     public void AuthServiceTest_login_Success() {
         LoginRequest request = new LoginRequest();
@@ -49,6 +56,9 @@ public class AuthServiceTests {
         assertEquals(true, login.getToken() != null && !login.getToken().isEmpty());
     }
 
+    /**
+     * Test per comprovar que l'inici de sessió és incorrecte.
+     */
     @Test
     public void AuthServiceTest_login_failure() {
         LoginRequest request = new LoginRequest();
@@ -67,12 +77,18 @@ public class AuthServiceTests {
         assertThrows(RuntimeException.class, () -> authService.login(request, role));
     }
 
+    /**
+     * Test per comprovar la generació del token de sessió.
+     */
     @Test
     public void AuthServiceTest_generateToken() {
         String token = authService.generateToken("UserTest");
         assertEquals(true, token != null && !token.isEmpty());
     }
 
+    /**
+     * Test per comprovar la validació del token de sessió.
+     */
     @Test
     public void AuthServiceTest_validateToken() {
         String username = "UserTest";

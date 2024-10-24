@@ -25,6 +25,10 @@ import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Classe test per testejar les funcions 
+ * implementades a la classe UserController.
+ */
 @WebMvcTest(controllers = UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +43,11 @@ public class UserControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Test per comprovar el correcte funcionament de l'endpoint 
+     * per sol·licitar el llistat de tots els usuaris.
+     * @throws Exception
+     */
     @Test
     public void UserControllerTest_getUsers() throws Exception {
         ArrayList<UserModel> listUsers = new ArrayList<>();
@@ -65,6 +74,11 @@ public class UserControllerTests {
         .andExpect(MockMvcResultMatchers.jsonPath("$[1].username").value(user2.getUsername()));
     }
 
+    /**
+     * Test per comprovar el correcte funcionament de l'endpoint 
+     * per sol·licitar les dades d'un usuari amb el paràmetre id.
+     * @throws Exception
+     */
     @Test
     public void UserControllerTest_getUserById() throws Exception {
         UserModel userReturn = new UserModel();
@@ -86,6 +100,11 @@ public class UserControllerTests {
         .andExpect(MockMvcResultMatchers.jsonPath("$.username").value(userReturn.getUsername()));
     }
 
+    /**
+     * Test per comprovar el correcte funcionament de l'endpoint 
+     * per eliminar un usuari amb el paràmetre id.
+     * @throws Exception
+     */
     @Test
     public void UserControllerTest_deleteUserById_ok() throws Exception {
         String message = "User with id 1 deleted";
@@ -100,6 +119,11 @@ public class UserControllerTests {
         .andExpect(MockMvcResultMatchers.content().string(message));
     }
 
+    /**
+     * Test per comprovar el correcte funcionament de l'endpoint 
+     * per quan no s'elimina un usuari amb el paràmetre id.
+     * @throws Exception
+     */
     @Test
     public void UserControllerTest_deleteUserById_error() throws Exception {
         String message = "Error deleting user with id 1";
