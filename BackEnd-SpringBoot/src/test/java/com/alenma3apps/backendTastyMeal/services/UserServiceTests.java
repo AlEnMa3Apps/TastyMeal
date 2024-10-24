@@ -21,6 +21,7 @@ import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 /**
  * Classe test per testejar les funcions 
  * implementades a la classe UserService.
+ * @author Albert Borras
  */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -33,6 +34,7 @@ public class UserServiceTests {
 
     /**
      * Test per comprvar que s'obté el llistat de tots els usuaris.
+     * @author Albert Borras
      */
     @Test
     public void UserServiceTest_getUsers() {
@@ -57,6 +59,7 @@ public class UserServiceTests {
 
     /**
      * Test per comprovar que es registra l'usuari.
+     * @author Albert Borras
      */
     @Test
     public void UserServiceTest_registerUser() {
@@ -86,6 +89,7 @@ public class UserServiceTests {
     /**
      * Test per comprovar que s'obté un usuari específic  
      * a través del seu paràmetre id.
+     * @author Albert Borras
      */
     @Test
     public void UserServiceTest_getUserById() {
@@ -108,6 +112,7 @@ public class UserServiceTests {
     /**
      * Test per comprovar que s'elimina l'usuari amb el 
      * paràmetre id especificat.
+     * @author Albert Borras
      */
     @Test
     public void UserServiceTest_deleteUserById() {

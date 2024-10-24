@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Classe test per testejar les funcions 
  * implementades a la classe AuthController.
+ * @author Albert Borras
  */
 @WebMvcTest(controllers = AuthController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -93,6 +94,7 @@ public class AuthControllerTests {
      * Test per comprovar el correcte funcionament 
      * de l'endpoint per iniciar sessió.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void AuthControllerTest_login_responseOk() throws Exception {
@@ -116,6 +118,7 @@ public class AuthControllerTests {
      * Test per comprovar el funcionament 
      * de l'endpoint per iniciar sessió quan no troba l'usuari.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void AuthControllerTest_login_responseNotFound() throws Exception {
@@ -133,6 +136,7 @@ public class AuthControllerTests {
      * Test per comprovar el funcionament 
      * de l'endpoint per iniciar sessió quan la contrasenya és incorrecte.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void AuthControllerTest_login_responseBadRequest() throws Exception {
@@ -150,6 +154,7 @@ public class AuthControllerTests {
      * Test per comprovar el funcionament 
      * de l'endpoint per registrar un usuari.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void AuthControllerTest_registerUser() throws Exception {

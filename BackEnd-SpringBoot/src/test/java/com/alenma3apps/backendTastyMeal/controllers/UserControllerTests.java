@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Classe test per testejar les funcions 
  * implementades a la classe UserController.
+ * @author Albert Borras
  */
 @WebMvcTest(controllers = UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -47,6 +48,7 @@ public class UserControllerTests {
      * Test per comprovar el correcte funcionament de l'endpoint 
      * per sol·licitar el llistat de tots els usuaris.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void UserControllerTest_getUsers() throws Exception {
@@ -78,6 +80,7 @@ public class UserControllerTests {
      * Test per comprovar el correcte funcionament de l'endpoint 
      * per sol·licitar les dades d'un usuari amb el paràmetre id.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void UserControllerTest_getUserById() throws Exception {
@@ -104,6 +107,7 @@ public class UserControllerTests {
      * Test per comprovar el correcte funcionament de l'endpoint 
      * per eliminar un usuari amb el paràmetre id.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void UserControllerTest_deleteUserById_ok() throws Exception {
@@ -123,6 +127,7 @@ public class UserControllerTests {
      * Test per comprovar el correcte funcionament de l'endpoint 
      * per quan no s'elimina un usuari amb el paràmetre id.
      * @throws Exception
+     * @author Albert Borras
      */
     @Test
     public void UserControllerTest_deleteUserById_error() throws Exception {

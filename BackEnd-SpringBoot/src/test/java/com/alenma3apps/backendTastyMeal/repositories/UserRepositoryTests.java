@@ -27,6 +27,7 @@ public class UserRepositoryTests {
 
     /**
      * Test per comprovar que l'usuari es guarda a a la base de dades.
+     * @author Albert Borras
      */
     @Test
     public void UserRepositoryTest_saveUser() {
@@ -49,6 +50,7 @@ public class UserRepositoryTests {
     /**
      * Test per comprovar que s'obté l'usuari demanat per 
      * id a la base de dades.
+     * @author Albert Borras
      */
     @Test
     public void UserRepositoryTest_findUserById() {
@@ -72,6 +74,7 @@ public class UserRepositoryTests {
     /**
      * Test per comprovar que s'obté l'usuari demanat per 
      * nom d'usuari a la base de dades.
+     * @author Albert Borras
      */
     @Test
     public void UserRepositoryTest_findUserByUsername() {
@@ -95,6 +98,7 @@ public class UserRepositoryTests {
     /**
      * Test per comprovar que s'ha eliminat l'usuari 
      * especificat per id de la base de dades.
+     * @author Albert Borras
      */
     @Test
     public void UserRepositoryTest_deleteUserById() {

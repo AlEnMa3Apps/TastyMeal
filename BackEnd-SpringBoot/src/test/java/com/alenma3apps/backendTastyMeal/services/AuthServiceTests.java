@@ -19,6 +19,7 @@ import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
 /**
  * Classe test per testejar les funcions 
  * implementades a la classe AuthService.
+ * @author Albert Borras
  */
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTests {
@@ -34,6 +35,7 @@ public class AuthServiceTests {
 
     /**
      * Test per comprovar que l'inici de sessió és correcte.
+     * @author Albert Borras
      */
     @Test
     public void AuthServiceTest_login_Success() {
@@ -58,6 +60,7 @@ public class AuthServiceTests {
 
     /**
      * Test per comprovar que l'inici de sessió és incorrecte.
+     * @author Albert Borras
      */
     @Test
     public void AuthServiceTest_login_failure() {
@@ -79,6 +82,7 @@ public class AuthServiceTests {
 
     /**
      * Test per comprovar la generació del token de sessió.
+     * @author Albert Borras
      */
     @Test
     public void AuthServiceTest_generateToken() {
@@ -88,6 +92,7 @@ public class AuthServiceTests {
 
     /**
      * Test per comprovar la validació del token de sessió.
+     * @author Albert Borras
      */
     @Test
     public void AuthServiceTest_validateToken() {
