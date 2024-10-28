@@ -11,7 +11,7 @@ const createWindow = () => {
     }
   });
 
-  win.loadFile('dist/index.html'); // Carga el archivo HTML compilado por Webpack
+  win.loadFile('dist/index.html');
 };
 
 app.whenReady().then(() => {
