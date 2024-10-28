@@ -1,3 +1,3 @@
-import { clsx } from 'clsx';  // O usa 'classnames'
+import { clsx } from 'clsx';
 
 export const cn = (...classes) => clsx(...classes);
