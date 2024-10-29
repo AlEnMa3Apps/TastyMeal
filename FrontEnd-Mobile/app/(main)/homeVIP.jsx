@@ -1,8 +1,19 @@
+/**
+ * @file HomeScreenVIP.jsx
+ * @description Componente de pantalla de inicio para usuarios VIP que muestra una lista de recetas y permite cerrar sesión.
+ * @autor Manuel García Nieto
+ */
 import React from 'react'
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useAuth } from '../../context/AuthContext'
 
+/**
+ * @constant
+ * @name recipes
+ * @description Lista de recetas para mostrar en la pantalla de inicio VIP.
+ * @type {Array<Object>}
+ */
 const recipes = [
 	{
 		id: '1',
@@ -21,15 +32,53 @@ const recipes = [
 	}
 ]
 
+/**
+ * @component
+ * @name HomeScreenVIP
+ * @description
+ * Componente de pantalla de inicio para usuarios VIP que muestra una lista de recetas y permite cerrar sesión.
+ *
+ * @returns {JSX.Element} La interfaz de usuario de la pantalla de inicio VIP.
+ */
 export default function HomeScreenVIP() {
+		/**
+	 * @hook
+	 * @name useRouter
+	 * @description Hook para manejar la navegación dentro de la aplicación.
+	 *
+	 * @type {Object}
+	 * @property {Function} replace Función para reemplazar la pantalla actual.
+	 */
 	const router = useRouter()
+		/**
+	 * @hook
+	 * @name useAuth
+	 * @description Hook personalizado para acceder al contexto de autenticación.
+	 *
+	 * @typedef {Object} AuthContext
+	 * @property {Function} logout Función para cerrar sesión.
+	 */
 	const { logout } = useAuth()
 
+		/**
+	 * @function handleLogout
+	 * @description
+	 * Maneja el proceso de cierre de sesión del usuario.
+	 */
 	const handleLogout = () => {
 		logout()
 		router.replace('/')
 	}
 
+	/**
+	 * @function renderItem
+	 * @description
+	 * Renderiza cada ítem de la lista de recetas.
+	 *
+	 * @param {Object} param0
+	 * @param {Object} param0.item - El ítem de receta a renderizar.
+	 * @returns {JSX.Element} El componente de receta.
+	 */
 	const renderItem = ({ item }) => (
 		<View className='mb-5 rounded-lg overflow-hidden bg-gray-200'>
 			<Image source={item.image} className='w-full h-48' resizeMode='cover' />

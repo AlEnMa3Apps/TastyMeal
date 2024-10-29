@@ -1,36 +1,65 @@
+/**
+ * @file SignUpForm.jsx
+ * @description Componente de formulario de registro para la aplicación.
+ * @autor Manuel García Nieto
+ */
 import { router } from 'expo-router'
 import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from '../../api/api'
 
+/**
+ * @component
+ * @name SignUpForm
+ * @description
+ * Este componente renderiza un formulario de registro que permite a los usuarios
+ * crear una cuenta proporcionando su información personal. Maneja la validación de
+ * los datos y la comunicación con la API para el registro de nuevos usuarios.
+ *
+ * @returns {JSX.Element} El formulario de registro.
+ */
 export default function SignUpForm() {
 	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
 	const [password, setPassword] = useState('')
-
+	
+/**
+   * @function validateEmail
+   * @description
+   * Valida el formato de una dirección de correo electrónico.
+   *
+   * @param {string} email - La dirección de correo electrónico a validar.
+   * @returns {boolean} `true` si el correo electrónico es válido, de lo contrario `false`.
+   */
 	const validateEmail = (email) => {
 		const re = /\S+@\S+\.\S+/
 		return re.test(email)
 	}
 
+ /**
+   * @function handleSignUp
+   * @description
+   * Maneja el proceso de registro de un nuevo usuario. Valida los campos del formulario,
+   * envía una solicitud a la API para registrar al usuario y maneja la respuesta.
+   */
 	const handleSignUp = async () => {
-		// if (!username || !email || !firstName || !lastName || !password) {
-		//   Alert.alert('Error', 'Please fill in all the fields.')
-		//   return
-		// }
+		if (!username || !email || !firstName || !lastName || !password) {
+		  Alert.alert('Error', 'Please fill in all the fields.')
+		  return
+		}
 
-		// if (!validateEmail(email)) {
-		//   Alert.alert('Error', 'Please enter a valid email address.')
-		//   return
-		// }
+		if (!validateEmail(email)) {
+		  Alert.alert('Error', 'Please enter a valid email address.')
+		  return
+		}
 
-		// if (password.length < 4) {
-		//   Alert.alert('Error', 'Password must be at least 4 characters long.')
-		//   return
-		// }
+		if (password.length < 4) {
+		  Alert.alert('Error', 'Password must be at least 4 characters long.')
+		  return
+		}
 
 		// send data to bakcend
 		console.log('Username:', username)

@@ -1,7 +1,22 @@
+/**
+ * @file WelcomeScreen.jsx
+ * @description Componente de pantalla de bienvenida que presenta la aplicación y permite navegar al registro o inicio de sesión.
+ * @autor Manuel García Nieto
+ */
 import React, { useEffect } from 'react'
 import { View, Text, Image, Button, StyleSheet, TouchableOpacity, BackHandler } from 'react-native'
-import { Link, useRouter } from 'expo-router'
+import { useRouter } from 'expo-router'
 
+/**
+ * @component
+ * @name WelcomeScreen
+ * @description
+ * Este componente muestra la pantalla de bienvenida de la aplicación, incluyendo una imagen principal,
+ * textos descriptivos y botones para iniciar el registro o el inicio de sesión. También deshabilita el
+ * botón de retroceso en dispositivos Android para evitar que el usuario salga de la aplicación desde esta pantalla.
+ *
+ * @returns {JSX.Element} La interfaz de usuario de la pantalla de bienvenida.
+ */
 export default function WelcomeScreen() {
 	const router = useRouter()
 
@@ -15,10 +30,20 @@ export default function WelcomeScreen() {
 		return () => backHandler.remove()
 	}, [])
 
+	/**
+	 * @function handleRegister
+	 * @description
+	 * Maneja la navegación hacia la pantalla de registro cuando el usuario presiona el botón "Getting Started".
+	 */
 	const handleRegister = () => {
 		router.push('/(auth)/signUp')
 	}
 
+	/**
+	 * @function handleLogin
+	 * @description
+	 * Maneja la navegación hacia la pantalla de inicio de sesión cuando el usuario presiona el texto "Login".
+	 */
 	const handleLogin = () => {
 		router.push('/(auth)/login')
 	}
@@ -63,13 +88,11 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		marginBottom: 20,
 		alignItems: 'center',
-		// Sombra para iOS
-		shadowColor: '#000', // Color de la sombra
+		shadowColor: '#000',
 		shadowOffset: { width: 0, height: 4 }, // Desplazamiento de la sombra
 		shadowOpacity: 0.3, // Opacidad de la sombra
 		shadowRadius: 4.65, // Radio de la sombra
-		// Sombra para Android
-		elevation: 8 // Nivel de elevación para Android
+		elevation: 8
 	},
 	buttonText: {
 		color: '#FFFFFF',

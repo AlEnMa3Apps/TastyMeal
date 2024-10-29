@@ -1,3 +1,8 @@
+/**
+ * @file LoginForm.jsx
+ * @description Componente de formulario de inicio de sesión para la aplicación.
+ * @autor Manuel García Nieto
+ */
 import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Link, router } from 'expo-router'
@@ -5,11 +10,47 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../api/api'
 
+/**
+ * @component
+ * @name LoginForm
+ * @description
+ * Este componente renderiza un formulario de inicio de sesión que permite a los usuarios
+ * ingresar su nombre de usuario y contraseña. Maneja la autenticación enviando una solicitud
+ * a la API y gestionando la navegación según el rol del usuario.
+ *
+ * @returns {JSX.Element} El formulario de inicio de sesión.
+ */
 export default function LoginForm() {
+	/**
+	 * @hook
+	 * @name useAuth
+	 * @description
+	 * Hook personalizado para acceder al contexto de autenticación.
+	 *
+	 * @typedef {Object} AuthContext
+	 * @property {Function} login Función para actualizar el estado de autenticación.
+	 */
 	const { login } = useAuth()
+	/**
+	 * @hook
+	 * @name useState
+	 * @description
+	 * Hooks para manejar el estado local del nombre de usuario y la contraseña.
+	 *
+	 * @typedef {Array} useStateReturn
+	 * @property {string} 0 Valor actual del estado.
+	 * @property {Function} 1 Función para actualizar el estado.
+	 */
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-
+	/**
+	 * @function
+	 * @name handleLogin
+	 * @description
+	 * Maneja el proceso de inicio de sesión. Valida los campos, envía una solicitud a la API,
+	 * almacena el token y el rol en AsyncStorage, actualiza el contexto de autenticación y
+	 * navega a la pantalla correspondiente según el rol del usuario.
+	 */
 	const handleLogin = async () => {
 		if (!username || !password) {
 			Alert.alert('Error', 'Please fill in all the fields.')
@@ -47,13 +88,17 @@ export default function LoginForm() {
 				router.replace('/(main)/home')
 			}
 		} catch (error) {
-			// Manejar errores
-			if (error.response && error.response.data && error.response.data.error) {
-				Alert.alert('Error', error.response.data.error)
+			// Verifica si es un error de red (backend desconectado)
+			if (error.code === 'ECONNREFUSED') {
+				Alert.alert('Error', 'Network error. Please check your connection.');
+			} else if (error.response && error.response.data && error.response.data.error) {
+				// Error de autenticación o cualquier error específico enviado desde el backend
+				Alert.alert('Error', error.response.data.error);
 			} else {
-				Alert.alert('Error', 'Wrong credentials, try again!')
+				// Muestra un mensaje de 
+				Alert.alert('Error', 'Wrong credentials.');
 			}
-			console.error('Error loging in:', error)
+			console.error('Error logging in:', error);
 		}
 	}
 
@@ -63,8 +108,8 @@ export default function LoginForm() {
 			<Text style={styles.title}>Welcome Back</Text>
 			<Text style={styles.subtitle}>Please login to continue</Text>
 
-			<TextInput style={styles.input} placeholder='Enter your username' value={username} onChangeText={setUsername} keyboardType='email-address' />
-			<TextInput style={styles.input} placeholder='Enter your password' value={password} onChangeText={setPassword} secureTextEntry />
+			<TextInput style={styles.input} placeholder='Enter your username' value={username} onChangeText={setUsername} testID='username-input' />
+			<TextInput style={styles.input} placeholder='Enter your password' value={password} onChangeText={setPassword} secureTextEntry testID='password-input' />
 
 			<View style={styles.forgotPasswordContainer}>
 				<TouchableOpacity>
@@ -72,7 +117,7 @@ export default function LoginForm() {
 				</TouchableOpacity>
 			</View>
 
-			<TouchableOpacity style={styles.button} onPress={handleLogin}>
+			<TouchableOpacity style={styles.button} onPress={handleLogin} testID='login-button'>
 				<Text style={styles.buttonText}>Login</Text>
 			</TouchableOpacity>
 
@@ -86,6 +131,12 @@ export default function LoginForm() {
 	)
 }
 
+/**
+ * @constant
+ * @name styles
+ * @description
+ * Define los estilos utilizados en el componente LoginForm.
+ */
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
