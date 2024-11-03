@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 
 import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
+import com.alenma3apps.backendTastyMeal.security.JwtService;
 
 /**
  * Classe test per testejar les funcions 
@@ -32,6 +33,8 @@ public class AuthServiceTests {
     
     @InjectMocks
     private AuthService authService;
+
+    private JwtService jwtService;
 
     /**
      * Test per comprovar que l'inici de sessió és correcte.
@@ -86,7 +89,7 @@ public class AuthServiceTests {
      */
     @Test
     public void AuthServiceTest_generateToken() {
-        String token = authService.generateToken("UserTest");
+        String token = jwtService.generateToken("UserTest");
         assertEquals(true, token != null && !token.isEmpty());
     }
 
@@ -97,9 +100,9 @@ public class AuthServiceTests {
     @Test
     public void AuthServiceTest_validateToken() {
         String username = "UserTest";
-        String token = authService.generateToken(username);
+        String token = jwtService.generateToken(username);
 
-        Boolean validateToken = authService.validateToken(token, username);
+        Boolean validateToken = jwtService.validateToken(token, username);
 
         assertEquals(true, validateToken);
     }

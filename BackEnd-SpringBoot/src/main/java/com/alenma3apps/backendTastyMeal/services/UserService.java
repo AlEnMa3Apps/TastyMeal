@@ -62,6 +62,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<UserModel> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     /**
      * Elimina l'usuari de la base de dsdes que conté el id passat per paràmetre.
      * @param id id de l'usuari a eliminar a la base de dades.
