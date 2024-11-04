@@ -19,7 +19,7 @@ const TabsLayout = () => {
 						borderTopWidth: 1,
 						paddingBottom: 20,
 						height: 70,
-						elevation: 5
+						elevation: 0
 					}
 				}}>
 				<Tabs.Screen
