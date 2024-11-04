@@ -19,6 +19,10 @@ export const AuthProvider = ({ children }) => {
 		loadAuthData()
 	}, [])
 
+	const userIsAuthenticated = () => {
+		return AsyncStorage.getItem('token') ? true : false
+	}
+
 	const login = (tokenData, roleData) => {
 		setToken(tokenData)
 		setRole(roleData)
@@ -31,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 		await AsyncStorage.removeItem('role')
 	}
 
-	return <AuthContext.Provider value={{ token, role, login, logout }}>{children}</AuthContext.Provider>
+	return <AuthContext.Provider value={{ userIsAuthenticated, token, role, login, logout }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => useContext(AuthContext)
