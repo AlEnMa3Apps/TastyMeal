@@ -5,14 +5,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alenma3apps.backendTastyMeal.dto.request.EditUserRequest;
+import com.alenma3apps.backendTastyMeal.dto.request.PasswordRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.ValidationResponse;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.security.JwtService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
+import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,13 +58,13 @@ public class UserController {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
 
         if(!validationResponse.isValid()) {
-            return ResponseEntity.ok("INVALID TOKEN");
+            return SpringResponse.invalidToken();
         }
         String username = validationResponse.getUsername();
         Optional<UserModel> userOptional = userService.getUserByUsername(username);
 
         if (!userOptional.isPresent()) {
-            ResponseEntity.ok("USER NOT FOUND");
+            return SpringResponse.userNotFound();
         }
 
         UserModel user = userOptional.get();
@@ -73,9 +79,41 @@ public class UserController {
      * @author Albert Borras
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(path = "user/{id}")
+    @GetMapping("/user/{id}")
     public Optional<UserModel> getUserById(@PathVariable("id") Long id) {
-        return this.userService.getUserById(id);
+        return userService.getUserById(id);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PatchMapping("/user")
+    public ResponseEntity<?> changePassword(HttpServletRequest header, @RequestBody PasswordRequest request) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+
+        if(!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
+        }
+        String username = validationResponse.getUsername();
+
+        return userService.changePassword(username, request.getPassword());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/user/{id}")
+    public ResponseEntity<?> editUserById(@PathVariable Long id, @RequestBody EditUserRequest request) {
+        return userService.editUserById(id, request);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PutMapping("/user")
+    public ResponseEntity<?> editMyUser(HttpServletRequest header, @RequestBody EditUserRequest request) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+
+        if (!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
+        }
+
+        String username = validationResponse.getUsername();
+        return userService.editUser(username, request);
     }
 
     /**
@@ -85,14 +123,21 @@ public class UserController {
      * @author Albert Borras
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping(path = "user/{id}")
-    public String deleteUserById(@PathVariable("id") Long id) {
-        boolean ok = this.userService.deleteUserById(id);
+    @DeleteMapping(path = "/user/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") Long id) {
+        return userService.deleteUserById(id);
+    }
 
-        if (ok) {
-            return "User with id " + id + " deleted";
-        } else {
-            return "Error deleting user with id " + id;
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @DeleteMapping(path = "/user")
+    public ResponseEntity<?> deleteMyUser(HttpServletRequest header) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+
+        if (!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
         }
+
+        String username = validationResponse.getUsername();
+        return userService.deleteUserByUsername(username);
     }
 }

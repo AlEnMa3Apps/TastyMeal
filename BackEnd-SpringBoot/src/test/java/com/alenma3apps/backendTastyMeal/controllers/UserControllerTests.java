@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
+import com.alenma3apps.backendTastyMeal.security.JwtService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,6 +41,9 @@ public class UserControllerTests {
     
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private JwtService jwtService;
     
     @Autowired
     private ObjectMapper objectMapper;
@@ -66,7 +70,7 @@ public class UserControllerTests {
 
         given(userService.getUsers()).willReturn(listUsers);
 
-        ResultActions response = mockMvc.perform(get("/api/")
+        ResultActions response = mockMvc.perform(get("/api/users")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(listUsers)));
 

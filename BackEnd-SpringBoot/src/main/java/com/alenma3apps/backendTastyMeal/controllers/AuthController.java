@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alenma3apps.backendTastyMeal.dto.request.LoginRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
-import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 import com.alenma3apps.backendTastyMeal.services.AuthService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
+import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
 import java.util.Optional;
 
@@ -45,16 +45,16 @@ public class AuthController {
      * @author Albert Borras
      */
     @PostMapping(path = "/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
          Optional<UserModel> userOptional = userRepository.findByUsername(request.getUsername());
 
         if(!userOptional.isPresent()){
-            return ResponseEntity.notFound().build();
+            return SpringResponse.userNotFound();
         }
         String passwordRequest = request.getPassword();
         String userPassword = userOptional.get().getPassword();
          if(!passwordEncoder.matches(passwordRequest,userPassword))
-             return ResponseEntity.badRequest().build();
+             return SpringResponse.wrongPassword();
 
         return ResponseEntity.ok(authService.login(request, userOptional.get().getRole().toString()));
     }

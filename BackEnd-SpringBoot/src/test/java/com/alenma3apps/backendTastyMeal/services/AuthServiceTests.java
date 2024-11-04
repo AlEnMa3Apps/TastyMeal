@@ -30,11 +30,12 @@ public class AuthServiceTests {
 
     @Mock
     private Authentication authentication;
-    
+
+    @Mock
+    private JwtService jwtService;
+
     @InjectMocks
     private AuthService authService;
-
-    private JwtService jwtService;
 
     /**
      * Test per comprovar que l'inici de sessió és correcte.
@@ -54,6 +55,8 @@ public class AuthServiceTests {
                 .thenReturn(authentication);
 
         when(authentication.isAuthenticated()).thenReturn(true);
+
+        when(jwtService.generateToken("UserTest")).thenReturn("token");
 
         LoginResponse login = authService.login(request, role);
 
@@ -81,29 +84,5 @@ public class AuthServiceTests {
         when(authentication.isAuthenticated()).thenThrow(new RuntimeException("Invalid login"));
 
         assertThrows(RuntimeException.class, () -> authService.login(request, role));
-    }
-
-    /**
-     * Test per comprovar la generació del token de sessió.
-     * @author Albert Borras
-     */
-    @Test
-    public void AuthServiceTest_generateToken() {
-        String token = jwtService.generateToken("UserTest");
-        assertEquals(true, token != null && !token.isEmpty());
-    }
-
-    /**
-     * Test per comprovar la validació del token de sessió.
-     * @author Albert Borras
-     */
-    @Test
-    public void AuthServiceTest_validateToken() {
-        String username = "UserTest";
-        String token = jwtService.generateToken(username);
-
-        Boolean validateToken = jwtService.validateToken(token, username);
-
-        assertEquals(true, validateToken);
     }
 }

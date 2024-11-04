@@ -27,6 +27,7 @@ import com.alenma3apps.backendTastyMeal.dto.response.LoginResponse;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
+import com.alenma3apps.backendTastyMeal.security.JwtService;
 import com.alenma3apps.backendTastyMeal.services.AuthService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +50,9 @@ public class AuthControllerTests {
 
     @MockBean
     private UserService userService;
+    
+    @MockBean
+    private JwtService jwtService;
 
     @MockBean
     private IUserRepository userRepository;
@@ -129,7 +133,7 @@ public class AuthControllerTests {
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(loginRequest)));
 
-        response.andExpect(MockMvcResultMatchers.status().isNotFound());
+        response.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     /**
@@ -147,7 +151,7 @@ public class AuthControllerTests {
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(loginRequest)));
 
-        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        response.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     /**
