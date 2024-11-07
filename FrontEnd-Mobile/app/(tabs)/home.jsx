@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const home = () => {
+const Home = () => {
 	return (
 		<SafeAreaView>
 			<View className='items-center justify-center'>
@@ -12,4 +12,4 @@ const home = () => {
 	)
 }
 
-export default home
+export default Home

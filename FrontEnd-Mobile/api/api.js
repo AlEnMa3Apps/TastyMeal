@@ -32,6 +32,9 @@ const api = axios.create({
 	baseURL: baseURL
 })
 
+// Endpoints públicos que no requieren autenticación
+const publicEndpoints = ['/auth/register', '/auth/login']
+
 /**
  * Interceptor de solicitudes para agregar el token de autenticación en los encabezados.
  *
@@ -45,6 +48,12 @@ const api = axios.create({
  */
 api.interceptors.request.use(
 	async (config) => {
+		// Verificar si el endpoint es público
+		if (publicEndpoints.some((endpoint) => config.url.includes(endpoint))) {
+			return config
+		}
+
+		// Obtener el token de AsyncStorage
 		const token = await AsyncStorage.getItem('token')
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`

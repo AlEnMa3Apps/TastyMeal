@@ -52,54 +52,59 @@ export default function LoginForm() {
 	 * navega a la pantalla correspondiente según el rol del usuario.
 	 */
 	const handleLogin = async () => {
-		// if (!username || !password) {
-		// 	Alert.alert('Error', 'Please fill in all the fields.')
-		// 	return
-		// }
+		if (!username || !password) {
+			Alert.alert('Error', 'Please fill in all the fields.')
+			return
+		}
 
-		// if (password.length < 4) {
-		// 	Alert.alert('Error', 'Password must be at least 4 characters long.')
-		// 	return
-		// }
+		if (password.length < 4) {
+			Alert.alert('Error', 'Password must be at least 4 characters long.')
+			return
+		}
 
-		// try {
-		// 	const response = await api.post('/auth/login', {
-		// 		username,
-		// 		password
-		// 	})
+		try {
+			const response = await api.post('/auth/login', {
+				username,
+				password
+			})
 
-		// 	// Manejar la respuesta
-		// 	const { token, role } = response.data
-		// 	console.log(response.data)
-		// 	console.log('Username:', username)
-		// 	console.log('Password:', password)
+			// Manejar la respuesta
+			const { token, role } = response.data
+			console.log(response.data)
+			console.log('Username:', username)
+			console.log('Password:', password)
 
-		// 	// Almacenar el token y el rol
-		// 	await AsyncStorage.setItem('token', token)
-		// 	await AsyncStorage.setItem('role', role)
+			// Almacenar el token y el rol
+			await AsyncStorage.setItem('token', token)
+			await AsyncStorage.setItem('role', role)
 
-		// 	// Actualizar el contexto de autenticación
-		// 	login(token, role)
+			// Actualizar el contexto de autenticación
+			login(token, role)
 
 			// Navegar según el rol
-			// if (role === 'USER_VIP') {
+			 if (role === 'USER_VIP') {
 				router.replace('/(tabs)/home')
-			// } else {
-			// 	router.replace('/(tabs)/home')
-			// }
-		// } catch (error) {
-		// 	// Verifica si es un error de red (backend desconectado)
-		// 	if (error.code === 'ECONNREFUSED') {
-		// 		Alert.alert('Error', 'Network error. Please check your connection.');
-		// 	} else if (error.response && error.response.data && error.response.data.error) {
-		// 		// Error de autenticación o cualquier error específico enviado desde el backend
-		// 		Alert.alert('Error', error.response.data.error);
-		// 	} else {
-		// 		// Muestra un mensaje de 
-		// 		Alert.alert('Error', 'Wrong credentials.');
-		// 	}
-		// 	console.error('Error logging in:', error);
-		// }
+			} else {
+			 	router.replace('/(tabs)/home')
+			 }
+		} catch (error) {
+			// Verifica si es un error de red (backend desconectado)
+			if (error.code === 'ECONNREFUSED') {
+				Alert.alert('Error', 'Network error. Please check your connection.');
+			} else if (error.response && error.response.data && error.response.data.error) {
+				// Error de autenticación o cualquier error específico enviado desde el backend
+				Alert.alert('Error', error.response.data.error);
+			} else {
+				// Muestra un mensaje de 
+				Alert.alert('Error', 'Wrong credentials.');
+			}
+			console.error('Error logging in:', error);
+		}
+	}
+
+	const handleForgotPassword = () => {
+		// Navegar a la pantalla de restablecimiento de contraseña
+		router.push('/(tabs)/(profile)/reset-password')
 	}
 
 	return (
@@ -112,7 +117,7 @@ export default function LoginForm() {
 			<TextInput style={styles.input} placeholder='Enter your password' value={password} onChangeText={setPassword} secureTextEntry testID='password-input' />
 
 			<View style={styles.forgotPasswordContainer}>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={handleForgotPassword}>
 					<Text style={styles.forgotPasswordText}>Forgot Password?</Text>
 				</TouchableOpacity>
 			</View>

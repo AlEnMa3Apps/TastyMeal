@@ -47,7 +47,7 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='profile/index'
+					name='(profile)'
 					options={{
 						title: 'Profile',
 						headerShown: false,
