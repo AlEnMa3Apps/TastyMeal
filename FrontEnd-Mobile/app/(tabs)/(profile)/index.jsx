@@ -35,7 +35,7 @@ const Profile = () => {
 
 	const handleEditProfile = () => {
 		// Navegar a la pantalla de edición de perfil
-    router.push('/(profile)/edit-profile')
+		router.push('/(profile)/edit-profile')
 	}
 
 	const handleDeleteProfile = () => {
@@ -44,24 +44,40 @@ const Profile = () => {
 			{ text: 'Cancel', style: 'cancel' },
 			{
 				text: 'Yes',
-				onPress: () => {
-					// Lógica para eliminar el perfil
-					console.log('Profile deleted')
-				},
-				style: 'destructive'
+				onPress: async () => {
+					try {
+						// Realiza la solicitud DELETE al endpoint /user
+						const response = await api.delete('/api/user')
+
+						if (response.status === 200) {
+							Alert.alert('Success', 'Profile has been deleted successfully.')
+
+							// Llama a logout para limpiar el token y el rol del AsyncStorage y el estado
+							await logout()
+
+							// Redirige al usuario a la pantalla de login
+							router.replace('/(auth)/login')
+						} else {
+							Alert.alert('Error', 'Failed to delete profile. Please try again.')
+						}
+					} catch (error) {
+						console.error('Error deleting profile:', error)
+						Alert.alert('Error', 'An error occurred while deleting the profile. Please try again later.')
+					}
+				}
 			}
 		])
 	}
 
 	const handleResetPassword = () => {
 		// Lógica para resetear contraseña
-    router.push('/(profile)/reset-password')
+		router.push('/(profile)/reset-password')
 		console.log('Password reset')
 	}
 
-	const handleLogout = () => {
+	const handleLogout = async () => {
 		// Lógica para cerrar sesión
-		logout()
+		await logout()
 		router.replace('/(auth)/login')
 		console.log('Logged out')
 	}

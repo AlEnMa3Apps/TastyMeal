@@ -104,7 +104,7 @@ export default function SignUpForm() {
 			<Text style={styles.subtitle}>Please fill in the details to create an account</Text>
 
 			<TextInput style={styles.input} placeholder='Enter your username' value={username} onChangeText={setUsername} />
-			<TextInput style={styles.input} placeholder='Enter your email' value={email} onChangeText={setEmail} keyboardType='email-address' />
+			<TextInput style={styles.input} placeholder='Enter your email' value={email} onChangeText={setEmail} keyboardType='email-address' autoCapitalize='none' />
 			<TextInput style={styles.input} placeholder='Enter your first name' value={firstName} onChangeText={setFirstName} />
 			<TextInput style={styles.input} placeholder='Enter your last name' value={lastName} onChangeText={setLastName} />
 			<TextInput style={styles.input} placeholder='Enter your password' value={password} onChangeText={setPassword} secureTextEntry />
