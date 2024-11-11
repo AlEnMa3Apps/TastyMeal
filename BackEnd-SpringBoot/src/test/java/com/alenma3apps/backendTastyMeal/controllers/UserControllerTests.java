@@ -11,11 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -24,6 +27,7 @@ import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.security.JwtService;
 import com.alenma3apps.backendTastyMeal.services.UserService;
+import com.alenma3apps.backendTastyMeal.tools.SpringResponse.JsonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -115,16 +119,16 @@ public class UserControllerTests {
      */
     @Test
     public void UserControllerTest_deleteUserById_ok() throws Exception {
-        String message = "User with id 1 deleted";
+        ResponseEntity<JsonResponse> responseExpect = new ResponseEntity<>(new JsonResponse(HttpStatus.OK.value(), "USER_DELETED"), HttpStatus.OK);
 
-        given(userService.deleteUserById(ArgumentMatchers.any())).willReturn(true);
+        given(userService.deleteUserById(1L)).willAnswer(invocation -> responseExpect);
+
 
         ResultActions response = mockMvc.perform(delete("/api/user/1")
-        .contentType(MediaType.TEXT_EVENT_STREAM_VALUE)
-        .content(message));
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(responseExpect)));
 
-        response.andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(message));
+        response.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
@@ -135,15 +139,16 @@ public class UserControllerTests {
      */
     @Test
     public void UserControllerTest_deleteUserById_error() throws Exception {
-        String message = "Error deleting user with id 1";
+        
+        ResponseEntity<JsonResponse> responseExpect = new ResponseEntity<>(new JsonResponse(HttpStatus.BAD_REQUEST.value(), "USER_NOT_DELETED"), HttpStatus.BAD_REQUEST);
 
-        given(userService.deleteUserById(ArgumentMatchers.any())).willReturn(false);
+        given(userService.deleteUserById(1L)).willAnswer(invocation -> responseExpect);
+
 
         ResultActions response = mockMvc.perform(delete("/api/user/1")
-        .contentType(MediaType.TEXT_EVENT_STREAM_VALUE)
-        .content(message));
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(responseExpect)));
 
-        response.andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(message));
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

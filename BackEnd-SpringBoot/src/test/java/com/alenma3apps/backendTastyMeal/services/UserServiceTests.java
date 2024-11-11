@@ -12,11 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
+import com.alenma3apps.backendTastyMeal.tools.SpringResponse.JsonResponse;
 
 /**
  * Classe test per testejar les funcions 
@@ -126,8 +129,8 @@ public class UserServiceTests {
         user.setRole(RoleModel.USER);
         user.setUsername("UserTest");
 
-        boolean userDeleted = userService.deleteUserById((long) 1);
+        ResponseEntity<?> userDeleted = userService.deleteUserById((long) 1);
 
-        Assertions.assertThat(userDeleted).isTrue();
+        Assertions.assertThat(userDeleted.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

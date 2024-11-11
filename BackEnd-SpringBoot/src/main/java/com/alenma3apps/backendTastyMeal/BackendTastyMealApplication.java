@@ -8,6 +8,7 @@ public class BackendTastyMealApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendTastyMealApplication.class, args);
+		System.out.println("Welcome to TastyMeal your best recipes app");
 	}
 
 }

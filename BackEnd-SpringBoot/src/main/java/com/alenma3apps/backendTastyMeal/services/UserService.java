@@ -121,7 +121,6 @@ public class UserService {
             user.setEmail(request.getEmail());
             user.setFirstName(request.getFirstName());
             user.setLastName(request.getLastName());
-            user.setPassword(request.getPassword());
             user.setUsername(request.getUsername());
 
             userRepository.save(user);
