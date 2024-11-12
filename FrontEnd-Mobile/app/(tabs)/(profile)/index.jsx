@@ -1,35 +1,43 @@
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, Redirect } from 'expo-router'
 import api from '../../../api/api'
 import { useAuth } from '../../../context/AuthContext'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Profile = () => {
 	const { logout } = useAuth()
 	const [user, setUser] = useState(null)
 
-	useEffect(() => {
-		// Función para obtener la información del usuario
-		const fetchUserData = async () => {
-			try {
-				const response = await api.get('/api/user')
-				if (response.data === 'INVALID TOKEN') {
-					Alert.alert('Session Expired', 'Please log in again.')
-					router.push('/(auth)/login')
-				} else if (response.data === 'USER NOT FOUND') {
-					Alert.alert('Error', 'User not found.')
-				} else {
-					setUser(response.data)
+	useFocusEffect(
+		useCallback(() => {
+			// Función para obtener la información del usuario
+			const fetchUserData = async () => {
+				try {
+					const response = await api.get('/api/user')
+					if (response.data === 'INVALID TOKEN') {
+						Alert.alert('Session Expired', 'Please log in again.')
+						router.push('/(auth)/login')
+					} else if (response.data === 'USER NOT FOUND') {
+						Alert.alert('Error', 'User not found.')
+					} else {
+						setUser(response.data)
+					}
+				} catch (error) {
+					console.error('Error fetching user data:', error)
+					Alert.alert('Error', 'Could not fetch user data.')
 				}
-			} catch (error) {
-				console.error('Error fetching user data:', error)
-				Alert.alert('Error', 'Could not fetch user data.')
 			}
-		}
 
-		fetchUserData()
-	}, [])
+			fetchUserData()
+
+			// Limpieza opcional si la necesitas
+			return () => {
+				setUser(null)
+			}
+		}, [])
+	)
 
 	console.log(user)
 
