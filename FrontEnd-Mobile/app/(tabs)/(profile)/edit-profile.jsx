@@ -65,16 +65,15 @@ const EditProfile = () => {
 
 	return (
 		<View className='flex-1 bg-gray-100 p-6'>
-			<Text className='text-2xl font-bold text-gray-800 mb-6 text-center mt-10'>Edit your profile</Text>
+			<Text className='text-2xl font-bold text-gray-800 mb-6 text-center mt-20'>Edit your profile</Text>
 
-			<Text className='text-gray-700 mb-1'>Username</Text>
-			<TextInput className='bg-white p-4 rounded-lg shadow mb-4 text-xl' placeholder='Username' value={username} onChangeText={setUsername} />
-			<Text className='text-gray-700 mb-1'>Email</Text>
-			<TextInput className='bg-white p-4 rounded-lg shadow mb-4 text-xl' placeholder='Email' value={email} onChangeText={setEmail} keyboardType='email-address' autoCapitalize='none' />
+		
 			<Text className='text-gray-700 mb-1'>First Name</Text>
 			<TextInput className='bg-white p-4 rounded-lg shadow mb-4 text-xl' placeholder='First Name' value={firstName} onChangeText={setFirstName} />
 			<Text className='text-gray-700 mb-1'>Last Name</Text>
-			<TextInput className='bg-white p-4 rounded-lg shadow mb-6 text-xl' placeholder='Last Name' value={lastName} onChangeText={setLastName} />
+			<TextInput className='bg-white p-4 rounded-lg shadow mb-4 text-xl' placeholder='Last Name' value={lastName} onChangeText={setLastName} />
+			<Text className='text-gray-700 mb-1'>Email</Text>
+			<TextInput className='bg-white p-4 rounded-lg shadow mb-16 text-xl' placeholder='Email' value={email} onChangeText={setEmail} keyboardType='email-address' autoCapitalize='none' />
 
 			<TouchableOpacity className='bg-green-500 p-4 rounded-full shadow items-center' onPress={handleSaveChanges}>
 				<Text className='text-white text-xl font-semibold'>Save Changes</Text>
