@@ -30,7 +30,7 @@ const EditProfile = () => {
 
 			loadUserData()
 
-			// Limpieza opcional si la necesitas
+			// Limpieza de los campos al salir del componente
 			return () => {
 				setUsername('')
 				setEmail('')
@@ -40,7 +40,17 @@ const EditProfile = () => {
 		}, [])
 	)
 
+	const validateEmail = (email) => {
+		const re = /\S+@\S+\.\S+/
+		return re.test(email)
+	}
+
 	const handleSaveChanges = async () => {
+		if (!validateEmail(email)) {
+		  Alert.alert('Error', 'Please enter a valid email address.')
+		  return
+		}
+
 		try {
 			const response = await api.put('/api/user', {
 				username,

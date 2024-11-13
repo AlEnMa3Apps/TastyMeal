@@ -32,7 +32,6 @@ const Profile = () => {
 
 			fetchUserData()
 
-			// Limpieza opcional si la necesitas
 			return () => {
 				setUser(null)
 			}
@@ -94,8 +93,8 @@ const Profile = () => {
 			<View className='h-full'>
 				<View className='items-center py-14'>
 					<Image source={{ uri: 'https://thispersondoesnotexist.com/' }} className='w-52 h-52 rounded-full mb-4 border-black border-2' />
-					<Text className='text-3xl font-bold text-gray-800'>{user?.firstName || 'Loading...'}</Text>
-					<Text className='text-2xl text-gray-800'>{user?.email || ''}</Text>
+					<Text className='text-3xl font-bold text-gray-800'>  {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}</Text>
+					<Text className='text-2xl text-gray-800 pl-3'>{user?.email || ''}</Text>
 				</View>
 				<View className='px-5 space-y-3 mb-10'>
 					<TouchableOpacity className='bg-green-500 py-4 px-5 rounded-full shadow-2xl mb-4' onPress={handleEditProfile}>
