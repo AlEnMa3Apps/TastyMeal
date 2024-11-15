@@ -6,8 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +66,7 @@ public class RecipeController {
         if (recipe != null) {
             return SpringResponse.recipeCreated();
         } else {
-            return SpringResponse.errorCreationRecipe();
+            return SpringResponse.errorCreatingRecipe();
         }
     }
 
@@ -96,10 +99,68 @@ public class RecipeController {
      * @return Llistat de receptes.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping("/all_recipes")
+    @GetMapping("/recipes/all")
     public ResponseEntity<?> getAllRecipes() {
         List<RecipeModel> listRecipes = recipeService.getAllRecipes();
         return ResponseEntity.ok(listRecipes);
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/recipe/{id}")
+    public ResponseEntity<?> getRecipeById(@PathVariable("id") Long id) {
+        RecipeModel recipe = recipeService.getRecipeById(id);
+        if (recipe != null) {
+            return ResponseEntity.ok(recipe);
+        } else {
+            return SpringResponse.recipeNotFound();
+        }
+    }
+
+    /**
+     * 
+     * @param header
+     * @param request
+     * @param id
+     * @return
+     */
+    @PutMapping("recipe/{id}")
+    public ResponseEntity<?> editMyRecipe(HttpServletRequest header, @RequestBody RecipeRequest request, @PathVariable Long id) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+        if (!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
+        }
+
+        String userName = validationResponse.getUsername();
+        Optional<UserModel> userOptional = userRepository.findByUsername(userName);
+        if (userOptional.isEmpty()) {
+            return SpringResponse.userNotFound();
+        }
+
+        UserModel user = userOptional.get();
+        return recipeService.editMyRecipe(id, user, request);
+    }
+
+    /**
+     * 
+     * @param header
+     * @param id
+     * @return
+     */
+    @DeleteMapping("recipe/{id}")
+    public ResponseEntity<?> deleteRecipe(HttpServletRequest header, @PathVariable Long id) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+        if (!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
+        }
+
+        String userName = validationResponse.getUsername();
+        Optional<UserModel> userOptional = userRepository.findByUsername(userName);
+        if (userOptional.isEmpty()) {
+            return SpringResponse.userNotFound();
+        }
+
+        UserModel user = userOptional.get();
+
+        return recipeService.deleteMyRecipe(id, user);
+    }
 }

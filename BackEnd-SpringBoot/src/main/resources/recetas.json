@@ -1,59 +1,59 @@
 [
   {
-    "title": "Revuelto de Tofu",
-    "description": "Una deliciosa opción vegana para el desayuno, hecho con tofu sazonado, verduras y especias.",
+    "title": "Remenat de Tofu",
+    "description": "Una deliciosa opció vegana per esmorzar, fet amb tofu assaonat, verdures i espècies.",
     "imageUrl": "https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 20,
     "numPersons": 1,
-    "ingredients": "200g de tofu firme, 1/2 pimiento, 1/4 de cebolla, 1/2 cucharadita de cúrcuma, sal y pimienta al gusto",
+    "ingredients": "200g de tofu ferm, 1/2 pebrot, 1/4 de ceba, 1/2 culleradeta de cúrcuma, sal i pebre al gust",
     "recipeCategory": {
       "id": 1,
-      "category": "Vegan"
+      "category": "Veguen"
     }
   },
   {
-    "title": "Salteado de Verduras",
-    "description": "Un plato vegetariano rápido y saludable que presenta una colorida variedad de verduras salteadas a la perfección.",
-    "imageUrl": "https://media.istockphoto.com/id/467332825/es/foto/friendo-verduras-en-pan-con-una-esp%C3%A1tula.jpg?s=612x612&w=0&k=20&c=7qZ4YkLJG5o5uVcypdrKfopBawJFlecTs1r_xmnrLbs=",
+    "title": "Saltejat de Verdures",
+    "description": "Un plat vegetarià ràpid i saludable que presenta una colorida varietat de verdures saltejades a la perfecció.",
+    "imageUrl": "https://media.istockphoto.com/id/467332825/es/foto/friendo-verduras-en-pan-con-una-esp%C3%A1tula.jpg?s=612x612&w=0&k=20&c=7qZ4YkLJG5o5uVcypdrKfop=" ,
     "cookingTime": 15,
     "numPersons": 2,
-    "ingredients": "1 taza de brócoli, 1 pimiento, 1 zanahoria, 1/2 taza de arvejas, 2 dientes de ajo, 2 cucharadas de salsa de soja",
+    "ingredients": "1 tassa de bròquil, 1 pebrot, 1 pastanaga, 1/2 tassa de arvejas, 2 dents d'all, 2 cullerades de salsa de soja",
     "recipeCategory": {
       "id": 2,
       "category": "Vegetarian"
     }
   },
   {
-    "title": "Filete a la Parrilla",
-    "description": "Un clásico plato de carne que presenta un filete tierno a la parrilla sazonado con hierbas y especias.",
+    "title": "Filet a la Graella",
+    "description": "Un clàssic plat de carn que presenta un filet tendre a la graella assaonat amb herbes i espècies.",
     "imageUrl": "https://images.pexels.com/photos/1251208/pexels-photo-1251208.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 30,
     "numPersons": 1,
-    "ingredients": "200g de filete, 1 cucharada de aceite de oliva, 1 cucharadita de sal, 1/2 cucharadita de pimienta negra",
+    "ingredients": "200g de filet, 1 cullerada d'oli d'oliva, 1 culleradeta de sal, 1/2 culleradeta de pebre negre",
     "recipeCategory": {
       "id": 3,
       "category": "Meat"
     }
   },
   {
-    "title": "Salmón a la Sartén",
-    "description": "Un sabroso plato de pescado que presenta filetes de salmón con piel crujiente sazonados con limón y hierbas.",
+    "title": "Salmó a la Paella",
+    "description": "Un saborós plat de peix que presenta filets de salmó amb pell cruixent assaonats amb llimona i herbes.",
     "imageUrl": "https://images.pexels.com/photos/6984182/pexels-photo-6984182.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 25,
     "numPersons": 1,
-    "ingredients": "2 filetes de salmón, 1 limón, 2 cucharadas de aceite de oliva, sal y pimienta al gusto",
+    "ingredients": "2 filets de salmó, 1 llimona, 2 cullerades d'oli d'oliva, sal i pebre al gust",
     "recipeCategory": {
       "id": 4,
       "category": "Fish"
     }
   },
   {
-    "title": "Espaguetis Aglio e Olio",
-    "description": "Un plato de pasta simple pero delicioso hecho con espaguetis, ajo, aceite de oliva y copos de chile.",
+    "title": "Espaguetis Aglio i Olio",
+    "description": "Un plat de pasta simple però deliciós fet amb espaguetis, all, oli d'oliva i flocs de Xile.",
     "imageUrl": "https://images.pexels.com/photos/11654236/pexels-photo-11654236.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 12,
     "numPersons": 2,
-    "ingredients": "200g de espaguetis, 3 dientes de ajo, 2 cucharadas de aceite de oliva, 1/2 cucharadita de copos de chile, perejil para decorar",
+    "ingredients": "200g d'espaguetis, 3 dents d'all, 2 cullerades d'oli d'oliva, 1/2 culleradeta de flocs de Xile, julivert per decorar",
     "recipeCategory": {
       "id": 5,
       "category": "Pasta"
@@ -61,74 +61,74 @@
   },
   {
     "title": "Pizza Margarita",
-    "description": "Una clásica pizza italiana cubierta con salsa de tomate, queso mozzarella y hojas de albahaca fresca.",
+    "description": "Una clàssica pizza italiana coberta amb salsa de tomàquet, formatge mozzarella i fulles d'alfàbrega fresca.",
     "imageUrl": "https://images.pexels.com/photos/6605218/pexels-photo-6605218.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 15,
     "numPersons": 1,
-    "ingredients": "1 base de pizza, 1/2 taza de salsa de tomate, 1 taza de queso mozzarella, hojas de albahaca fresca",
+    "ingredients": "1 base de pizza, 1/2 tassa de salsa de tomàquet, 1 tassa de formatge mozzarella, fulles d'alfàbrega fresca",
     "recipeCategory": {
       "id": 6,
       "category": "Pizza"
     }
   },
   {
-    "title": "Ensalada Griega",
-    "description": "Una ensalada refrescante con lechuga crujiente, tomates, pepinos, aceitunas y queso feta, aliñada con un aderezo agridulce.",
+    "title": "Amanida Grega",
+    "description": "Una amanida refrescant amb enciam cruixent, tomàquets, cogombres, olives i formatge feta, amanida amb un amaniment agredolç.",
     "imageUrl": "https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 10,
     "numPersons": 1,
-    "ingredients": "2 tazas de lechuga, 1 tomate, 1 pepino, 1/4 taza de aceitunas, 50g de queso feta, 2 cucharadas de aceite de oliva, 1 cucharada de jugo de limón",
+    "ingredients": "2 tasses d'enciam, 1 tomàquet, 1 cogombre, 1/4 tassa d'olives, 50g de formatge feta, 2 cullerades d'oli d'oliva, 1 cullerada de suc de llimona",
     "recipeCategory": {
       "id": 7,
       "category": "Salad"
     }
   },
   {
-    "title": "Brownies de Chocolate",
-    "description": "Barritas de postre decadentes hechas con chocolate rico y cubiertas con un glaseado cremoso.",
-    "imageUrl": "https://images.pexels.com/photos/18523013/pexels-photo-18523013/free-photo-of-frambuesas-chocolate-bombon-dulce.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "title": "Brownies de Xocolata",
+    "description": "Barretes de postres decadents fetes amb xocolata rica i cobertes amb un glacejat cremós.",
+    "imageUrl": "https://images.pexels.com/photos/18523013/pexels-photo-18523013/free-photo-of-gerds-xocolata-bombon-dulce.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 40,
     "numPersons": 6,
-    "ingredients": "100g de mantequilla, 200g de chocolate negro, 1 taza de azúcar, 2 huevos, 1 cucharadita de extracto de vainilla, 1/2 taza de harina",
+    "ingredients": "100g de mantega, 200g de xocolata negra, 1 tassa de sucre, 2 ous, 1 culleradeta d'extracte de vainilla, 1/2 tassa de farina",
     "recipeCategory": {
       "id": 8,
       "category": "Dessert"
     }
   },
   {
-    "title": "Cóctel Mojito",
-    "description": "Un cóctel refrescante a base de ron con menta, lima y agua con gas.",
+    "title": "Còctel Mojito",
+    "description": "Un còctel refrescant a base de rom amb menta, llima i aigua amb gas.",
     "imageUrl": "https://images.pexels.com/photos/4021983/pexels-photo-4021983.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 5,
     "numPersons": 1,
-    "ingredients": "50ml de ron blanco, 1 lima, 10 hojas de menta fresca, 2 cucharaditas de azúcar, agua con gas, cubitos de hielo",
+    "ingredients": "50ml de rom blanc, 1 llima, 10 fulles de menta fresca, 2 culleradetes de sucre, aigua amb gas, glaçons de gel",
     "recipeCategory": {
       "id": 9,
       "category": "Drinks"
     }
   },
   {
-    "title": "Tostada de Aguacate",
-    "description": "Una opción de desayuno simple y nutritiva que presenta aguacate machacado sobre pan tostado.",
+    "title": "Tostada d'Alvocat",
+    "description": "Una opció d'esmorzar simple i nutritiva que presenta alvocat picat sobre pa torrat.",
     "imageUrl": "https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 10,
     "numPersons": 1,
-    "ingredients": "1 aguacate maduro, 2 rebanadas de pan integral, sal y pimienta al gusto",
+    "ingredients": "1 alvocat madur, 2 llesques de pa integral, sal i pebre al gust",
     "recipeCategory": {
       "id": 10,
       "category": "Breakfast"
     }
-  },
-  {
-    "title": "Sopa de Tomate y Albahaca",
-    "description": "Una sopa reconfortante hecha con tomates maduros, albahaca fresca y un toque de crema.",
+ },
+ {
+    "title": "Sopa de Tomàquet i Alfàbrega",
+    "description": "Una sopa reconfortant feta amb tomàquets madurs, alfàbrega fresca i un toc de crema.",
     "imageUrl": "https://images.pexels.com/photos/1618943/pexels-photo-1618943.jpeg?auto=compress&cs=tinysrgb&w=600",
     "cookingTime": 25,
     "numPersons": 2,
-    "ingredients": "4 tomates grandes, 1 cebolla, 2 dientes de ajo, 1 taza de caldo de verduras, 1/4 taza de crema, hojas de albahaca fresca",
+    "ingredients": "4 tomàquets grans, 1 ceba, 2 dents d'all, 1 tassa de brou de verdures, 1/4 tassa de crema, fulles d'alfàbrega fresca",
     "recipeCategory": {
       "id": 11,
       "category": "Soup"
     }
-  }
+ }
 ]

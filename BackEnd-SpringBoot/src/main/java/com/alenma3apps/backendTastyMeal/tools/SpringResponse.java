@@ -63,7 +63,7 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static ResponseEntity<JsonResponse> errorCreationRecipe(){
+    public static ResponseEntity<JsonResponse> errorCreatingRecipe(){
         JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_RECIPE_NOT_CREATED");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -73,8 +73,8 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    public static ResponseEntity<JsonResponse> recipeNotExist(){
-        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_EXIST");
+    public static ResponseEntity<JsonResponse> recipeNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_FOUND");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -83,7 +83,7 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static ResponseEntity<JsonResponse> errorRecipeDeleted(){
+    public static ResponseEntity<JsonResponse> errorDeletingRecipe(){
         JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_DELETED");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -93,7 +93,7 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static ResponseEntity<JsonResponse> errorRecipeUpdated(){
+    public static ResponseEntity<JsonResponse> errorUpdatingRecipe(){
         JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_UPDATED");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
