@@ -15,5 +15,5 @@ public class RecipeRequest {
     private Integer cookingTime;
     private Integer numPersons;
     private String ingredients;
-    
+    private String recipeCategory;
 }

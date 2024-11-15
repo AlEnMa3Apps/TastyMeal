@@ -67,6 +67,11 @@ public class RecipeController {
         }
     }
 
+    /**
+     * Endpoint per obtenir el llistat de receptes de l'usuari que fa la petició.
+     * @param header
+     * @return
+     */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/recipes")
     public ResponseEntity<?> getMyRecipes(HttpServletRequest header) {
@@ -82,10 +87,15 @@ public class RecipeController {
         }
 
         UserModel user = userOptional.get();
-        List<RecipeModel> listRecipes = recipeService.getMyRecipes(user.getId());
+        List<RecipeModel> listRecipes = recipeService.getMyRecipes(user);
         return ResponseEntity.ok(listRecipes);
     }
-    @PreAuthorize("hasAnyRole('ADMIN')")
+
+    /**
+     * Endpoint per obtenir totes les receptes de tots els usuaris.
+     * @return Llistat de receptes.
+     */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/all_recipes")
     public ResponseEntity<?> getAllRecipes() {
         List<RecipeModel> listRecipes = recipeService.getAllRecipes();

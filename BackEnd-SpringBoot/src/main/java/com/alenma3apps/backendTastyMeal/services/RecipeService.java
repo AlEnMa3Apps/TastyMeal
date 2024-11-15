@@ -15,6 +15,12 @@ public class RecipeService {
     @Autowired
     private IRecipeRepository recipeRepository;
 
+    /**
+     * 
+     * @param request
+     * @param user
+     * @return
+     */
     public RecipeModel createRecipe(RecipeRequest request, UserModel user) {
         RecipeModel newRecipe = new RecipeModel();
         newRecipe.setTitle(request.getTitle());
@@ -28,11 +34,19 @@ public class RecipeService {
         return recipeRepository.save(newRecipe);
     }
 
-    public List<RecipeModel> getMyRecipes(Long id) {
-
-       return recipeRepository.findByOwnerId(id);
+    /**
+     * 
+     * @param user
+     * @return
+     */
+    public List<RecipeModel> getMyRecipes(UserModel user) {
+       return recipeRepository.findByOwnerId(user);
     }
 
+    /**
+     * 
+     * @return
+     */
     public List<RecipeModel> getAllRecipes() {
         return recipeRepository.findAll();
     }
