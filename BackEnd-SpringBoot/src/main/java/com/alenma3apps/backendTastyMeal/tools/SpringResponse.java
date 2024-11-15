@@ -58,6 +58,46 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    public static ResponseEntity<JsonResponse> recipeCreated() {
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "RECIPE_CREATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> errorCreationRecipe(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_RECIPE_NOT_CREATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<JsonResponse> notOwnerRecipe(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "NOT_OWNER_RECIPE");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<JsonResponse> recipeNotExist(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_EXIST");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<JsonResponse> recipeDeleted(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "RECIPE_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> errorRecipeDeleted(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> recipeUpdated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "RECIPE_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> errorRecipeUpdated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @Getter @Setter
     public static class JsonResponse {
         private int status;
