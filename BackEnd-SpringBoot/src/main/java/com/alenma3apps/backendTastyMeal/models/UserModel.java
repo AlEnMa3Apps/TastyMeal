@@ -1,5 +1,7 @@
 package com.alenma3apps.backendTastyMeal.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +39,10 @@ public class UserModel {
 
     @Column
     private Boolean active;
+
+    @OneToMany(mappedBy = "ownerId", cascade = CascadeType.PERSIST)
+    private List<RecipeModel> recipesList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<CommentModel> commentsList;
 }
