@@ -41,8 +41,8 @@ public class RecipeController {
 
     /**
      * Endpoint per crear una recepta
-     * @param request Paràmetres de la nova recepta
-     * @param header capçalera de la petició http
+     * @param request Paràmetres de la nova recepta.
+     * @param header Capçalera de la petició http.
      * @return Codi de la petició i estat de la petició.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
@@ -77,8 +77,8 @@ public class RecipeController {
     /**
      * Endpoint per obtenir el llistat de receptes de 
      * l'usuari que fa la petició.
-     * @param header
-     * @return
+     * @param header Capçalera de la petició http.
+     * @return Llistat de totes les receptes de l'usuari que fa la petició.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipes")
@@ -101,7 +101,7 @@ public class RecipeController {
 
     /**
      * Endpoint per obtenir totes les receptes de tots els usuaris.
-     * @return Llistat de receptes.
+     * @return Llistat de totes les receptes.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipes/all")
@@ -110,6 +110,11 @@ public class RecipeController {
         return ResponseEntity.ok(listRecipes);
     }
 
+    /**
+     * Endpoint per obtenir una recepta passada pel paràmetre id.
+     * @param id Id de la recepta.
+     * @return Recepta sol·licitada.
+     */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipe/{id}")
     public ResponseEntity<?> getRecipeById(@PathVariable("id") Long id) {
@@ -124,10 +129,10 @@ public class RecipeController {
     /**
      * Endpoint per editar una recepta passada per id 
      * que sigui de l'usuari que fa la petició.
-     * @param header
-     * @param request
-     * @param id
-     * @return
+     * @param header Capçalera de la petició http.
+     * @param request Paràmetres per editar la recepta.
+     * @param id Id de la recepta a editar.
+     * @return Missatge notificant si s'ha editat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PutMapping("recipe/{id}")
@@ -148,10 +153,11 @@ public class RecipeController {
     }
 
     /**
-     * 
-     * @param header
-     * @param id
-     * @return
+     * Endpoint per eliminar receptes pel paràmetre id
+     * que siguin de l'usuari que fa la petició.
+     * @param header Capçalera de la petició http.
+     * @param id Id de la recepta a eliminar.
+     * @return Missatge notificant si s'ha eliminat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @DeleteMapping("recipe/{id}")
@@ -173,10 +179,10 @@ public class RecipeController {
     }
 
     /**
-     * 
-     * @param header
-     * @param id
-     * @return
+     * Endpoint per eliminar qualsevol recepta pel paràmetre id.
+     * @param header Capçalera de la petició http.
+     * @param id Id de la recepta a eliminar.
+     * @return Missatge notificant si s'ha eliminat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
     @DeleteMapping("recipe/a/{id}")

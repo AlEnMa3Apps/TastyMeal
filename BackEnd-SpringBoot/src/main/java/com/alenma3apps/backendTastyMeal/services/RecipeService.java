@@ -24,10 +24,10 @@ public class RecipeService {
     private ICategoryRepository categoryRepository;
 
     /**
-     * 
-     * @param request
-     * @param user
-     * @return
+     * Registra la recepta passada per paràmetre a la base de dades.
+     * @param request Recepta a registrar. 
+     * @param user Usuari que ha creat la recepta.
+     * @return Recepta registrada a la base de dades.
      */
     public RecipeModel createRecipe(RecipeRequest request, UserModel user) {
        
@@ -48,26 +48,26 @@ public class RecipeService {
     }
 
     /**
-     * 
-     * @param user
-     * @return
+     * Retorna el llistat de les receptes de l'usuari passat per paràmetre.
+     * @param user Usuari del qual es volen obtenir les receptes.
+     * @return Llistat de totes les receptes de l'usuari.
      */
     public List<RecipeModel> getMyRecipes(UserModel user) {
        return recipeRepository.findByOwnerId(user);
     }
 
     /**
-     * 
-     * @return
+     * Retorna el llistat de totes les receptes.
+     * @return Llistat de totes les receptes.
      */
     public List<RecipeModel> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
     /**
-     * 
-     * @param id
-     * @return
+     * Retorna la recepta passada per el paràmetre id.
+     * @param id Id de la recepta.
+     * @return Recepta si n'hi ha, del contrari retorna null.
      */
     public RecipeModel getRecipeById(Long id) {
 
@@ -80,11 +80,11 @@ public class RecipeService {
     }
 
     /**
-     * 
-     * @param recipeId
-     * @param user
-     * @param request
-     * @return
+     * Edita la recepta passada pel paràmetre id.
+     * @param recipeId Id de la recepta a editar.
+     * @param user Usuari que edita la recepta.
+     * @param request Paràmetres de la recepta a editar.
+     * @return Missatge confirmant si s'ha editat o no la recepta.
      */
     public ResponseEntity<?> editMyRecipe(Long recipeId, UserModel user, RecipeRequest request) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
@@ -117,10 +117,10 @@ public class RecipeService {
     }
 
     /**
-     * 
-     * @param recipeId
-     * @param user
-     * @return
+     * Elimina una recepta passada pel paràmetre id que sigui de l'usuari que ho demana.
+     * @param recipeId Id de la recepta a eliminar.
+     * @param user Usuari que ho demana.
+     * @return Missatge confirmant si s'ha eliminat o no la recepta.
      */
     public ResponseEntity<?> deleteMyRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
@@ -142,10 +142,9 @@ public class RecipeService {
     }
 
     /**
-     * 
-     * @param recipeId
-     * @param user
-     * @return
+     * Elimina una recepta passada pel paràmetre id.
+     * @param recipeId Id de la recepta a eliminar.
+     * @return Missatge confirmant si s'ha eliminat o no la recepta.
      */
     public ResponseEntity<?> deleteRecipeById(Long recipeId) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
@@ -164,9 +163,9 @@ public class RecipeService {
     }
 
     /**
-     * 
-     * @param request 
-     * @return 
+     * Comprova pel títol de la recepta si existeix a la base de dades.
+     * @param request Recepta a comprovar
+     * @return True si existeix, del contrari retorna false.
      * @author Albert Borras
      */
     public Boolean recipeExists(RecipeRequest request) {

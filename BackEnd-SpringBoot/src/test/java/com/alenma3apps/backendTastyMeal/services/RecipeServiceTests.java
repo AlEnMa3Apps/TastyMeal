@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.alenma3apps.backendTastyMeal.dto.request.RecipeRequest;
@@ -80,6 +81,7 @@ public class RecipeServiceTests {
         savedRecipe.setNumPersons(request.getNumPersons());
         savedRecipe.setIngredients(request.getIngredients());
         savedRecipe.setRecipeCategory(category);
+        savedRecipe.setOwnerId(user);
     }
 
     /**
@@ -129,6 +131,55 @@ public class RecipeServiceTests {
         Assertions.assertThat(result).isNotNull();
     }
 
-    
+    /**
+     * 
+     * @author Albert Borras
+     */
+    @Test
+    public void RecipeServiceTest_getRecipeById() {
+        when(recipeRepository.findById((long) 1)).thenReturn(Optional.ofNullable(savedRecipe));
+
+        RecipeModel result = recipeService.getRecipeById((long) 1);
+
+        Assertions.assertThat(result).isNotNull();
+    }
+
+    /**
+     * 
+     * @author Albert Borras
+     */
+    @Test
+    public void RecipeServiceTest_editMyRecipe() {
+        when(categoryRepository.findByCategory(Mockito.any(String.class))).thenReturn(Optional.ofNullable(category));
+        when(recipeRepository.findById(1L)).thenReturn(Optional.ofNullable(savedRecipe));
+
+        ResponseEntity<?> result = recipeService.editMyRecipe(1L, user, request);
+
+        Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @author Albert Borras
+     */
+    @Test
+    public void RecipeServiceTest_deleteMyRecipe() {
+        when(recipeRepository.findById((long) 1)).thenReturn(Optional.ofNullable(savedRecipe));
+
+        ResponseEntity<?> result = recipeService.deleteMyRecipe((long) 1, user);
+        Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @author Albert Borras
+     */
+    @Test
+    public void RecipeServiceTest_deleteRecipeById() {
+        when(recipeRepository.findById((long) 1)).thenReturn(Optional.ofNullable(savedRecipe));
+
+        ResponseEntity<?> result = recipeService.deleteRecipeById((long) 1);
+        Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
 
 }
