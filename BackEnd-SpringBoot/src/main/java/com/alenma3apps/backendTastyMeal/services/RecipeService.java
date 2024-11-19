@@ -30,6 +30,7 @@ public class RecipeService {
      * @return
      */
     public RecipeModel createRecipe(RecipeRequest request, UserModel user) {
+       
         Optional<CategoryModel> categoryOptional = categoryRepository.findByCategory(request.getRecipeCategory());
         CategoryModel category = categoryOptional.get();
 
@@ -138,5 +139,42 @@ public class RecipeService {
                 return SpringResponse.errorDeletingRecipe();
             }   
         }  
+    }
+
+    /**
+     * 
+     * @param recipeId
+     * @param user
+     * @return
+     */
+    public ResponseEntity<?> deleteRecipeById(Long recipeId) {
+        Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
+        if (!recipeOptional.isPresent()){
+            return SpringResponse.recipeNotFound();
+        }
+
+        RecipeModel recipe = recipeOptional.get();
+        
+        try {
+            recipeRepository.delete(recipe);
+            return SpringResponse.recipeDeleted();
+        } catch (Exception ex) {
+            return SpringResponse.errorDeletingRecipe();
+        }   
+    }
+
+    /**
+     * 
+     * @param request 
+     * @return 
+     * @author Albert Borras
+     */
+    public Boolean recipeExists(RecipeRequest request) {
+        Optional<RecipeModel> checkRecipe = recipeRepository.findByTitle(request.getTitle());
+        if (checkRecipe.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

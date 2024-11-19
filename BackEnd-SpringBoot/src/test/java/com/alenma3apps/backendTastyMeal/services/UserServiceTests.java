@@ -19,13 +19,7 @@ import com.alenma3apps.backendTastyMeal.dto.request.RegisterRequest;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
-import com.alenma3apps.backendTastyMeal.tools.SpringResponse.JsonResponse;
 
-/**
- * Classe test per testejar les funcions 
- * implementades a la classe UserService.
- * @author Albert Borras
- */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
 

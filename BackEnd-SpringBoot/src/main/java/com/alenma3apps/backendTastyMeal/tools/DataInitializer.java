@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -52,8 +51,15 @@ public class DataInitializer {
             admin.setEmail("enric_admin@gmail.com");
             admin.setRole(RoleModel.ADMIN);
             admin.setActive(true);
-
             userRepository.save(admin);
+
+            UserModel user = new UserModel();
+            user.setUsername("JohnDoe");
+            user.setPassword(passwordEncoder.encode("1234"));
+            user.setEmail("john_doe@gmail.com");
+            user.setRole(RoleModel.USER);
+            user.setActive(true);
+            userRepository.save(user);
         }
 
         if (categoryRepository.count() == 0) {

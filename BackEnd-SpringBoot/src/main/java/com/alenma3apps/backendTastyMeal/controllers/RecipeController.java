@@ -45,9 +45,13 @@ public class RecipeController {
      * @param header capçalera de la petició http
      * @return Codi de la petició i estat de la petició.
      */
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PostMapping("/recipe")
     public ResponseEntity<?> createRecipe(@RequestBody RecipeRequest request, HttpServletRequest header) {
+        if (recipeService.recipeExists(request)) {
+            return SpringResponse.recipeAlreadyExist();
+        }
+
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
             return SpringResponse.invalidToken();
@@ -71,11 +75,12 @@ public class RecipeController {
     }
 
     /**
-     * Endpoint per obtenir el llistat de receptes de l'usuari que fa la petició.
+     * Endpoint per obtenir el llistat de receptes de 
+     * l'usuari que fa la petició.
      * @param header
      * @return
      */
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipes")
     public ResponseEntity<?> getMyRecipes(HttpServletRequest header) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
@@ -98,14 +103,14 @@ public class RecipeController {
      * Endpoint per obtenir totes les receptes de tots els usuaris.
      * @return Llistat de receptes.
      */
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipes/all")
     public ResponseEntity<?> getAllRecipes() {
         List<RecipeModel> listRecipes = recipeService.getAllRecipes();
         return ResponseEntity.ok(listRecipes);
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipe/{id}")
     public ResponseEntity<?> getRecipeById(@PathVariable("id") Long id) {
         RecipeModel recipe = recipeService.getRecipeById(id);
@@ -117,12 +122,14 @@ public class RecipeController {
     }
 
     /**
-     * 
+     * Endpoint per editar una recepta passada per id 
+     * que sigui de l'usuari que fa la petició.
      * @param header
      * @param request
      * @param id
      * @return
      */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PutMapping("recipe/{id}")
     public ResponseEntity<?> editMyRecipe(HttpServletRequest header, @RequestBody RecipeRequest request, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
@@ -146,8 +153,9 @@ public class RecipeController {
      * @param id
      * @return
      */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @DeleteMapping("recipe/{id}")
-    public ResponseEntity<?> deleteRecipe(HttpServletRequest header, @PathVariable Long id) {
+    public ResponseEntity<?> deleteMyRecipe(HttpServletRequest header, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
             return SpringResponse.invalidToken();
@@ -162,5 +170,17 @@ public class RecipeController {
         UserModel user = userOptional.get();
 
         return recipeService.deleteMyRecipe(id, user);
+    }
+
+    /**
+     * 
+     * @param header
+     * @param id
+     * @return
+     */
+    @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
+    @DeleteMapping("recipe/a/{id}")
+    public ResponseEntity<?> deleteRecipeById(@PathVariable Long id) {
+        return recipeService.deleteRecipeById(id);
     }
 }

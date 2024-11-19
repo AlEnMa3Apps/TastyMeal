@@ -73,6 +73,12 @@ public class JwtService {
 
     }
 
+    /**
+     * Funció per validar el token i obtenir el username.
+     * @param header
+     * @return ValidationResponse amb el nom d'usuari i un booleà amb true si és vàlid, 
+     * del contrari false.
+     */
     public ValidationResponse validateTokenAndUser(HttpServletRequest header) {
         String token = getTokenFromRequest(header);
         boolean isValid = false;
