@@ -84,7 +84,7 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que es crea la recepta.
      * @author Albert Borras
      */
     @Test
@@ -99,7 +99,8 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que s'obté el llistat de totes les receptes
+     * de l'usuari que ho ha demanat.
      * @author Albert Borras
      */
     @Test
@@ -115,7 +116,7 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que s'obté el llistat de totes les receptes.
      * @author Albert Borras
      */
     @Test
@@ -131,7 +132,8 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que s'obté la recepta amb l'id passat 
+     * per paràmetre.
      * @author Albert Borras
      */
     @Test
@@ -144,7 +146,7 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que s'edita la recepta.
      * @author Albert Borras
      */
     @Test
@@ -158,7 +160,7 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per comprovar que s'elimina una recepta de l'usuari que ho demana.
      * @author Albert Borras
      */
     @Test
@@ -170,7 +172,7 @@ public class RecipeServiceTests {
     }
 
     /**
-     * 
+     * Test per eliminar una recepta amb l'id passat per paràmetre.
      * @author Albert Borras
      */
     @Test
