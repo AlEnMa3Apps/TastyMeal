@@ -17,7 +17,7 @@ import lombok.Setter;
 public class LoginResponse {
     
     /**
-     * Parámetros devueltos
+     * Paràmetres retornats.
      */
     private String token;
     private String role;

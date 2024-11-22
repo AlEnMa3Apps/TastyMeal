@@ -52,6 +52,12 @@ public class UserController {
         return ResponseEntity.ok(listUsers);
     }
 
+    /**
+     * Endpoint per obtenir l'usuari que fa la petició.
+     * @param header Capçalera de la petició HTTP.
+     * @return Les dades de l'usuari que fa la petició.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/user")
     public ResponseEntity<?> getMyUser(HttpServletRequest header) {
@@ -84,6 +90,13 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    /**
+     * Endpoint per canviar la contrasenya.
+     * @param header Capçalera de la petició HTTP.
+     * @param request Nova contrasenya.
+     * @return Missatge confirmant si s'ha canviat o no la contrasenya.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("/user")
     public ResponseEntity<?> changePassword(HttpServletRequest header, @RequestBody PasswordRequest request) {
@@ -97,12 +110,26 @@ public class UserController {
         return userService.changePassword(username, request.getPassword());
     }
 
+    /**
+     * Endpoint per editar un usuari pel seu id passat per paràmetre.
+     * @param id Id de l'usuari.
+     * @param request Noves dades de l'usuari.
+     * @return Missatge confirmant si s'ha editat o no l'usuari.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/user/{id}")
     public ResponseEntity<?> editUserById(@PathVariable Long id, @RequestBody EditUserRequest request) {
         return userService.editUserById(id, request);
     }
 
+    /**
+     * Endpoint per editar l'usuari que fa la petició.
+     * @param header Capçalera de la petició HTTP.
+     * @param request Noves dades de l'usuari.
+     * @return Missatge confirmant si s'ha editat o no l'usuari.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("/user")
     public ResponseEntity<?> editMyUser(HttpServletRequest header, @RequestBody EditUserRequest request) {
@@ -128,6 +155,12 @@ public class UserController {
         return userService.deleteUserById(id);
     }
 
+    /**
+     * Endpoint per eliminar l'usuari que fa la petició.
+     * @param header Capçalera de la petició HTTP.
+     * @return Missatge confirmant si s'ha eliminat o no l'usuari.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @DeleteMapping(path = "/user")
     public ResponseEntity<?> deleteMyUser(HttpServletRequest header) {

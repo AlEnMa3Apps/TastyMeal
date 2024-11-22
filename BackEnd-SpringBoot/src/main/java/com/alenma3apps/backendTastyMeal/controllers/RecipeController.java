@@ -44,7 +44,7 @@ public class RecipeController {
     private JwtService jwtService;
 
     /**
-     * Endpoint per crear una recepta
+     * Endpoint per crear una recepta.
      * @param request Paràmetres de la nova recepta.
      * @param header Capçalera de la petició http.
      * @return Codi de la petició i estat de la petició.
