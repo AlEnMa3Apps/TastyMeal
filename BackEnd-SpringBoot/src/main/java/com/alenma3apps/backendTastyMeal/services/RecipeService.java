@@ -15,6 +15,10 @@ import com.alenma3apps.backendTastyMeal.repositories.ICategoryRepository;
 import com.alenma3apps.backendTastyMeal.repositories.IRecipeRepository;
 import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
+/**
+ * Classe que gestiona la lògica de les receptes.
+ * @author Albert Borras
+ */
 @Service
 public class RecipeService {
     @Autowired

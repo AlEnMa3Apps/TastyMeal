@@ -26,6 +26,10 @@ import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Clase controladora que conté els endpoints de gestió de receptes.
+ * @author Albert Borras
+ */
 @RestController
 @RequestMapping("/api")
 public class RecipeController {
