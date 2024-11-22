@@ -184,7 +184,6 @@ public class RecipeController {
 
     /**
      * Endpoint per eliminar qualsevol recepta pel paràmetre id.
-     * @param header Capçalera de la petició http.
      * @param id Id de la recepta a eliminar.
      * @return Missatge notificant si s'ha eliminat o no la recepta.
      */

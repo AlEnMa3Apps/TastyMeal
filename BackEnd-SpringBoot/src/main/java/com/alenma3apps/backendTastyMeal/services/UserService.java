@@ -175,7 +175,7 @@ public class UserService {
     }
 
     /**
-     * Elimina l'usuari de la base de dsdes que conté el nom d'usuari passat per paràmetre.
+     * Elimina l'usuari de la base de dades que conté el nom d'usuari passat per paràmetre.
      * @param username Nom d'usuari.
      * @return Missatge confirmant si s'ha eliminat o no l'usuari la base de dades.
      * @author Albert Borras
