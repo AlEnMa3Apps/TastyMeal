@@ -83,9 +83,9 @@ export default function LoginForm() {
 
 			// Navegar según el rol
 			 if (role === 'USER_VIP') {
-				router.replace('/(tabs)/home')
+				router.replace('/(tabs)/(home)')
 			} else {
-			 	router.replace('/(tabs)/home')
+			 	router.replace('/(tabs)/(home)')
 			 }
 		} catch (error) {
 			// Verifica si es un error de red (backend desconectado)
