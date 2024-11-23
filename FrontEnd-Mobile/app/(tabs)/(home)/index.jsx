@@ -101,26 +101,26 @@ const Home = () => {
 						}>
 						<View className='p-6 mx-6 my-2 border border-green-900 rounded-lg bg-stone-800'>
 							<View className='flex-col items-center'>
-								<View className='justify-center items-center w-96 h-96 mb-2'>
-									<Image source={{ uri: item.imageUrl }} className='w-80 h-80 rounded-lg  border-black border-2' />
+								<View className='justify-center items-center w-56 h-56 mb-2'>
+									<Image source={{ uri: item.imageUrl }} className='w-52 h-52 rounded-lg  border-black border-2' />
 								</View>
 							</View>
-							<Text className='text-3xl font-bold text-slate-100'>{item.title}</Text>
+							<Text className='text-2xl font-bold text-slate-100'>{item.title}</Text>
 							<Text className='text-base text-gray-300 my-2 '>{item.description}</Text>
 
 							<View className='flex-row my-2'>
 								<View className='flex-row my-2 border border-slate-50 py-2 px-4 rounded-3xl'>
 									<FontAwesome6 name='clock-four' size={24} color='lightgray' />
-									<Text className='text-base text-gray-300 pl-2'>{item.cookingTime} min</Text>
+									<Text className='text-sm text-gray-300 pl-2'>{item.cookingTime} min</Text>
 								</View>
 								<View className='flex-row my-2 mx-10 border border-slate-50 py-2 px-4 rounded-3xl'>
 									<MaterialIcons name='people' size={24} color='lightgray' />
-									<Text className='text-base text-gray-300 pl-2'>{item.numPersons}</Text>
+									<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 								</View>
 							</View>
 							<View className='flex-row justify-between'>
 								<View className=' w-28 p-2 mt-4 rounded-3xl bg-green-800'>
-									<Text className='text-lg text-gray-100 text-center font-bold'>{item.categoryName}</Text>
+									<Text className='text-base text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 								</View>
 								{/* <FontAwesome name='heart' size={24} color='red' /> */}
 								<FontAwesome name='heart-o' size={24} color='red' />
