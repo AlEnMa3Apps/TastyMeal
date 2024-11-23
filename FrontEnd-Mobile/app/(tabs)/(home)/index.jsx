@@ -21,7 +21,7 @@ const Home = () => {
 				const response = await api.get('/api/recipes/all')
 				setRecipes(response.data)
 			} catch (err) {
-				setError('Error al cargar las recetas. Inténtalo más tarde.')
+				setError('Unable to load recipes.')
 				console.error(err)
 			} finally {
 				setLoading(false)
@@ -58,7 +58,17 @@ const Home = () => {
 	}
 
 	const handleSearch = () => {
-		console.log('Buscar:', searchQuery) 
+		console.log('Buscar:', searchQuery)
+		if (searchQuery.trim() === '') {
+			setFilteredRecipes(recipes.filter((recipe) => (activeCategory ? recipe.categoryName === activeCategory : true)))
+		} else {
+			setFilteredRecipes(
+				recipes.filter(
+					(recipe) => recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+					//  || recipe.description.toLowerCase().includes(searchQuery.toLowerCase()
+				)
+			)
+		}
 	}
 
 	return (
@@ -79,10 +89,8 @@ const Home = () => {
 						horizontal
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({ item }) => (
-							<TouchableOpacity
-								onPress={() => setActiveCategory(item === activeCategory ? null : item)}
-								className={`p-4 mx-2 my-4 rounded-2xl ${item === activeCategory ? 'bg-lime-500' : 'bg-green-800'}`}>
-								<Text className={`text-lg font-bold ${item === activeCategory ? 'text-slate-900 ' : 'text-slate-50 '}     `}>{item}</Text>
+							<TouchableOpacity onPress={() => setActiveCategory(item === activeCategory ? null : item)} className={`p-4 mx-2 my-4 rounded-2xl ${item === activeCategory ? 'bg-lime-500' : 'bg-green-800'}`}>
+								<Text className={`text-lg font-bold ${item === activeCategory ? 'text-slate-900 ' : 'text-slate-50 '}`}>{item}</Text>
 							</TouchableOpacity>
 						)}
 						showsHorizontalScrollIndicator={true}
@@ -101,9 +109,7 @@ const Home = () => {
 						}>
 						<View className='p-6 mx-6 my-2 border border-green-900 rounded-lg bg-stone-800'>
 							<View className='flex-col items-center'>
-								<View className='justify-center items-center w-56 h-56 mb-2'>
-									<Image source={{ uri: item.imageUrl }} className='w-52 h-52 rounded-lg  border-black border-2' />
-								</View>
+								<Image source={{ uri: item.imageUrl }} className='w-full h-56 rounded-lg mb-4' />
 							</View>
 							<Text className='text-2xl font-bold text-slate-100'>{item.title}</Text>
 							<Text className='text-base text-gray-300 my-2 '>{item.description}</Text>
@@ -113,18 +119,18 @@ const Home = () => {
 									<FontAwesome6 name='clock-four' size={24} color='lightgray' />
 									<Text className='text-sm text-gray-300 pl-2'>{item.cookingTime} min</Text>
 								</View>
-								<View className='flex-row my-2 mx-10 border border-slate-50 py-2 px-4 rounded-3xl'>
+								<View className='flex-row my-2 mx-4 border border-slate-50 py-2 px-4 rounded-3xl'>
 									<MaterialIcons name='people' size={24} color='lightgray' />
 									<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 								</View>
-							</View>
-							<View className='flex-row justify-between'>
-								<View className=' w-28 p-2 mt-4 rounded-3xl bg-green-800'>
-									<Text className='text-base text-gray-100 text-center font-bold'>{item.categoryName}</Text>
+								<View className='w-28 my-2 rounded-3xl bg-green-800 justify-center items-center'>
+									<Text className='text-sm text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 								</View>
-								{/* <FontAwesome name='heart' size={24} color='red' /> */}
-								<FontAwesome name='heart-o' size={24} color='red' />
 							</View>
+							{/* <View className='flex-row justify-end mt-4'>
+								<FontAwesome name='heart' size={24} color='red' />
+								<FontAwesome name='heart-o' size={24} color='red' />
+							</View> */}
 						</View>
 					</TouchableOpacity>
 				)}
