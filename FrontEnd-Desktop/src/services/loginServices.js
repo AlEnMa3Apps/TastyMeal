@@ -6,11 +6,11 @@ import axios from 'axios';
  * 
  * @async
  * @function
- * @param {Object} loginData - The login data object containing username and password.
- * @param {string} loginData.username - The username entered by the user.
- * @param {string} loginData.password - The password entered by the user.
- * @returns {Promise<Object>} The server response containing authentication details such as token and user role.
- * @throws {Error} If the login fails or there is a server error.
+ * @param {Object} loginData
+ * @param {string} loginData.username
+ * @param {string} loginData.password 
+ * @returns {Promise<Object>} 
+ * @throws {Error} 
  * 
  * @example
  * const loginData = { username: 'user1', password: 'password123' };
@@ -24,6 +24,9 @@ export const fetchlogin = async (loginData) => {
     console.log(loginData);
     return axios.post('http://localhost:8080/auth/login', loginData)
         .then((response) => {
+            const { token } = response.data;
+
+            localStorage.setItem('authToken', token);
             return response.data;
         })
         .catch((error) => {

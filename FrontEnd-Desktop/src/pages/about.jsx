@@ -10,7 +10,7 @@ import { Button_home } from '../components/button_home';
  * It includes a title and a button to navigate back to the home page.
  *
  * @component
- * @returns {JSX.Element} The rendered AboutView component.
+ * @returns {JSX.Element} 
  * 
  * @example
  * // Example of rendering AboutView

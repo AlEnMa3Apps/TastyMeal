@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/recipeService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/recipeService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+
+
+const API_URL = 'http://localhost:8080/api';
+
+/**
+ * Fetches all recipes from the backend.
+ *
+ * @returns {Promise&lt;Array>}
+ * @throws Will throw an error if the request fails.
+ */
+export const fetchAllRecipes = async () => {
+    const token = localStorage.getItem('authToken');
+    console.log(token);
+
+    return axios.get(`${API_URL}/recipes/all`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.error('Error al obtener todas las recetas:');
+            if (error.response &amp;&amp; error.response.data) {
+                console.error('Error del servidor:', error.response.data);
+            } else {
+                console.error('Error desconocido.');
+            }
+            throw error;
+        });
+};
+
+/**
+ * Fetches a specific recipe by its ID.
+ *
+ * @param {number} id 
+ * @returns {Promise&lt;Object>} 
+ * @throws Will throw an error if the request fails.
+ */
+export const fetchRecipeById = async (id) => {
+    const token = localStorage.getItem('authToken');
+    console.log(token);
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.get(`${API_URL}/recipe/${id}`, config);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener la receta:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
+/**
+ * Updates a recipe by its ID.
+ *
+ * @param {number} id 
+ * @param {Object} recipeData 
+ * @returns {Promise&lt;Object>}
+ * @throws Will throw an error if the request fails.
+ */
+export const updateRecipe = async (id, recipeData) => {
+    const token = localStorage.getItem('authToken');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.put(`${API_URL}/recipe/${id}`, recipeData, config);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar la receta:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
+/**
+ * Deletes a recipe by its ID.
+ *
+ * @param {number} id 
+ * @returns {Promise&lt;Object>}
+ * @throws Will throw an error if the request fails.
+ */
+export const deleteRecipe = async (id) => {
+    const token = localStorage.getItem('authToken');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.delete(`${API_URL}/recipe/${id}`, config);
+        return response.data;
+    } catch (error) {
+        console.error('Error al eliminar la receta:', error.response?.data || error.message);
+        throw error;
+    };
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

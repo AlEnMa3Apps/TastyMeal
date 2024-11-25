@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/login.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/login.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { Button_home } from '../components/button_home';
+
+import { Button_iniciar } from '../components/button_iniciar';
+import { Card } from '@mui/material';
+import { Menu_style } from '../styles/home_style';
+import Alert from '@mui/material/Alert';
+import '../css/login.css';
+import { useNavigate } from 'react-router-dom';
+import { fetchlogin } from '../services/loginServices';
+
+/**
+ * Login component represents the login screen of the Tasty Meal application.
+ * It allows users to input their username and password and initiates the login process.
+ * Based on the user role, it navigates to different views (admin or gestor).
+ *
+ * @component
+ * @returns {JSX.Element} 
+ * 
+ * @example
+ * // Example of rendering the Login component
+ * &lt;Login />
+ * 
+ * @author Enric Nanot Melchor
+ */
+const Login = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  /**
+   * Handles the login action by submitting the login form.
+   * It sends the user's credentials to the login service and redirects the user based on their role.
+   *
+   * @param {React.FormEvent} event
+   */
+  const loginAction = async (event) => {
+    event.preventDefault();
+
+    const loginData = {
+      username,
+      password
+    };
+
+    const response = await fetchlogin(loginData);
+
+
+    if (response.role === "ADMIN") {
+      navigate('/admin');
+    }
+    if (response.role === "GESTOR") {
+      navigate('/gestor');
+    }
+  };
+
+  return (
+    &lt;div className='card_login'>
+      &lt;Card sx={Menu_style}>
+        &lt;h1>Login Screen&lt;/h1>
+
+
+        {showAlert &amp;&amp; (
+          &lt;Alert severity="success" sx={{ mb: 2 }}>
+            {alertMessage}
+          &lt;/Alert>
+        )}
+
+        &lt;form onSubmit={loginAction}>
+          &lt;div className='form_login'>
+            &lt;label>Username:&lt;/label>
+            &lt;input
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            &lt;label>Password:&lt;/label>
+            &lt;input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          &lt;/div>
+
+          &lt;div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            &lt;Button_iniciar type="submit" />
+
+          &lt;/div>
+        &lt;/form>
+      &lt;/Card>
+
+      &lt;Button_home />
+    &lt;/div>
+  );
+};
+
+export default Login;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

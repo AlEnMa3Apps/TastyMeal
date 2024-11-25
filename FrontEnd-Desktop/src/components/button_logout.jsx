@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
  * Button component that logs the user out and navigates to the home page.
  *
  * @component
- * @returns {JSX.Element} A link component that acts as a logout button.
+ * @returns {JSX.Element} 
  *
  * @author Enric Nanot Melchor
  *

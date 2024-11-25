@@ -1,0 +1,15 @@
+.UserTable {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10%;
+    padding-top: 2%;
+
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}

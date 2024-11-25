@@ -13,7 +13,7 @@ import { Button_logout } from "./button_logout";
  * logout button based on whether the user is authenticated.
  *
  * @component
- * @returns {JSX.Element} The header with a home button, title, and logout button.
+ * @returns {JSX.Element} 
  *
  * @author Enric Nanot Melchor
  *
@@ -22,8 +22,8 @@ import { Button_logout } from "./button_logout";
  * <Header />
  */
 export function Header() {
-  // const { userIsAuthenticated } = useAuth();  // will be used in the next implementations
-  const userIsAuthenticated = false;  // Currently hardcoded for testing purposes
+  // const { userIsAuthenticated } = useAuth();  // will be used in the next implementation
+  const userIsAuthenticated = false;
 
   const navigate = useNavigate();
 

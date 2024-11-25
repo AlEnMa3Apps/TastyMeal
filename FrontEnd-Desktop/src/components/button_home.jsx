@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
  *   <Button_home />
  * )
  * 
- * @returns {JSX.Element} The rendered button component.
+ * @returns {JSX.Element} 
  * 
  * @author Enric Nanot Melchor
  */

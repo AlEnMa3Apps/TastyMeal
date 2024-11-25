@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/userService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/userService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+
+/**
+ * Fetches user details by user ID.
+ *
+ * @param {number} id
+ * @returns {Promise&lt;Object>} 
+ * @throws Will throw an error if the request fails.
+ */
+export const fetchUserById = async (id) => {
+    const token = localStorage.getItem('authToken');
+    console.log("Token ", token);
+
+    const response = await fetch(`http://localhost:8080/api/user/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+
+    if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+
+    const data = await response.json();
+    return data;
+};
+
+/**
+ * Updates a user by their ID.
+ *
+ * @param {number} id 
+ * @param {Object} userData 
+ * @param {string} [authToken] 
+ * @returns {Promise&lt;Object>}
+ * @throws Will throw an error if the request fails.
+ */
+export const updateUser = async (id, userData, authToken) => {
+    const token = localStorage.getItem('authToken') || authToken;
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.put(`http://localhost:8080/api/user/${id}`, userData, config);
+        console.log('Datos enviados:', userData);
+        console.log('Respuesta del servidor:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+
+/**
+ * Deletes a user by their ID.
+ *
+ * @param {number} id 
+ * @param {string} [authToken] 
+ * @returns {Promise&lt;Object>} 
+ * @throws Will throw an error if the request fails.
+ */
+export const DeleteUser = async (id, authToken) => {
+    const token = localStorage.getItem('authToken') || authToken;
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    try {
+        const response = await axios.delete(`http://localhost:8080/api/user/${id}`, config);
+        console.log('Respuesta del servidor:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al eliminar el usuario:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

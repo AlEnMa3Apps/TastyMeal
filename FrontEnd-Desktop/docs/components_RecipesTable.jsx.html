@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/RecipesTable.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/RecipesTable.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { fetchAllRecipes } from '../services/recipeService';
+import { useNavigate } from 'react-router-dom';
+
+/**
+ * RecipeTable component renders a table displaying a list of recipes with their details
+ * and provides an option to edit each recipe.
+ *
+ * This component fetches data from the backend using the `fetchAllRecipes` service 
+ * and displays it in a tabular format. Users can click on the "Editar" button 
+ * to navigate to the edit page for a specific recipe.
+ *
+ * @component
+ * @returns {JSX.Element} 
+ *
+ * @example
+ * // Example usage:
+ * &lt;RecipeTable />
+ *
+ * @author Enric Nanot Melchor
+ */
+export const RecipeTable = () => {
+    const [recipes, setRecipes] = useState([]);
+    const navigate = useNavigate();
+    /**
+     * Fetches the list of recipes from the backend and updates the state.
+     */
+    useEffect(() => {
+        const getRecipes = async () => {
+            try {
+                const data = await fetchAllRecipes();
+                setRecipes(data);
+            } catch (error) {
+                console.error('Error al obtener recetas:', error);
+            }
+        };
+        getRecipes();
+    }, []);
+
+    /**
+     * Handles the navigation to the edit page for a specific recipe.
+     * 
+     * @param {number} recipeId 
+     */
+    const handleEditRecipe = (recipeId) => {
+        navigate(`/editRecipe/${recipeId}`);
+    };
+
+    return (
+        &lt;div>
+            &lt;h2>Recetas&lt;/h2>
+            &lt;table>
+                &lt;thead>
+                    &lt;tr>
+                        &lt;th>ID&lt;/th>
+                        &lt;th>Título&lt;/th>
+                        &lt;th>Tiempo de Cocción&lt;/th>
+                        &lt;th>Número de Personas&lt;/th>
+                        &lt;th>Acciones&lt;/th>
+                    &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                    {recipes.map((recipe) => (
+                        &lt;tr key={recipe.id}>
+                            &lt;td>{recipe.id}&lt;/td>
+                            &lt;td>{recipe.title}&lt;/td>
+                            &lt;td>{recipe.cookingTime} mins&lt;/td>
+                            &lt;td>{recipe.numPersons}&lt;/td>
+                            &lt;td>
+                                &lt;button onClick={() => handleEditRecipe(recipe.id)}>Editar&lt;/button>
+                            &lt;/td>
+                        &lt;/tr>
+                    ))}
+                &lt;/tbody>
+            &lt;/table>
+        &lt;/div>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

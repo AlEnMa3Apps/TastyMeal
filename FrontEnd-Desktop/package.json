@@ -13,7 +13,7 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --silent",
     "start": "electron .",
     "build": "webpack --mode development",
     "watch": "webpack --mode development --watch",
@@ -49,6 +49,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-css-modules-transform": "^4.4.2",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
     "jest-react-native": "^18.0.0",
     "jsdoc": "^4.0.4",
     "jsdom": "^25.0.1",
@@ -71,6 +72,7 @@
     "@mui/icons-material": "^6.1.3",
     "@mui/material": "^6.1.2",
     "@radix-ui/react-toast": "^1.2.2",
+    "axios": "^1.7.7",
     "boolean": "^3.2.0",
     "buffer-crc32": "^0.2.13",
     "cacheable-lookup": "^5.0.4",

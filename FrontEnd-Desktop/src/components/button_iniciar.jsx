@@ -6,8 +6,7 @@ import Button from '@mui/material/Button';
  * This button triggers the `fetchLogin` function located in the `login` component.
  *
  * @component
- * @returns {JSX.Element} A button that triggers the `fetchLogin` function on click.
- *
+ * @returns {JSX.Element}
  * @author Enric Nanot Melchor
  *
  * @example

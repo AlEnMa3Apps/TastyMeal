@@ -15,7 +15,7 @@ import { fetchlogin } from '../services/loginServices';
  * Based on the user role, it navigates to different views (admin or gestor).
  *
  * @component
- * @returns {JSX.Element} The rendered Login component.
+ * @returns {JSX.Element} 
  * 
  * @example
  * // Example of rendering the Login component
@@ -47,10 +47,10 @@ const Login = () => {
     const response = await fetchlogin(loginData);
 
 
-    if (response.role === "admin") {
+    if (response.role === "ADMIN") {
       navigate('/admin');
     }
-    if (response.role === "gestor") {
+    if (response.role === "GESTOR") {
       navigate('/gestor');
     }
   };

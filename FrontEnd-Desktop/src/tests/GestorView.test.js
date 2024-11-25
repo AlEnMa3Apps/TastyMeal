@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, act } from '@testing-library/react'; import { MemoryRouter } from 'react-router-dom';
 import GestorView from '../pages/gestorView';
 /**
  * Test suite for the GestorView component.
@@ -19,6 +18,6 @@ describe('GestorView Component', () => {
                 <GestorView />
             </MemoryRouter>
         );
-        expect(getByText('Vista de gestor')).toBeInTheDocument();
+        expect(getByText('Gestor View')).toBeInTheDocument();
     });
 });

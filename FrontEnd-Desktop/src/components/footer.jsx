@@ -8,7 +8,7 @@ import '../css/footer.css';
  * to the "About Us" and "Contact" pages.
  *
  * @component
- * @returns {JSX.Element} The footer with navigation links and a heading.
+ * @returns {JSX.Element} 
  *
  * @author Enric Nanot Melchor
  *

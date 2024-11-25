@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/editUser.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/editUser.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchUserById, updateUser, DeleteUser } from '../services/userService';
+import '../css/editUser.css';
+
+/**
+ * EditUser component allows editing and deleting a specific user.
+ *
+ * This component fetches the user details based on the `userId` from the URL,
+ * allows the user to update the details, or delete the user entirely.
+ *
+ * @component
+ * @returns {JSX.Element} 
+ *
+ * @example
+ * // Example usage:
+ * &lt;EditUser />
+ *
+ * @author Enric Nanot Melchor
+ */
+const EditUser = () => {
+    const { userId } = useParams();
+    const navigate = useNavigate();
+
+    /**
+     * State to store the user details.
+     * @typedef {Object} User
+     * @property {string} id 
+     * @property {string} username 
+     * @property {string} email 
+     * @property {string} firstName
+     * @property {string} lastName 
+     * @property {string} role 
+     * @property {boolean} active 
+     */
+    const [user, setUser] = useState({
+        id: '',
+        username: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        role: '',
+        active: false,
+    });
+
+    /**
+     * Fetches the user details when the component mounts or when `userId` changes.
+     * Updates the state with the fetched user data.
+     *
+     * @function useEffect
+     */
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const data = await fetchUserById(userId);
+                setUser(data);
+            } catch (error) {
+                console.error('Error al obtener los datos del usuario:', error);
+            }
+        };
+        getUser();
+    }, [userId]);
+
+    /**
+     * Handles changes in the form inputs and updates the user state.
+     *
+     * @function handleChange
+     * @param {Object} e 
+     * @param {string} e.target.name 
+     * @param {string} e.target.value 
+     * @param {string} e.target.type 
+     */
+    const handleChange = (e) => {
+        const { name, value, type } = e.target;
+        setUser((prevUser) => ({
+            ...prevUser,
+            [name]: type === 'checkbox' ? value === 'true' : value,
+        }));
+    };
+
+    /**
+     * Submits the updated user data to the backend.
+     * Displays a success or error message based on the result.
+     *
+     * @function handleSubmit
+     * @param {Object} e 
+     */
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await updateUser(userId, user);
+            alert('Cambios realizados');
+            navigate('/admin');
+        } catch (error) {
+            console.error('Error al actualizar el usuario:', error);
+            alert('Hubo un problema al actualizar el usuario');
+        }
+    };
+
+    /**
+     * Deletes the user after user confirmation.
+     * Navigates back to the admin page upon success.
+     *
+     * @function deleteUser
+     */
+    const deleteUser = async () => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+            try {
+                await DeleteUser(userId);
+                navigate('/admin');
+            } catch (error) {
+                console.error('Error al eliminar el usuario', error);
+                alert('No ha sido posible eliminar a este usuario');
+            }
+        }
+    };
+
+    return (
+        &lt;div className="form-container">
+            &lt;h1>Edit User&lt;/h1>
+            &lt;form onSubmit={handleSubmit} className="edit-form">
+                &lt;div>
+                    &lt;label htmlFor="id">ID:&lt;/label>
+                    &lt;input id="id" type="text" name="id" value={user.id} readOnly />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="username">Username:&lt;/label>
+                    &lt;input
+                        id="username"
+                        type="text"
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                    />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="email">Email:&lt;/label>
+                    &lt;input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}
+                    />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="firstName">First Name:&lt;/label>
+                    &lt;input
+                        id="firstName"
+                        type="text"
+                        name="firstName"
+                        value={user.firstName}
+                        onChange={handleChange}
+                    />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="lastName">Last Name:&lt;/label>
+                    &lt;input
+                        id="lastName"
+                        type="text"
+                        name="lastName"
+                        value={user.lastName}
+                        onChange={handleChange}
+                    />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="role">Role:&lt;/label>
+                    &lt;input
+                        id="role"
+                        type="text"
+                        name="role"
+                        value={user.role}
+                        onChange={handleChange}
+                    />
+                &lt;/div>
+                &lt;div>
+                    &lt;label htmlFor="active">Reportado:&lt;/label>
+                    &lt;select
+                        id="active"
+                        name="active"
+                        value={user.active}
+                        onChange={handleChange}
+                    >
+                        &lt;option value={true}>Sí&lt;/option>
+                        &lt;option value={false}>No&lt;/option>
+                    &lt;/select>
+                &lt;/div>
+                &lt;div className="button-group">
+                    &lt;button type="submit">Guardar cambios&lt;/button>
+                    &lt;button type="button" onClick={() => navigate('/admin')}>
+                        Cancelar
+                    &lt;/button>
+                    &lt;button type="button" onClick={deleteUser}>
+                        Borrar Usuario
+                    &lt;/button>
+                &lt;/div>
+            &lt;/form>
+        &lt;/div>
+    );
+};
+
+export default EditUser;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/UsersTable.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/UsersTable.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { fetchUsers } from '../services/ListUsersService';
+import { useNavigate } from 'react-router-dom';
+
+import '../css/userTable.css';
+
+/**
+ * UserTable component displays a table with a list of users, including their details
+ * and an option to navigate to edit each user.
+ *
+ * This component fetches user data from the backend and displays it in a styled table.
+ * Each user has an "Editar" button to navigate to the edit user page.
+ *
+ * @component
+ * @returns {JSX.Element} 
+ *
+ * @example
+ * // Example usage:
+ * &lt;UserTable />
+ *
+ * @author Enric Nanot Melchor
+ */
+export const UserTable = () => {
+    const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
+
+    /**
+     * Fetches the list of users from the backend and updates the state.
+     */
+    useEffect(() => {
+        const getUsers = async () => {
+            try {
+                const data = await fetchUsers();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error al obtener los usuarios:', error);
+            }
+        };
+
+        getUsers();
+    }, []);
+
+    /**
+     * Handles navigation to the edit user page.
+     *
+     * @param {number} userId 
+     */
+    const handleEdit = (userId) => {
+        console.log(userId);
+        navigate(`/editUser/${userId}`);
+    };
+
+    return (
+        &lt;div className="centered-container">
+            &lt;h2>User List&lt;/h2>
+            &lt;div className="UserTable">
+                &lt;table border="10" cellPadding="10" cellSpacing="0">
+                    &lt;thead>
+                        &lt;tr>
+                            &lt;th>ID&lt;/th>
+                            &lt;th>Username&lt;/th>
+                            &lt;th>Email&lt;/th>
+                            &lt;th>First Name&lt;/th>
+                            &lt;th>Last Name&lt;/th>
+                            &lt;th>Role&lt;/th>
+                            &lt;th>Reportado&lt;/th>
+                            &lt;th>Editar Usuario&lt;/th>
+                        &lt;/tr>
+                    &lt;/thead>
+                    &lt;tbody>
+                        {users.map((user) => (
+                            &lt;tr key={user.id}>
+                                &lt;td>{user.id}&lt;/td>
+                                &lt;td>{user.username}&lt;/td>
+                                &lt;td>{user.email}&lt;/td>
+                                &lt;td>{user.firstName || '-'}&lt;/td>
+                                &lt;td>{user.lastName || '-'}&lt;/td>
+                                &lt;td>{user.role}&lt;/td>
+                                &lt;td>{user.active ? 'Yes' : 'No'}&lt;/td>
+                                &lt;td>
+                                    &lt;button onClick={() => handleEdit(user.id)}>Editar&lt;/button>
+                                &lt;/td>
+                            &lt;/tr>
+                        ))}
+                    &lt;/tbody>
+                &lt;/table>
+            &lt;/div>
+        &lt;/div>
+    );
+};
+
+export default UserTable;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#DeleteUser">DeleteUser</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteRecipe">deleteRecipe</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#fetchAllRecipes">fetchAllRecipes</a></li><li><a href="global.html#fetchRecipeById">fetchRecipeById</a></li><li><a href="global.html#fetchUserById">fetchUserById</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#fetchlogin">fetchlogin</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#updateRecipe">updateRecipe</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 12:30:59 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

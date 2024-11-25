@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
  * Button component that navigates the user to the login page when clicked.
  *
  * @component
- * @returns {JSX.Element} A button that redirects the user to the login page.
+ * @returns {JSX.Element} 
  *
  * @author Enric Nanot Melchor
  *

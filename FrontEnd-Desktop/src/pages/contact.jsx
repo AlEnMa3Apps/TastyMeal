@@ -10,7 +10,7 @@ import { Button_home } from '../components/button_home';
  * It displays a title and includes a button to navigate back to the home page.
  *
  * @component
- * @returns {JSX.Element} The rendered ContactView component.
+ * @returns {JSX.Element} 
  * 
  * @example
  * // Example of rendering ContactView

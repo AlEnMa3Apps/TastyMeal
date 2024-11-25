@@ -7,7 +7,8 @@ import GestorView from './pages/gestorView.jsx';
 import AdminView from './pages/adminView.jsx';
 import ContactView from './pages/contact.jsx';
 import AboutView from './pages/about.jsx';
-
+import EditUser from './pages/editUser.jsx'
+import EditRecipe from './pages/editRecipes.jsx';
 import { Header } from './components/header.jsx';
 import Footer from './components/footer.jsx'
 
@@ -17,7 +18,7 @@ import Footer from './components/footer.jsx'
  * Includes a Header and Footer on all pages.
  *
  * @component
- * @returns {JSX.Element} The rendered application with routes and layout.
+ * @returns {JSX.Element}
  * @author Enric Nanot Melchor
  * 
  * @example
@@ -37,6 +38,8 @@ const App = () => {
           <Route path="/gestor" element={<GestorView />} />
           <Route path="/contact" element={<ContactView />} />
           <Route path="/about" element={<AboutView />} />
+          <Route path="/editUser/:userId" element={<EditUser />} />
+          <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

@@ -9,7 +9,7 @@ import { Menu_style } from '../styles/home_style';
  * It displays the application title and includes a login button for user authentication.
  *
  * @component
- * @returns {JSX.Element} The rendered Home component.
+ * @returns {JSX.Element} 
  * 
  * @example
  * // Example of rendering Home
