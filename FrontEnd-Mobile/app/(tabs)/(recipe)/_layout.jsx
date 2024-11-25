@@ -8,6 +8,8 @@ const RecipeLayout = () => {
     <Stack.Screen name='index' options={{ title: 'Recipe', headerShown: false }} />
     <Stack.Screen name='create-recipe' options={{ title: 'Create Recipe' }} />
     <Stack.Screen name='edit-recipe' options={{ title: 'Edit Recipe' }} />
+    <Stack.Screen name='edit-recipe-detail' options={{ title: 'Edit Recipe Detail' }} />
+    <Stack.Screen name='delete-recipe' options={{ title: 'Delete Recipe' }} />
     </Stack>
   )
 }
