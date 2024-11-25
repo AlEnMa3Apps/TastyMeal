@@ -31,7 +31,7 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='create'
+					name='(recipe)'
 					options={{
 						title: 'Recipe',
 						headerShown: false,
