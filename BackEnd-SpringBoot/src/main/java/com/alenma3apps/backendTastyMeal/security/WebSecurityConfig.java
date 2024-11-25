@@ -24,7 +24,7 @@ public class WebSecurityConfig {
         return http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER", "GESTOR")
                 .anyRequest().authenticated()
             ).sessionManagement((sessionManagement) ->
             sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

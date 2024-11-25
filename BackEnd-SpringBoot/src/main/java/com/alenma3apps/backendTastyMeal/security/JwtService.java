@@ -19,6 +19,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Classe que gestiona la lògica de la verificació de l'usuari.
+ * @author Albert Borras
+ */
 @Service
 public class JwtService {
 
@@ -48,8 +52,8 @@ public class JwtService {
 
     /**
      * Funció per validar el token.
-     * @param token
-     * @param username
+     * @param token Token de l'usuari.
+     * @param username Nom de l'usuari.
      * @return Retorna true si el token és vàlid, del contrari retorna false.
      * @author Albert Borras
      */
@@ -60,7 +64,7 @@ public class JwtService {
 
     /**
      * Funció per obtenir el token de la capçalera de la petició.
-     * @param request 
+     * @param request dades d'entrada de la petició HTTP.
      * @return token o null
      * @author Albert Borras
      */
@@ -73,6 +77,12 @@ public class JwtService {
 
     }
 
+    /**
+     * Funció per validar el token i obtenir el username.
+     * @param header Capçalera de la petició HTTP.
+     * @return ValidationResponse amb el nom d'usuari i un booleà amb true si és vàlid, 
+     * del contrari false.
+     */
     public ValidationResponse validateTokenAndUser(HttpServletRequest header) {
         String token = getTokenFromRequest(header);
         boolean isValid = false;
@@ -89,7 +99,7 @@ public class JwtService {
 
     /**
      * Funció per extreure el nom d'usuari del token passat per paràmetre.
-     * @param token
+     * @param token Token de l'usuari.
      * @return El nom d'usuari.
      * @author Albert Borras
      */
@@ -99,7 +109,7 @@ public class JwtService {
 
     /**
      * Funció per extreure el cos del token on conté totes les dades.
-     * @param token
+     * @param token Token de l'usuari.
      * @return El cos del token.
      * @author Albert Borras
      */
@@ -109,7 +119,7 @@ public class JwtService {
 
     /**
      * Funció per comprovar si el token passat per paràmetre està caducat.
-     * @param token
+     * @param token Token de l'usuari.
      * @return Retorna true si està caducat, del contrari retorna false.
      * @author Albert Borras
      */

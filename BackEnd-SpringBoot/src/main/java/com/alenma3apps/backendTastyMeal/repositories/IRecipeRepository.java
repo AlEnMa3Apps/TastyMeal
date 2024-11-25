@@ -7,6 +7,7 @@ import com.alenma3apps.backendTastyMeal.models.RecipeModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -16,4 +17,6 @@ import java.util.List;
 @Repository
 public interface IRecipeRepository extends JpaRepository<RecipeModel, Long>{
     List<RecipeModel> findByOwnerId(UserModel user);
+
+    Optional<RecipeModel> findByTitle(String title);
 }

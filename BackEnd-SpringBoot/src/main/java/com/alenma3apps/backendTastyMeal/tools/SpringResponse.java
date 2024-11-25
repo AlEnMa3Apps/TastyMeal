@@ -68,6 +68,11 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    public static ResponseEntity<JsonResponse> recipeAlreadyExist(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "RECIPE_ALREADY_EXIST");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     public static ResponseEntity<JsonResponse> notOwnerRecipe(){
         JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "NOT_OWNER_RECIPE");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

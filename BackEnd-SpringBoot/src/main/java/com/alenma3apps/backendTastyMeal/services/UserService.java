@@ -65,10 +65,24 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    /**
+     * Retorna l'usuari de la base de dades amb el nom d'usuari passat per paràmetre.
+     * @param username No d'usuari.
+     * @return Usuari de la base de dades.
+     * @author Albert Borras
+     */
     public Optional<UserModel> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * Canvia la contrasenya de l'usuari passat per paràmetre per una nova 
+     * contrasenya passada per paràmetre.
+     * @param username Nom d'usuari.
+     * @param password Nova contrasenya.
+     * @return Missatge confirmant si s'ha canviat o no la contrasenya.
+     * @author Albert Borras
+     */
     public ResponseEntity<?> changePassword(String username, String password) {
         Optional<UserModel> userOptional = userRepository.findByUsername(username);
 
@@ -87,6 +101,13 @@ public class UserService {
         }
     }
 
+    /**
+     * Edita les dades de l'usuari de la base de dades amb l'id passat per paràmetre.
+     * @param id Id de l'usuari.
+     * @param request Dades actualitzades.
+     * @return Missatge confirmant si s'ha editat o no l'usuari.
+     * @author Albert Borras
+     */
     public ResponseEntity<?> editUserById(Long id, EditUserRequest request) {
         Optional<UserModel> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
@@ -110,6 +131,14 @@ public class UserService {
         }
     }
 
+    /**
+     * Edita les dades de l'usuari de la base de dades amb el nom d'usuari 
+     * passat per paràmetre.
+     * @param username Nom d'usuari.
+     * @param request Dades actualitzades.
+     * @return Missatge confirmant si s'ha editat o no l'usuari.
+     * @author Albert Borras
+     */
     public ResponseEntity<?> editUser(String username, EditUserRequest request) {
         Optional<UserModel> userOptional = userRepository.findByUsername(username);
         if (!userOptional.isPresent()) {
@@ -133,7 +162,7 @@ public class UserService {
     /**
      * Elimina l'usuari de la base de dsdes que conté el id passat per paràmetre.
      * @param id id de l'usuari a eliminar a la base de dades.
-     * @return true si l'usuari s'ha eliminat de la base de dades, del contrari retorna false.
+     * @return Missatge confirmant si s'ha eliminat o no l'usuari la base de dades.
      * @author Albert Borras
      */
     public ResponseEntity<?> deleteUserById(Long id) {
@@ -145,6 +174,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Elimina l'usuari de la base de dades que conté el nom d'usuari passat per paràmetre.
+     * @param username Nom d'usuari.
+     * @return Missatge confirmant si s'ha eliminat o no l'usuari la base de dades.
+     * @author Albert Borras
+     */
     public ResponseEntity<?> deleteUserByUsername(String username) {
         Optional<UserModel> userOptional = userRepository.findByUsername(username);
         if (!userOptional.isPresent()) {

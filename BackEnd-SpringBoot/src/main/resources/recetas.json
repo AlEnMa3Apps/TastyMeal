@@ -8,13 +8,13 @@
     "ingredients": "200g de tofu ferm, 1/2 pebrot, 1/4 de ceba, 1/2 culleradeta de cúrcuma, sal i pebre al gust",
     "recipeCategory": {
       "id": 1,
-      "category": "Veguen"
+      "category": "Vegan"
     }
   },
   {
     "title": "Saltejat de Verdures",
     "description": "Un plat vegetarià ràpid i saludable que presenta una colorida varietat de verdures saltejades a la perfecció.",
-    "imageUrl": "https://media.istockphoto.com/id/467332825/es/foto/friendo-verduras-en-pan-con-una-esp%C3%A1tula.jpg?s=612x612&w=0&k=20&c=7qZ4YkLJG5o5uVcypdrKfop=" ,
+    "imageUrl": "https://media.istockphoto.com/id/467332825/es/foto/friendo-verduras-en-pan-con-una-esp%C3%A1tula.jpg?s=612x612&w=0&k=20&c=7qZ4YkLJG5o5uVcypdrKfopBawJFlecTs1r_xmnrLbs=" ,
     "cookingTime": 15,
     "numPersons": 2,
     "ingredients": "1 tassa de bròquil, 1 pebrot, 1 pastanaga, 1/2 tassa de arvejas, 2 dents d'all, 2 cullerades de salsa de soja",
