@@ -1,3 +1,10 @@
+/**
+ * Componente Profile.
+ * Muestra la información del usuario y proporciona opciones para editar el perfil, eliminarlo, restablecer la contraseña y cerrar sesión.
+ *
+ * @returns {JSX.Element} Vista de perfil con opciones de administración del usuario.
+ * @author Manuel García Nieto
+ */
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -6,6 +13,9 @@ import api from '../../../api/api'
 import { useAuth } from '../../../context/AuthContext'
 import { useFocusEffect } from '@react-navigation/native'
 
+/**
+ * Componente principal Profile.
+ */
 const Profile = () => {
 	const { logout } = useAuth()
 	const [user, setUser] = useState(null)
@@ -40,11 +50,17 @@ const Profile = () => {
 
 	console.log(user)
 
+	/**
+	 * Maneja la navegación a la pantalla de edición de perfil.
+	 */
 	const handleEditProfile = () => {
 		// Navegar a la pantalla de edición de perfil
 		router.push('/(profile)/edit-profile')
 	}
 
+	/**
+	 * Maneja la eliminación del perfil del usuario con confirmación.
+	 */
 	const handleDeleteProfile = () => {
 		// Confirmación de eliminación de perfil
 		Alert.alert('Delete Profile', 'Are you sure you want to delete your profile?', [
@@ -76,24 +92,31 @@ const Profile = () => {
 		])
 	}
 
+	/**
+	 * Navega a la pantalla de restablecimiento de contraseña.
+	 */
 	const handleResetPassword = () => {
-		// Lógica para resetear contraseña
 		router.push('/(profile)/reset-password')
 		console.log('Password reset')
 	}
 
+	/**
+	 * Maneja el cierre de sesión del usuario.
+	 */
 	const handleLogout = async () => {
 		// Lógica para cerrar sesión
 		await logout()
 		router.replace('/(auth)/login')
 		console.log('Logged out')
 	}
+
+	// Renderizado de la pantalla de perfil
 	return (
 		<SafeAreaView>
 			<View className='h-full'>
 				<View className='items-center py-14'>
 					<Image source={{ uri: 'https://thispersondoesnotexist.com/' }} className='w-52 h-52 rounded-full mb-4 border-black border-2' />
-					<Text className='text-3xl font-bold text-gray-800'>  {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}</Text>
+					<Text className='text-3xl font-bold text-gray-800'> {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}</Text>
 					<Text className='text-2xl text-gray-800 pl-3'>{user?.email || ''}</Text>
 				</View>
 				<View className='px-5 space-y-3 mb-10'>

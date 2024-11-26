@@ -1,3 +1,11 @@
+/**
+ * Componente `CreateRecipe`.
+ * Permite al usuario crear una nueva receta mediante un formulario con validaciones.
+ *
+ * @returns {JSX.Element} Vista del formulario para crear una nueva receta.
+ * @autor Manuel García Nieto
+ */
+// Importación de módulos necesarios para la creación del componente.
 import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
@@ -16,11 +24,20 @@ const CreateRecipe = () => {
 	const categories = ['Vegan', 'Vegetarian', 'Meat', 'Fish', 'Pasta', 'Pizza', 'Salad', 'Dessert', 'Drinks', 'Breakfast', 'Soup']
 	const numberOfPeople = [1, 2, 3, 4, 5, 6]
 
+	/**
+	 * Valida si una URL es válida.
+	 * @param {string} url - URL a validar.
+	 * @returns {boolean} true si la URL es válida, false en caso contrario.
+	 */
 	const isValidUrl = (url) => {
 		const urlRegex = /^(https?:\/\/)[^\s$.?#].[^\s]*$/
 		return urlRegex.test(url)
 	}
 
+	/**
+	 * Maneja la acción de crear una nueva receta.
+	 * Valida los datos ingresados y envía la solicitud al backend.
+	 */
 	const handleCreateRecipe = async () => {
 		if (!title || !description || !image || !cookingTime || !servings || !ingredients || !category) {
 			Alert.alert('Error', 'Please fill out all fields')
@@ -62,6 +79,7 @@ const CreateRecipe = () => {
 		}
 	}
 
+	//Renderiza la vista con el formulario para crear una nueva receta.
 	return (
 		<ScrollView className='flex-1 bg-green-900 p-5'>
 			<Text className='text-3xl font-bold text-white mb-5 text-center'>New Recipe</Text>

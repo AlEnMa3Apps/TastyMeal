@@ -1,3 +1,12 @@
+/**
+ * Componente EditRecipe.
+ * Permite al usuario seleccionar una de sus recetas para editarla.
+ * Muestra una lista de recetas del usuario con la opción de editar.
+ *
+ * @returns {JSX.Element} Pantalla con la lista de recetas del usuario.
+ * @autor Manuel García Nieto
+ */
+// Importación de módulos necesarios para la creación del componente.
 import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,11 +16,21 @@ import { router } from 'expo-router'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
+/**
+ * Componente principal EditRecipe.
+ * Permite al usuario seleccionar una de sus recetas para editarla.
+ *
+ * @returns {JSX.Element} Pantalla con la lista de recetas del usuario.
+ *
+ */
 const EditRecipe = () => {
 	const [recipes, setRecipes] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(null)
 
+	/**
+	 * Función para obtener las recetas del usuario desde el backend.
+	 */
 	const fetchUserRecipes = async () => {
 		try {
 			const response = await api.get('/api/recipes')
@@ -24,6 +43,9 @@ const EditRecipe = () => {
 		}
 	}
 
+	/**
+	 * Hook useFocusEffect para recargar las recetas al enfocar la pantalla.
+	 */
 	useFocusEffect(
 		useCallback(() => {
 			fetchUserRecipes()
@@ -83,7 +105,6 @@ const EditRecipe = () => {
 						</View>
 					</TouchableOpacity>
 				)}
-			
 			/>
 		</SafeAreaView>
 	)

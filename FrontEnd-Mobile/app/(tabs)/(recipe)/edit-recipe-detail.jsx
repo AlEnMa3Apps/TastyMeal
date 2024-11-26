@@ -1,3 +1,12 @@
+/**
+ * Componente EditRecipeDetail.
+ * Permite al usuario editar una receta específica obteniendo los datos actuales y actualizándolos en el backend.
+ *
+ * @returns {JSX.Element} Pantalla con un formulario para editar una receta.
+ * @autor Manuel García Nieto
+ */
+
+// Importación de módulos necesarios para la creación del componente.
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
@@ -13,16 +22,23 @@ const EditRecipeDetail = () => {
 	const categories = ['Vegan', 'Vegetarian', 'Meat', 'Fish', 'Pasta', 'Pizza', 'Salad', 'Dessert', 'Drinks', 'Breakfast', 'Soup']
 	const numberOfPeople = [1, 2, 3, 4, 5, 6]
 
+	/**
+	 * Valida si una URL es válida.
+	 * @param {string} url - URL a validar.
+	 * @returns {boolean} true si la URL es válida, false en caso contrario.
+	 */
 	const isValidUrl = (url) => {
 		const urlRegex = /^(https?:\/\/)[^\s$.?#].[^\s]*$/
 		return urlRegex.test(url)
 	}
 
-	// Cargar datos iniciales de la receta
+	/**
+	 * Carga los datos actuales de la receta desde el backend.
+	 */
 	useEffect(() => {
 		const fetchRecipe = async () => {
 			try {
-				const response = await api.get(`api/recipe/${id}`) 
+				const response = await api.get(`api/recipe/${id}`)
 				setRecipe(response.data)
 			} catch (err) {
 				console.error('Error fetching recipe:', err)
@@ -35,6 +51,10 @@ const EditRecipeDetail = () => {
 		fetchRecipe()
 	}, [id])
 
+	/**
+	 * Maneja la acción de guardar cambios en la receta.
+	 * Valida los datos ingresados y actualiza la receta en el backend.
+	 */
 	const handleSaveChanges = async () => {
 		if (!recipe.title || !recipe.description || !recipe.imageUrl || !recipe.cookingTime || !recipe.numPersons || !recipe.ingredients || !recipe.recipeCategory) {
 			Alert.alert('Error', 'Please fill out all fields.')
@@ -74,6 +94,7 @@ const EditRecipeDetail = () => {
 		}
 	}
 
+	// Renderiza mientras cargan los datos.
 	if (loading) {
 		return (
 			<View className='flex-1 justify-center items-center'>
@@ -82,6 +103,7 @@ const EditRecipeDetail = () => {
 		)
 	}
 
+	// Muestra un mensaje de error si no se pueden cargar los datos.
 	if (error) {
 		return (
 			<View className='flex-1 justify-center items-center'>
@@ -90,6 +112,7 @@ const EditRecipeDetail = () => {
 		)
 	}
 
+	// Renderiza el formulario para editar la receta.
 	return (
 		<ScrollView className='flex-1 bg-green-900 p-5'>
 			<Text className='text-3xl font-bold text-white mb-5 text-center'>Edit your Recipe</Text>

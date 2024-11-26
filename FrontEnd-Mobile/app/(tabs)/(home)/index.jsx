@@ -1,3 +1,12 @@
+/**
+ * Componente `Home`.
+ * Muestra una lista de recetas con funcionalidad de búsqueda y filtrado por categoría.
+ *
+ * @returns {JSX.Element} Componente que presenta recetas con funcionalidad de búsqueda y navegación a detalles.
+ * @author Manuel García Nieto
+ */
+
+// Importación de módulos necesarios para la creación del componente.
 import { View, Text, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,6 +16,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { router } from 'expo-router'
 
+/**
+ * Componente principal Home.
+ * Gestiona la carga de recetas, filtrado por categorías y búsqueda de recetas.
+ */
 const Home = () => {
 	const [recipes, setRecipes] = useState([])
 	const [loading, setLoading] = useState(true)
@@ -15,6 +28,7 @@ const Home = () => {
 	const [filteredRecipes, setFilteredRecipes] = useState([])
 	const [activeCategory, setActiveCategory] = useState(null)
 
+	// useEffect para cargar recetas desde el backend al montar el componente
 	useEffect(() => {
 		const fetchRecipes = async () => {
 			try {
@@ -33,6 +47,7 @@ const Home = () => {
 
 	console.log(JSON.stringify(recipes, null, 2))
 
+	// Filtrar recetas cada vez que cambia la categoría activa o las recetas cargadas
 	useEffect(() => {
 		if (activeCategory) {
 			setFilteredRecipes(recipes.filter((recipe) => recipe.categoryName === activeCategory))
@@ -57,6 +72,7 @@ const Home = () => {
 		)
 	}
 
+	// Manejador de búsqueda: filtra las recetas por título o categoría activa
 	const handleSearch = () => {
 		console.log('Buscar:', searchQuery)
 		if (searchQuery.trim() === '') {

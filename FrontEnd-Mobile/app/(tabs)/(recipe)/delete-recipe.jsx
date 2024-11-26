@@ -1,3 +1,11 @@
+/**
+ * Componente DeleteRecipe.
+ * Permite al usuario visualizar y eliminar sus recetas personales.
+ *
+ * @returns {JSX.Element} Pantalla con una lista de recetas y opciones para eliminarlas.
+ * @autor Manuel García Nieto
+ */
+// Importación de módulos necesarios para la creación del componente.
 import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -10,7 +18,7 @@ const DeleteRecipe = () => {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(null)
 
-	// Función para cargar recetas del usuario
+	// Función para cargar recetas del usuario desde el backend
 	const fetchUserRecipes = async () => {
 		setLoading(true)
 		try {
@@ -29,7 +37,7 @@ const DeleteRecipe = () => {
 		fetchUserRecipes()
 	}, [])
 
-	// Función para eliminar una receta
+	// Función para eliminar una receta del usuario por ID de receta (id)
 	const handleDeleteRecipe = async (id) => {
 		Alert.alert(
 			'Delete Recipe',
@@ -59,6 +67,7 @@ const DeleteRecipe = () => {
 		)
 	}
 
+	// Mostrar indicador de carga mientras se obtienen las recetas
 	if (loading) {
 		return (
 			<View className='flex-1 justify-center items-center'>
@@ -67,6 +76,7 @@ const DeleteRecipe = () => {
 		)
 	}
 
+	// Mostrar mensaje de error si no se pueden cargar las recetas
 	if (error) {
 		return (
 			<View className='flex-1 justify-center items-center'>
@@ -75,6 +85,7 @@ const DeleteRecipe = () => {
 		)
 	}
 
+	// Renderizar la lista de recetas con opción para eliminar
 	return (
 		<SafeAreaView className='flex-1 bg-slate-50'>
 			<Text className='text-2xl font-bold text-center px-10 pb-4 pt-0'>Delete Recipe</Text>
@@ -91,11 +102,11 @@ const DeleteRecipe = () => {
 
 						<View className='flex-row my-2'>
 							<View className='flex-row my-2 border border-slate-50 py-2 px-4 rounded-3xl'>
-							<FontAwesome6 name='clock-four' size={20} color='lightgray' />
+								<FontAwesome6 name='clock-four' size={20} color='lightgray' />
 								<Text className='text-sm text-gray-300 pl-2'>{item.cookingTime} min</Text>
 							</View>
 							<View className='flex-row my-2 mx-4 border border-slate-50 py-2 px-4 rounded-3xl'>
-							<MaterialIcons name='people' size={20} color='lightgray' />
+								<MaterialIcons name='people' size={20} color='lightgray' />
 								<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 							</View>
 							<View className='w-28 my-2 rounded-3xl bg-green-600 justify-center items-center'>
