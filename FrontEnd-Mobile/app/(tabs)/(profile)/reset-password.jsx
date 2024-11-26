@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import api from '../../../api/api'
+import { router } from 'expo-router'
 
 const ResetPassword = () => {
 	const [newPassword, setNewPassword] = useState('')
@@ -12,26 +13,27 @@ const ResetPassword = () => {
 			return
 		}
 
-    if (newPassword.length < 4 || confirmPassword.length < 4) {
+		if (newPassword.length < 4 || confirmPassword.length < 4) {
 			Alert.alert('Error', 'Password must be at least 4 characters long.')
 			return
 		}
 
-		 try {
-        // Realiza la solicitud PATCH al endpoint /user con la nueva contraseña
-        const response = await api.patch('/api/user', {
-            password: newPassword
-        });
+		try {
+			// Realiza la solicitud PATCH al endpoint /user con la nueva contraseña
+			const response = await api.patch('/api/user', {
+				password: newPassword
+			})
 
-        if (response.status === 200) {
-            Alert.alert("Success", "Password has been reset successfully.");
-        } else {
-            Alert.alert("Error", "Failed to reset password. Please try again.");
-        }
-    } catch (error) {
-        console.error("Error resetting password:", error);
-        Alert.alert("Error", "An error occurred while resetting the password. Please try again later.");
-    }
+			if (response.status === 200) {
+				Alert.alert('Success', 'Password has been reset successfully.')
+				router.replace('/(auth)/login')
+			} else {
+				Alert.alert('Error', 'Failed to reset password. Please try again.')
+			}
+		} catch (error) {
+			console.error('Error resetting password:', error)
+			Alert.alert('Error', 'An error occurred while resetting the password. Please try again later.')
+		}
 	}
 
 	return (

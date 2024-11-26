@@ -123,7 +123,7 @@ const Home = () => {
 									<MaterialIcons name='people' size={24} color='lightgray' />
 									<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 								</View>
-								<View className='w-28 my-2 rounded-3xl bg-green-800 justify-center items-center'>
+								<View className='w-28 my-2 rounded-3xl bg-green-600 justify-center items-center'>
 									<Text className='text-sm text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 								</View>
 							</View>

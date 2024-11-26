@@ -48,7 +48,7 @@ const EditRecipe = () => {
 
 	return (
 		<SafeAreaView className='flex-1 bg-slate-100'>
-			<Text className='text-2xl font-bold text-center p-4'>Select one of your recipes to edit</Text>
+			<Text className='text-2xl font-bold text-center px-4 pb-4'>Select one of your recipes to edit</Text>
 			<FlatList
 				data={recipes}
 				keyExtractor={(item) => item.id.toString()}
@@ -76,14 +76,14 @@ const EditRecipe = () => {
 									<MaterialIcons name='people' size={24} color='lightgray' />
 									<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 								</View>
-								<View className='w-28 my-2 rounded-3xl bg-green-800 justify-center items-center'>
+								<View className='w-28 my-2 rounded-3xl bg-green-600 justify-center items-center'>
 									<Text className='text-sm text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 								</View>
 							</View>
 						</View>
 					</TouchableOpacity>
 				)}
-				ItemSeparatorComponent={() => <View className='h-4' />}
+			
 			/>
 		</SafeAreaView>
 	)

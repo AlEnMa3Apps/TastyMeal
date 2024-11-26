@@ -2,6 +2,8 @@ import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity, Alert
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import api from '../../../api/api'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 const DeleteRecipe = () => {
 	const [recipes, setRecipes] = useState([])
@@ -75,7 +77,7 @@ const DeleteRecipe = () => {
 
 	return (
 		<SafeAreaView className='flex-1 bg-slate-50'>
-			<Text className='text-2xl font-bold text-center p-4'>Delete Recipe</Text>
+			<Text className='text-2xl font-bold text-center px-10 pb-4 pt-0'>Delete Recipe</Text>
 			<FlatList
 				data={recipes}
 				keyExtractor={(item) => item.id.toString()}
@@ -89,12 +91,14 @@ const DeleteRecipe = () => {
 
 						<View className='flex-row my-2'>
 							<View className='flex-row my-2 border border-slate-50 py-2 px-4 rounded-3xl'>
+							<FontAwesome6 name='clock-four' size={20} color='lightgray' />
 								<Text className='text-sm text-gray-300 pl-2'>{item.cookingTime} min</Text>
 							</View>
 							<View className='flex-row my-2 mx-4 border border-slate-50 py-2 px-4 rounded-3xl'>
-								<Text className='text-sm text-gray-300 pl-2'>{item.numPersons} people</Text>
+							<MaterialIcons name='people' size={20} color='lightgray' />
+								<Text className='text-sm text-gray-300 pl-2'>{item.numPersons}</Text>
 							</View>
-							<View className='w-28 my-2 rounded-3xl bg-green-800 justify-center items-center'>
+							<View className='w-28 my-2 rounded-3xl bg-green-600 justify-center items-center'>
 								<Text className='text-sm text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 							</View>
 						</View>
@@ -105,7 +109,6 @@ const DeleteRecipe = () => {
 						</TouchableOpacity>
 					</View>
 				)}
-				ItemSeparatorComponent={() => <View className='h-4' />}
 			/>
 		</SafeAreaView>
 	)
