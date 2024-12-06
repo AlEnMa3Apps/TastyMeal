@@ -59,6 +59,15 @@ public class RecipeModel {
     @JsonIdentityReference(alwaysAsId = true)
     private List<CommentModel> comments;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<ReportModel> reports;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "recipe_favorite", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "username"))
+    private List<UserModel> username;
+
     @JsonProperty("categoryName")
     public String getCategoryName() {
         return recipeCategory != null ? recipeCategory.getCategory() : null;

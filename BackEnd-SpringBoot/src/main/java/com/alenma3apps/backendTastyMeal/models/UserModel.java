@@ -45,4 +45,10 @@ public class UserModel {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<CommentModel> commentsList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<ReportModel> reportsList;
+
+    @ManyToMany(mappedBy = "username")
+    private List<RecipeModel> recipesFavorite;
 }
