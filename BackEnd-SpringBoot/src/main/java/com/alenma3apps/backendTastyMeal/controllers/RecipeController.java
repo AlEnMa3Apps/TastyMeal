@@ -200,6 +200,14 @@ public class RecipeController {
         return recipeService.deleteRecipeById(id);
     }
 
+    /**
+     * Endpoint per afegir un comentari a la recepta del paràmetre id.
+     * @param header Capçalera de la petició http.
+     * @param id Id de la recepta a afegir el comentari.
+     * @param request El comentari.
+     * @return El comentari afegit o en cas d'error retornarà un missatge d'estat.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PostMapping("recipe/{id}/comment")
     public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, @RequestBody CommentRequest request) {
@@ -227,6 +235,12 @@ public class RecipeController {
         }
     }
     
+    /**
+     * Endpoint per obtenir els comentaris de la recepta del paràmetre id.
+     * @param id Id de la recepta a obtenir els comentaris.
+     * @return Llistat dels comentaris que te la recepta.
+     * @author Albert Borras
+     */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("recipe/{id}/comments")
     public ResponseEntity<?> getComments(@PathVariable Long id) {

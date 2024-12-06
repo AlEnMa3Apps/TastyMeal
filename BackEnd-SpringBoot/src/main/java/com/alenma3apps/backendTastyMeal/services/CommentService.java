@@ -1,8 +1,6 @@
 package com.alenma3apps.backendTastyMeal.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +40,12 @@ public class CommentService {
         return commentSaved;
     }
 
+    /**
+     * Mètode per obtenir el llistat de comentaris de la recepta passada per paràmetre.
+     * @param recipe Recepta la qual obtenir els seus comentaris.
+     * @return Llistat de comentaris que tingui la recepta.
+     * @author Albert Borras
+     */
     public List<CommentModel> getComments(RecipeModel recipe) {
         List<CommentModel> comments;
         comments = commentRepository.findByRecipe(recipe);
