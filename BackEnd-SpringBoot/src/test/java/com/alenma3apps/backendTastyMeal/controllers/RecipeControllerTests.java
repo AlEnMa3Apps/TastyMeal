@@ -35,6 +35,7 @@ import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IRecipeRepository;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 import com.alenma3apps.backendTastyMeal.security.JwtService;
+import com.alenma3apps.backendTastyMeal.services.CommentService;
 import com.alenma3apps.backendTastyMeal.services.RecipeService;
 import com.alenma3apps.backendTastyMeal.tools.SpringResponse.JsonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,6 +57,9 @@ public class RecipeControllerTests {
     
     @MockBean
     private RecipeService recipeService;
+
+    @MockBean
+    private CommentService commentService;
 
     @MockBean
     private JwtService jwtService;

@@ -89,8 +89,8 @@ public class SpringResponse {
     }
 
     public static ResponseEntity<JsonResponse> errorDeletingRecipe(){
-        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_DELETED");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_RECIPE_NOT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     public static ResponseEntity<JsonResponse> recipeUpdated(){
@@ -99,8 +99,13 @@ public class SpringResponse {
     }
 
     public static ResponseEntity<JsonResponse> errorUpdatingRecipe(){
-        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_RECIPE_NOT_UPDATED");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_RECIPE_NOT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<JsonResponse> errorCommentNotCreated(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_COMMENT_NOT_CREATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @Getter @Setter

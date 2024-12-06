@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alenma3apps.backendTastyMeal.dto.request.CommentRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.RecipeRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.ValidationResponse;
+import com.alenma3apps.backendTastyMeal.models.CommentModel;
 import com.alenma3apps.backendTastyMeal.models.RecipeModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 import com.alenma3apps.backendTastyMeal.security.JwtService;
+import com.alenma3apps.backendTastyMeal.services.CommentService;
 import com.alenma3apps.backendTastyMeal.services.RecipeService;
 import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
@@ -39,6 +42,9 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private JwtService jwtService;
@@ -191,5 +197,32 @@ public class RecipeController {
     @DeleteMapping("recipe/a/{id}")
     public ResponseEntity<?> deleteRecipeById(@PathVariable Long id) {
         return recipeService.deleteRecipeById(id);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
+    @PostMapping("recipe/{id}/comment")
+    public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, CommentRequest request) {
+        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
+        if (!validationResponse.isValid()) {
+            return SpringResponse.invalidToken();
+        }
+
+        String userName = validationResponse.getUsername();
+        Optional<UserModel> userOptional = userRepository.findByUsername(userName);
+        if (userOptional.isEmpty()) {
+            return SpringResponse.userNotFound();
+        }
+
+        UserModel user = userOptional.get();
+
+        RecipeModel recipe = recipeService.getRecipeById(id);
+
+        CommentModel comment = commentService.createComment(request, user, recipe);
+
+        if (comment != null) {
+            return ResponseEntity.ok(comment);
+        } else {
+            return SpringResponse.errorCommentNotCreated();
+        }
     }
 }
