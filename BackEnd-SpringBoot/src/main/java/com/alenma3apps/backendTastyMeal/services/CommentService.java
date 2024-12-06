@@ -1,5 +1,7 @@
 package com.alenma3apps.backendTastyMeal.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,11 @@ public class CommentService {
         CommentModel commentSaved = commentRepository.save(newComment);
 
         return commentSaved;
+    }
+
+    public List<CommentModel> getComments(RecipeModel recipe) {
+        List<CommentModel> comments;
+        comments = commentRepository.findByRecipe(recipe);
+        return comments;
     }
 }

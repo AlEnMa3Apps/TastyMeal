@@ -1,5 +1,6 @@
 package com.alenma3apps.backendTastyMeal.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -199,9 +200,9 @@ public class RecipeController {
         return recipeService.deleteRecipeById(id);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PostMapping("recipe/{id}/comment")
-    public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, CommentRequest request) {
+    public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, @RequestBody CommentRequest request) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
             return SpringResponse.invalidToken();
@@ -225,4 +226,18 @@ public class RecipeController {
             return SpringResponse.errorCommentNotCreated();
         }
     }
+    
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
+    @GetMapping("recipe/{id}/comments")
+    public ResponseEntity<?> getComments(@PathVariable Long id) {
+        RecipeModel recipe = recipeService.getRecipeById(id);
+        List<CommentModel> comments = commentService.getComments(recipe);
+
+        if (comments != null) {
+            return ResponseEntity.ok(comments);
+        } else {
+            return SpringResponse.commentsNotFound();
+        }
+    }
+
 }

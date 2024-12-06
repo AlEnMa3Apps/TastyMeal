@@ -108,6 +108,11 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    public static ResponseEntity<JsonResponse> commentsNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "COMMENTS_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @Getter @Setter
     public static class JsonResponse {
         private int status;
