@@ -1,6 +1,5 @@
 package com.alenma3apps.backendTastyMeal.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +42,6 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
-
-    @Autowired
-    private CommentService commentService;
 
     @Autowired
     private JwtService jwtService;
@@ -146,7 +142,7 @@ public class RecipeController {
      * @return Missatge notificant si s'ha editat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @PutMapping("recipe/{id}")
+    @PutMapping("/recipe/{id}")
     public ResponseEntity<?> editMyRecipe(HttpServletRequest header, @RequestBody RecipeRequest request, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
@@ -171,7 +167,7 @@ public class RecipeController {
      * @return Missatge notificant si s'ha eliminat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @DeleteMapping("recipe/{id}")
+    @DeleteMapping("/recipe/{id}")
     public ResponseEntity<?> deleteMyRecipe(HttpServletRequest header, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
@@ -195,63 +191,8 @@ public class RecipeController {
      * @return Missatge notificant si s'ha eliminat o no la recepta.
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
-    @DeleteMapping("recipe/a/{id}")
+    @DeleteMapping("/recipe/a/{id}")
     public ResponseEntity<?> deleteRecipeById(@PathVariable Long id) {
         return recipeService.deleteRecipeById(id);
     }
-
-    /**
-     * Endpoint per afegir un comentari a la recepta del paràmetre id.
-     * @param header Capçalera de la petició http.
-     * @param id Id de la recepta a afegir el comentari.
-     * @param request El comentari.
-     * @return El comentari afegit o en cas d'error retornarà un missatge d'estat.
-     * @author Albert Borras
-     */
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @PostMapping("recipe/{id}/comment")
-    public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, @RequestBody CommentRequest request) {
-        ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
-        if (!validationResponse.isValid()) {
-            return SpringResponse.invalidToken();
-        }
-
-        String userName = validationResponse.getUsername();
-        Optional<UserModel> userOptional = userRepository.findByUsername(userName);
-        if (userOptional.isEmpty()) {
-            return SpringResponse.userNotFound();
-        }
-
-        UserModel user = userOptional.get();
-
-        RecipeModel recipe = recipeService.getRecipeById(id);
-
-        CommentModel comment = commentService.createComment(request, user, recipe);
-
-        if (comment != null) {
-            return ResponseEntity.ok(comment);
-        } else {
-            return SpringResponse.errorCommentNotCreated();
-        }
-    }
-    
-    /**
-     * Endpoint per obtenir els comentaris de la recepta del paràmetre id.
-     * @param id Id de la recepta a obtenir els comentaris.
-     * @return Llistat dels comentaris que te la recepta.
-     * @author Albert Borras
-     */
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @GetMapping("recipe/{id}/comments")
-    public ResponseEntity<?> getComments(@PathVariable Long id) {
-        RecipeModel recipe = recipeService.getRecipeById(id);
-        List<CommentModel> comments = commentService.getComments(recipe);
-
-        if (comments != null) {
-            return ResponseEntity.ok(comments);
-        } else {
-            return SpringResponse.commentsNotFound();
-        }
-    }
-
 }

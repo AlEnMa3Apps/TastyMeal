@@ -113,6 +113,26 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    public static ResponseEntity<JsonResponse> commentNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "COMMENT_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    public static ResponseEntity<JsonResponse> commentDeleted(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "COMMENT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> errorDeletingComment(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_COMMENT_NOT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity<JsonResponse> notAuthorComment(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "NOT_AUTHOR_COMMENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @Getter @Setter
     public static class JsonResponse {
         private int status;
