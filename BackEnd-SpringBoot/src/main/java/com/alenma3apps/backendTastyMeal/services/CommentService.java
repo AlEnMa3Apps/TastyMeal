@@ -68,7 +68,7 @@ public class CommentService {
         }
 
         CommentModel comment = commentOptional.get();
-        if (comment.getAuthor() != user.getUsername()) {
+        if (comment.getUser() != user) {
             return SpringResponse.notAuthorComment();
         } else {
             try {
