@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author Albert Borras
  */
 @RestController
-@RequestMapping("/api/recipe/{id}")
+@RequestMapping("/api")
 public class CommentController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class CommentController {
      * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @PostMapping("/comment")
+    @PostMapping("/recipe/{id}/comment")
     public ResponseEntity<?> addComment(HttpServletRequest header, @PathVariable Long id, @RequestBody CommentRequest request) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
@@ -89,7 +89,7 @@ public class CommentController {
      * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @GetMapping("/comments")
+    @GetMapping("/recipe/{id}/comments")
     public ResponseEntity<?> getComments(@PathVariable Long recipeId) {
         RecipeModel recipe = recipeService.getRecipeById(recipeId);
         List<CommentModel> comments = commentService.getComments(recipe);
@@ -109,8 +109,8 @@ public class CommentController {
      * @return Missatge notificant si s'ha eliminat o no el comentari.
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    @DeleteMapping("/comment/{comment_id}")
-    public ResponseEntity<?> deleteMyComment(HttpServletRequest header, @PathVariable Long comment_id) {
+    @DeleteMapping("/comment/{id}")
+    public ResponseEntity<?> deleteMyComment(HttpServletRequest header, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
             return SpringResponse.invalidToken();
@@ -124,7 +124,7 @@ public class CommentController {
 
         UserModel user = userOptional.get();
 
-        return commentService.deleteMyComment(comment_id, user);
+        return commentService.deleteMyComment(id, user);
     }
 
     /**
@@ -133,8 +133,8 @@ public class CommentController {
      * @return Missatge notificant si s'ha eliminat o no el comentari.
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
-    @DeleteMapping("/comment/a/{comment_id}")
-    public ResponseEntity<?> deleteCommentById(@PathVariable Long comment_id) {
-        return commentService.deleteCommentById(comment_id);
+    @DeleteMapping("/comment/a/{id}")
+    public ResponseEntity<?> deleteCommentById(@PathVariable Long id) {
+        return commentService.deleteCommentById(id);
     }
 }
