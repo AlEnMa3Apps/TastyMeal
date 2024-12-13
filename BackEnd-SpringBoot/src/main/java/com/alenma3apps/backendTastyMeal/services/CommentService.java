@@ -56,6 +56,35 @@ public class CommentService {
     }
 
     /**
+     * Edita el comentari passat pel paràmetre id.
+     * @param commentId Id del comentari a editar.
+     * @param user Usuari que edita el comentari.
+     * @param request Paràmetres del comentari a editar.
+     * @return Missatge confirmant si s'ha editat o no el comentari.
+     */
+    public ResponseEntity<?> editMyComment(Long commentId, UserModel user, CommentRequest request ){
+        Optional<CommentModel> commentOptional = commentRepository.findById(commentId);
+        if (!commentOptional.isPresent()){
+            return SpringResponse.commentNotFound();
+        }
+
+        CommentModel comment = commentOptional.get();
+        if (comment.getAuthor() != user.getUsername()) {
+            return SpringResponse.notAuthorComment();
+        }
+
+        try {
+            comment.setComment(request.getComment());
+
+            commentRepository.save(comment);
+            return SpringResponse.commentUpdated();
+        } catch (Exception ex) {
+            return SpringResponse.errorUpdatingComment();
+        }
+
+    }
+
+    /**
      * Elimina un comentari passat pel paràmetre id que sigui de l'usuari que ho demana.
      * @param commentId Id del comentari a eliminar.
      * @param user Usuari que ho demana.

@@ -133,6 +133,16 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    public static ResponseEntity<JsonResponse> commentUpdated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "COMMENT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static ResponseEntity<JsonResponse> errorUpdatingComment(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_COMMENT_NOT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @Getter @Setter
     public static class JsonResponse {
         private int status;

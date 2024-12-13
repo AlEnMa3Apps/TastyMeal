@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alenma3apps.backendTastyMeal.dto.request.CommentRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.RecipeRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.ValidationResponse;
-import com.alenma3apps.backendTastyMeal.models.CommentModel;
 import com.alenma3apps.backendTastyMeal.models.RecipeModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 import com.alenma3apps.backendTastyMeal.security.JwtService;
-import com.alenma3apps.backendTastyMeal.services.CommentService;
 import com.alenma3apps.backendTastyMeal.services.RecipeService;
 import com.alenma3apps.backendTastyMeal.tools.SpringResponse;
 
