@@ -81,7 +81,7 @@ public class CommentService {
     }
 
     /**
-     * Elimina un comentari passat pel paràmetre id que sigui de l'usuari que ho demana.
+     * Elimina un comentari passat pel paràmetre id.
      * @param commentId Id del comentari a eliminar.
      * @return Missatge confirmant si s'ha eliminat o no el comentari.
      */
@@ -100,4 +100,5 @@ public class CommentService {
             return SpringResponse.errorDeletingComment();
         }
     }
+    
 }

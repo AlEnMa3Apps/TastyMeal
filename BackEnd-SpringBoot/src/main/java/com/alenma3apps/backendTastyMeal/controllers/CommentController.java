@@ -90,8 +90,8 @@ public class CommentController {
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/recipe/{id}/comments")
-    public ResponseEntity<?> getComments(@PathVariable Long recipeId) {
-        RecipeModel recipe = recipeService.getRecipeById(recipeId);
+    public ResponseEntity<?> getComments(@PathVariable Long id) {
+        RecipeModel recipe = recipeService.getRecipeById(id);
         List<CommentModel> comments = commentService.getComments(recipe);
 
         if (comments != null) {
@@ -128,7 +128,7 @@ public class CommentController {
     }
 
     /**
-     * Endpoint per eliminar qualsevol comentari pel paràmetre id.
+     * Endpoint per eliminar un comentari amb el paràmetre id.
      * @param comment_id Id del comentari a eliminar.
      * @return Missatge notificant si s'ha eliminat o no el comentari.
      */
