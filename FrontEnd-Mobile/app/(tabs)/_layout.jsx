@@ -1,3 +1,11 @@
+/**
+ * Componente TabsLayout.
+ * Proporciona un diseño de navegación por pestañas para la aplicación.
+ * Cada pestaña corresponde a una sección principal de la app: Home, Recipe, Likes y Profile.
+ *
+ * @returns {JSX.Element} Diseño de pestañas con iconos y estilos personalizados.
+ * @autor Manuel García Nieto
+ */
 import React from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Tabs } from 'expo-router'
@@ -23,7 +31,7 @@ const TabsLayout = () => {
 					}
 				}}>
 				<Tabs.Screen
-					name='home'
+					name='(home)'
 					options={{
 						title: 'Home',
 						headerShown: false,
@@ -31,7 +39,7 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='create'
+					name='(recipe)'
 					options={{
 						title: 'Recipe',
 						headerShown: false,

@@ -1,9 +1,21 @@
+/**
+ * Componente EditProfile.
+ * Permite al usuario editar los datos de su perfil, como nombre, apellido y correo electrónico.
+ * Incluye validación de correo y envía los datos actualizados al backend.
+ *
+ * @returns {JSX.Element} Interfaz de edición de perfil.
+ * @author Manuel García Nieto
+ */
+
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import api from '../../../api/api'
 import { useFocusEffect } from '@react-navigation/native'
 import { router } from 'expo-router'
 
+/**
+ * Componente principal EditProfile.
+ */
 const EditProfile = () => {
 	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
@@ -40,6 +52,11 @@ const EditProfile = () => {
 		}, [])
 	)
 
+	/**
+	 * Valida si el correo tiene un formato correcto.
+	 * @param {string} email - Correo electrónico a validar.
+	 * @returns {boolean} true si el correo es válido, false en caso contrario.
+	 */
 	const validateEmail = (email) => {
 		const re = /\S+@\S+\.\S+/
 		return re.test(email)
@@ -47,8 +64,8 @@ const EditProfile = () => {
 
 	const handleSaveChanges = async () => {
 		if (!validateEmail(email)) {
-		  Alert.alert('Error', 'Please enter a valid email address.')
-		  return
+			Alert.alert('Error', 'Please enter a valid email address.')
+			return
 		}
 
 		try {
@@ -73,11 +90,11 @@ const EditProfile = () => {
 		}
 	}
 
+	// Renderizado de la interfaz
 	return (
 		<View className='flex-1 bg-gray-100 p-6'>
 			<Text className='text-2xl font-bold text-gray-800 mb-6 text-center mt-20'>Edit your profile</Text>
 
-		
 			<Text className='text-gray-700 mb-1'>First Name</Text>
 			<TextInput className='bg-white p-4 rounded-lg shadow mb-4 text-xl' placeholder='First Name' value={firstName} onChangeText={setFirstName} />
 			<Text className='text-gray-700 mb-1'>Last Name</Text>
