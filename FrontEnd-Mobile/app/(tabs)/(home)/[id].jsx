@@ -7,12 +7,13 @@
  */
 
 // Importación de módulos necesarios
-import React, { useEffect, useState } from 'react'
-import { View, Text, ActivityIndicator, Image, ScrollView, TextInput, Button } from 'react-native'
+import React, { useEffect, useState, useContext } from 'react'
+import { View, Text, ActivityIndicator, Image, ScrollView, TextInput, Button, Alert } from 'react-native'
 import { useRouter, useLocalSearchParams } from 'expo-router'
 import api from '../../../api/api'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
+import { UserContext } from '../../../context/UserContext'
 
 /**
  * Componente principal RecipeDetails.
@@ -21,6 +22,7 @@ import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 const RecipeDetails = () => {
 	//Obtener el parámetro dinámico id de la ruta
 	const { id } = useLocalSearchParams()
+	const { username } = useContext(UserContext)
 
 	// Estados para la receta y el indicador de carga
 	const [recipe, setRecipe] = useState(null)
@@ -61,6 +63,7 @@ const RecipeDetails = () => {
 			try {
 				const response = await api.get(`/api/recipe/${id}/comments`)
 				setComments(response.data)
+				console.log(response.data)
 			} catch (err) {
 				console.error(err)
 			}
@@ -71,7 +74,7 @@ const RecipeDetails = () => {
 		}
 	}, [id])
 
-	console.log('este comments falla' + comments)
+	console.log(id)
 
 	// Función para manejar el envío de un nuevo comentario
 	const handleCommentSubmit = async () => {
@@ -79,7 +82,7 @@ const RecipeDetails = () => {
 
 		try {
 			await api.post(`/api/recipe/${id}/comment`, {
-				text: newComment
+				comment: newComment
 			})
 
 			// Limpiar el input
@@ -91,6 +94,22 @@ const RecipeDetails = () => {
 		} catch (err) {
 			console.error(err)
 		}
+	}
+
+	// Función para manejar la eliminación de un comentario
+	const handleDeleteComment = async (commentId) => {
+		try {
+			await api.delete(`/api/comment/${commentId}`)
+			const response = await api.get(`/api/recipe/${id}/comments`)
+			setComments(response.data)
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
+	// Función para manejar la edición de un comentario
+	const handleEditComment = (comment) => {
+		console.log('Edit comment:', comment)
 	}
 
 	// Mostrar un indicador de carga mientras los datos se obtienen del backend
@@ -111,6 +130,7 @@ const RecipeDetails = () => {
 		)
 	}
 
+	console.log('que usuario es  ' + username)
 	// Renderizar los detalles de la receta
 	return (
 		<ScrollView className='flex-1 bg-lime-500 px-6'>
@@ -139,8 +159,8 @@ const RecipeDetails = () => {
 			</Text>
 
 			{/* Sección de Comentarios */}
-			<Text className='text-xl font-bold mt-6'>--- Comments ---</Text>
-			<TextInput value={newComment} onChangeText={setNewComment} placeholder='Leave a comment...' className='border border-gray-300 rounded p-2 mt-4 bg-white' multiline/>
+			<Text className='text-2xl font-bold mt-6 text-center'>--- Comments ---</Text>
+			<TextInput value={newComment} onChangeText={setNewComment} placeholder='Leave a comment...' className='border border-gray-300 rounded-lg p-2 mt-4 bg-white' multiline />
 			<View className='mt-2 mb-4'>
 				<Button title='Comment' onPress={handleCommentSubmit} color='#000' />
 			</View>
@@ -148,10 +168,29 @@ const RecipeDetails = () => {
 			{comments &&
 				comments.length > 0 &&
 				comments.map((comment, index) => (
-					<View key={index} className='mt-4 bg-white p-3 rounded'>
-						<Text className='text-lg'>
-							<Text className='font-bold'>{comment.userName}:</Text> {comment.text}
+					<View key={index} className='mt-4 bg-white p-3 rounded-lg mb-10'>
+						<Text className='text-lg mb-4'>
+							<Text className='font-bold'>{comment.author}:</Text> {comment.comment}
 						</Text>
+						{comment.author === username && (
+							<View className='flex-row mt-2 mb-2 justify-evenly'>
+								<Button title='Edit' onPress={() => handleEditComment(comment)} color='#000' />
+								<Button
+									title='Delete'
+									onPress={() => {
+										Alert.alert('Delete Confirmation', 'Are you sure you want to delete this comment?', [
+											{ text: 'Cancel', style: 'cancel' },
+											{
+												text: 'Delete',
+												style: 'destructive',
+												onPress: () => handleDeleteComment(comment.id)
+											}
+										])
+									}}
+									color='#000'
+								/>
+							</View>
+						)}
 					</View>
 				))}
 		</ScrollView>

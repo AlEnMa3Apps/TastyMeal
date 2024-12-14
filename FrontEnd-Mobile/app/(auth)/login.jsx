@@ -3,12 +3,13 @@
  * @description Componente de formulario de inicio de sesión para la aplicación.
  * @autor Manuel García Nieto
  */
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Link, router } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../api/api'
+import { UserContext } from '@/context/UserContext'
 
 /**
  * @component
@@ -31,6 +32,7 @@ export default function LoginForm() {
 	 * @property {Function} login Función para actualizar el estado de autenticación.
 	 */
 	const { login } = useAuth()
+	const { setUsername: setGlobalUsername } = useContext(UserContext) 
 	/**
 	 * @hook
 	 * @name useState
@@ -80,6 +82,9 @@ export default function LoginForm() {
 
 			// Actualizar el contexto de autenticación
 			login(token, role)
+
+			// Actualizar el nombre de usuario global
+			setGlobalUsername(username)
 
 			// Navegar según el rol
 			 if (role === 'USER_VIP') {
