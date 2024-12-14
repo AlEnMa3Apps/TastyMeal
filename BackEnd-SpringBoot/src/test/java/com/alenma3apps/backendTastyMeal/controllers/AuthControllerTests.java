@@ -133,7 +133,7 @@ public class AuthControllerTests {
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(loginRequest)));
 
-        response.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+        response.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     /**
