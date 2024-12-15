@@ -33,6 +33,10 @@ const RecipeDetails = () => {
 	// Log para verificar el ID recibido
 	console.log(id)
 
+	// Estados para edición de comentarios
+	const [editingCommentId, setEditingCommentId] = useState(null)
+	const [editingCommentText, setEditingCommentText] = useState('')
+
 	// useEffect para cargar los detalles de la receta al montar el componente
 	useEffect(() => {
 		/**
@@ -107,9 +111,36 @@ const RecipeDetails = () => {
 		}
 	}
 
-	// Función para manejar la edición de un comentario
-	const handleEditComment = (comment) => {
-		console.log('Edit comment:', comment)
+	// Funciones para editar comentarios
+	const startEditingComment = (comment) => {
+		setEditingCommentId(comment.id)
+		setEditingCommentText(comment.comment)
+	}
+
+	const cancelEditComment = () => {
+		setEditingCommentId(null)
+		setEditingCommentText('')
+	}
+
+	const saveEditedComment = async () => {
+		if (!editingCommentId || editingCommentText.trim() === '') return
+
+		try {
+			// PUT /api/comment/{id}
+			await api.put(`/api/comment/${editingCommentId}`, {
+				comment: editingCommentText
+			})
+
+			// Recargar comentarios
+			const response = await api.get(`/api/recipe/${id}/comments`)
+			setComments(response.data)
+
+			// Limpiar estado de edición
+			setEditingCommentId(null)
+			setEditingCommentText('')
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	// Mostrar un indicador de carga mientras los datos se obtienen del backend
@@ -169,27 +200,41 @@ const RecipeDetails = () => {
 				comments.length > 0 &&
 				comments.map((comment, index) => (
 					<View key={index} className='mt-4 bg-white p-3 rounded-lg mb-10'>
-						<Text className='text-lg mb-4'>
-							<Text className='font-bold'>{comment.author}:</Text> {comment.comment}
-						</Text>
-						{comment.author === username && (
-							<View className='flex-row mt-2 mb-2 justify-evenly'>
-								<Button title='Edit' onPress={() => handleEditComment(comment)} color='#000' />
-								<Button
-									title='Delete'
-									onPress={() => {
-										Alert.alert('Delete Confirmation', 'Are you sure you want to delete this comment?', [
-											{ text: 'Cancel', style: 'cancel' },
-											{
-												text: 'Delete',
-												style: 'destructive',
-												onPress: () => handleDeleteComment(comment.id)
-											}
-										])
-									}}
-									color='#000'
-								/>
-							</View>
+						{editingCommentId === comment.id ? (
+							<>
+								{/* Modo edición */}
+								<TextInput value={editingCommentText} onChangeText={setEditingCommentText} placeholder='Edit your comment...' className='border border-gray-300 rounded-lg p-2 mt-4 bg-white' multiline />
+								<View className='flex-row mt-2 mb-2 justify-evenly'>
+									<Button title='Save' onPress={saveEditedComment} color='#000' />
+									<Button title='Cancel' onPress={cancelEditComment} color='#000' />
+								</View>
+							</>
+						) : (
+							<>
+								{/* Modo visualización normal */}
+								<Text className='text-lg mb-4'>
+									<Text className='font-bold'>{comment.author}:</Text> {comment.comment}
+								</Text>
+								{comment.author === username && (
+									<View className='flex-row mt-2 mb-2 justify-evenly'>
+										<Button title='Edit' onPress={() => startEditingComment(comment)} color='#000' />
+										<Button
+											title='Delete'
+											onPress={() => {
+												Alert.alert('Delete Confirmation', 'Are you sure you want to delete this comment?', [
+													{ text: 'Cancel', style: 'cancel' },
+													{
+														text: 'Delete',
+														style: 'destructive',
+														onPress: () => handleDeleteComment(comment.id)
+													}
+												])
+											}}
+											color='#000'
+										/>
+									</View>
+								)}
+							</>
 						)}
 					</View>
 				))}
