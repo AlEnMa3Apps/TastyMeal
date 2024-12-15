@@ -223,6 +223,70 @@ public class SpringResponse {
         JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_COMMENT_NOT_UPDATED");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+    
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorReportNotCreated(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REPORT_NOT_CREATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 404 Not Found
+     */
+    public static ResponseEntity<JsonResponse> reportsNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "REPORTS_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * @return CODE 404 Not Found
+     */
+    public static ResponseEntity<JsonResponse> reportNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "REPORT_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> reportDeleted(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "REPORT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorDeletingReport(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REPORT_NOT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+     /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> notOwnerReport(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "NOT_OWNER_REPORT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> reportUpdated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "REPORT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorUpdatingReport(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REPORT_NOT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     @Getter @Setter
     public static class JsonResponse {
