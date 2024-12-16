@@ -26,11 +26,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.alenma3apps.backendTastyMeal.dto.request.CommentRequest;
 import com.alenma3apps.backendTastyMeal.dto.request.ReportRequest;
 import com.alenma3apps.backendTastyMeal.dto.response.ValidationResponse;
 import com.alenma3apps.backendTastyMeal.models.CategoryModel;
-import com.alenma3apps.backendTastyMeal.models.CommentModel;
 import com.alenma3apps.backendTastyMeal.models.RecipeModel;
 import com.alenma3apps.backendTastyMeal.models.ReportModel;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
