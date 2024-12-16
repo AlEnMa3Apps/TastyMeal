@@ -120,12 +120,12 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-     /**
+    /**
      * @return CODE 400 Bad Request
      */
     public static ResponseEntity<JsonResponse> recipeNotFound(){
         JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_FOUND");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -296,12 +296,20 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-     /**
+    /**
      * @return CODE 200 OK
      */
     public static ResponseEntity<JsonResponse> favoriteRecipeRemoved(){
         JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "FAVORITE_RECIPE_REMOVED");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 BAD REQUEST
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeAlreadyExist(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "FAVORITE_RECIPE_ALREADY_EXIST");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -320,7 +328,13 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "FAVORITE_RECIPE_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 
     @Getter @Setter
     public static class JsonResponse {

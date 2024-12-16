@@ -27,6 +27,7 @@ public class FavoriteRecipeService {
     @Autowired
     private IRecipeRepository recipeRepository;
 
+
     public ResponseEntity<?> saveFavoriteRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
 
@@ -44,12 +45,7 @@ public class FavoriteRecipeService {
             recipeRepository.save(recipe);
             return SpringResponse.favoriteRecipeSaved();
         } else {
-            user.getRecipesFavorite().remove(recipe);
-            recipe.getUsername().remove(user);
-
-            userRepository.save(user);
-            recipeRepository.save(recipe);
-            return SpringResponse.favoriteRecipeRemoved();
+            return SpringResponse.favoriteRecipeAlreadyExist();
         }
 
     }
@@ -64,4 +60,27 @@ public class FavoriteRecipeService {
         );
         return ResponseEntity.ok(favoritesRecipesId);
     }
+
+    public ResponseEntity<?> deleteFavoriteRecipe(Long recipeId, UserModel user) {
+        Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
+
+        if (recipeOptional.isEmpty()) {
+            return SpringResponse.recipeNotFound();
+        }
+
+        RecipeModel recipe = recipeOptional.get();
+
+        if (user.getRecipesFavorite().contains(recipe)) {
+            user.getRecipesFavorite().remove(recipe);
+            recipe.getUsername().remove(user);
+
+            userRepository.save(user);
+            recipeRepository.save(recipe);
+            return SpringResponse.favoriteRecipeRemoved();
+        } else {
+            return SpringResponse.favoriteRecipeNotFound();
+        }
+
+    }
+    
 }
