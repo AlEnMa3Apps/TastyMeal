@@ -288,6 +288,40 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+     /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeSaved(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "FAVORITE_RECIPE_SAVED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeRemoved(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "FAVORITE_RECIPE_REMOVED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorSavingFavoriteRecipe(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_SAVING_FAVORITE_RECIPE");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorGettingFavoriteRecipes(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_GETTING_FAVORITE_RECIPES");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
     @Getter @Setter
     public static class JsonResponse {
         private int status;
