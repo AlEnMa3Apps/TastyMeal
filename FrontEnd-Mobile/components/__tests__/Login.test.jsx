@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 import LoginForm from '../../app/(auth)/login'
 import { Alert } from 'react-native'
+import { UserProvider } from '../../context/UserContext'
 
 // Mock de AsyncStorage
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -21,9 +22,18 @@ jest.mock('../../context/AuthContext', () => ({
 	})
 }))
 
+// Crea una función wrapper para proveer el UserProvider
+const renderWithContext = (component) => {
+  return render(
+    <UserProvider>
+      {component}
+    </UserProvider>
+  )
+}
+
 describe('LoginForm', () => {
 	it('muestra un error si los campos están vacíos al presionar el botón de login', () => {
-		const { getByText } = render(<LoginForm />)
+		const { getByText } = renderWithContext(<LoginForm />)
 
 		// Obtenemos el botón de login
 		const loginButton = getByText('Login')
@@ -36,7 +46,7 @@ describe('LoginForm', () => {
 	})
 
 	it('muestra un error si la contraseña es menor a 4 caracteres', () => {
-		const { getByText, getByPlaceholderText } = render(<LoginForm />)
+		const { getByText, getByPlaceholderText } = renderWithContext(<LoginForm />)
 
 		// Ponemos un nombre de usuario válido y una contraseña corta
 		fireEvent.changeText(getByPlaceholderText('Enter your username'), 'usuario')
