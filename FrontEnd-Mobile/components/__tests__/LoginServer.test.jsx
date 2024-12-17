@@ -2,11 +2,16 @@ import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import LoginForm from '../../app/(auth)/login'
 import { AuthProvider } from '../../context/AuthContext'
+import { UserProvider } from '../../context/UserContext'
 import { Alert } from 'react-native'
 
 // Crea una función wrapper para proveer el contexto de autenticación
 const renderWithContext = (component) => {
-	return render(<AuthProvider>{component}</AuthProvider>)
+	return render(
+		<AuthProvider>
+			<UserProvider>{component}</UserProvider>
+		</AuthProvider>
+	)
 }
 
 describe('LoginScreen - Prueba de Integración', () => {

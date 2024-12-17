@@ -120,12 +120,12 @@ public class SpringResponse {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-     /**
+    /**
      * @return CODE 400 Bad Request
      */
     public static ResponseEntity<JsonResponse> recipeNotFound(){
         JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_FOUND");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -286,6 +286,54 @@ public class SpringResponse {
     public static ResponseEntity<JsonResponse> errorUpdatingReport(){
         JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REPORT_NOT_UPDATED");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+     /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeSaved(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "FAVORITE_RECIPE_SAVED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeRemoved(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "FAVORITE_RECIPE_REMOVED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 BAD REQUEST
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeAlreadyExist(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "FAVORITE_RECIPE_ALREADY_EXIST");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorSavingFavoriteRecipe(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_SAVING_FAVORITE_RECIPE");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorGettingFavoriteRecipes(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_GETTING_FAVORITE_RECIPES");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "FAVORITE_RECIPE_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @Getter @Setter

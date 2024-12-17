@@ -19,7 +19,7 @@ import { UserContext } from '../../../context/UserContext'
  * Componente principal RecipeDetails.
  * Obtiene y muestra los detalles de una receta basada en un ID dinámico.
  */
-const RecipeDetails = () => {
+export const RecipeDetails = () => {
 	//Obtener el parámetro dinámico id de la ruta
 	const { id } = useLocalSearchParams()
 	const { username } = useContext(UserContext)

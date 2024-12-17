@@ -18,33 +18,33 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.alenma3apps.backendTastyMeal.dto.request.CommentRequest;
+import com.alenma3apps.backendTastyMeal.dto.request.ReportRequest;
 import com.alenma3apps.backendTastyMeal.models.CategoryModel;
-import com.alenma3apps.backendTastyMeal.models.CommentModel;
 import com.alenma3apps.backendTastyMeal.models.RecipeModel;
+import com.alenma3apps.backendTastyMeal.models.ReportModel;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
-import com.alenma3apps.backendTastyMeal.repositories.ICommentRepository;
+import com.alenma3apps.backendTastyMeal.repositories.IReportRepository;
 
 /**
  * Classe test per testejar les funcions 
- * implementades a la classe CommentService.
+ * implementades a la classe ReportService.
  * @author Albert Borras
  */
 @ExtendWith(MockitoExtension.class)
-public class CommentServiceTests {
+public class ReportServiceTests {
+
     @Mock
-    private ICommentRepository commentRepository;
+    private IReportRepository reportRepository;
 
     @InjectMocks
-    private CommentService commentService;
+    private ReportService reportService;
 
     private UserModel user;
-    private CommentRequest request;
+    private ReportRequest request;
     private CategoryModel category;
     private RecipeModel recipe;
-    private CommentModel comment;
-    
+    private ReportModel report;
 
     @BeforeEach
     public void init() {
@@ -57,8 +57,8 @@ public class CommentServiceTests {
         user.setRole(RoleModel.USER);
         user.setUsername("UserTest");
 
-        request = new CommentRequest();
-        request.setComment("Insert comment here.");
+        request = new ReportRequest();
+        request.setReport("Insert report here.");
 
         category = new CategoryModel();
         category.setCategory("Vegan");
@@ -73,82 +73,79 @@ public class CommentServiceTests {
         recipe.setRecipeCategory(category);
         recipe.setOwnerId(user);
 
-        comment = new CommentModel();
-        comment.setAuthor("UserTest");
-        comment.setComment("Insert comment here.");
-        comment.setRecipe(new RecipeModel());
-        comment.setUser(user);
+        report = new ReportModel();
+        report.setReport("Insert report here.");
+        report.setRecipe(new RecipeModel());
+        report.setUser(user);
     }
 
     /**
-     * Test per comprovar que es crea el comentari.
+     * Test per comprovar que es crea el report.
      * @author Albert Borras
      */
     @Test
-    public void CommentServiceTests_createComment() {
-        when(commentRepository.save(Mockito.any(CommentModel.class))).thenReturn(comment);
+    public void ReportServiceTests_createReport() {
+        when(reportRepository.save(Mockito.any(ReportModel.class))).thenReturn(report);
 
-        CommentModel result = commentService.createComment(request, user, recipe);
+        ReportModel result = reportService.createReport(request, user, recipe);
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getComment()).isEqualTo(request.getComment());
+        Assertions.assertThat(result.getReport()).isEqualTo(request.getReport());
     }
 
     /**
-     * Test per comprovar que s'obté el llistat de comentaris de la recepta 
+     * Test per comprovar que s'obté el llistat de reports de la recepta 
      * passada per paràmetre.
      * @author Albert Borras
      */
     @Test
-    public void CommentServiceTests_getComments() {
-        ArrayList<CommentModel> listComments = new ArrayList<CommentModel>();
-        listComments.add(comment);
+    public void ReportServiceTests_getReports() {
+        ArrayList<ReportModel> listReports = new ArrayList<ReportModel>();
+        listReports.add(report);
 
-        when(commentRepository.findByRecipe(recipe)).thenReturn(listComments);
+        when(reportRepository.findByRecipe(recipe)).thenReturn(listReports);
 
-        List<CommentModel> result = commentService.getComments(recipe);
+        List<ReportModel> result = reportService.getReports(recipe);
 
         Assertions.assertThat(result).isNotNull();
     }
 
     /**
-     * Test per comprovar que s'edita el comentari amb l'id passat per paràmetre. 
+     * Test per comprovar que s'edita el report amb l'id passat per paràmetre. 
      * @author Albert Borras
      */
     @Test
-    public void CommentServiceTests_editMyComment() {
-        when(commentRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(comment));
+    public void ReportServiceTests_editMyReport() {
+        when(reportRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.ofNullable(report));
 
-        ResponseEntity<?> result = commentService.editMyComment(1L, user, request);
+        ResponseEntity<?> result = reportService.editMyReport(1L, user, request);
 
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     /**
-     * Test per comprovar que s'elimina un comentari el qual l'usuari que ho demana és l'autor.
+     * Test per comprovar que s'elimina el report el qual l'usuari que ho demana és l'autor.
      * @author Albert Borras
      */
     @Test
-    public void CommentServiceTests_deleteMyComment() {
-        when(commentRepository.findById((long) 1)).thenReturn(Optional.ofNullable(comment));
+    public void ReportServiceTests_deleteMyReport() {
+        when(reportRepository.findById((long) 1)).thenReturn(Optional.ofNullable(report));
 
-        ResponseEntity<?> result = commentService.deleteMyComment((long) 1, user);
+        ResponseEntity<?> result = reportService.deleteMyReport((long) 1, user);
 
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-
     }
 
     /**
-     * Test per comprovar que s'elimina un comentari passat pel paràmetre id.
+     * Test per comprovar que s'elimina un report passat pel paràmetre id.
      * @author Albert Borras
      */
     @Test
-    public void CommentServiceTests_deleteCommentById() {
-        when(commentRepository.findById((long) 1)).thenReturn(Optional.ofNullable(comment));
+    public void ReportServiceTests_deleteReportById() {
+        when(reportRepository.findById((long) 1)).thenReturn(Optional.ofNullable(report));
 
-        ResponseEntity<?> result = commentService.deleteCommentById((long) 1);
+        ResponseEntity<?> result = reportService.deleteReportById((long) 1);
 
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-    
 }
