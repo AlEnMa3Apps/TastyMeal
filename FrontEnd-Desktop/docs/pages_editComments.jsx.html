@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/editComments.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/editComments.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { addCommentToRecipe, fetchCommentsForRecipe, editComment, deleteComment } from '../services/commentsService';
+
+import '../css/editComments.css';
+
+/**
+ * EditComments component allows managing comments for a specific recipe.
+ *
+ * This component fetches comments for a recipe identified by its `recipeId`,
+ * allows users to add, edit, and delete comments, and navigate back to the recipe editor.
+ *
+ * @component
+ * @returns {JSX.Element}
+ * @example
+ * // Example usage:
+ * &lt;EditComments />
+ *
+ * @author Enric Nanot Melchor
+ */
+const EditComments = () => {
+    const { recipeId } = useParams(); // Recipe ID from URL parameters
+    const navigate = useNavigate(); // Navigation hook to redirect user
+
+    /**
+     * State to store the list of comments.
+     * @type {Array&lt;Object>}
+     */
+    const [comments, setComments] = useState([]);
+
+    /**
+     * State to store the content of a new comment.
+     * @type {string}
+     */
+    const [newComment, setNewComment] = useState('');
+
+    /**
+     * State to track the ID of the comment being edited.
+     * @type {number|null}
+     */
+    const [editCommentId, setEditCommentId] = useState(null);
+
+    /**
+     * State to store the updated text for the comment being edited.
+     * @type {string}
+     */
+    const [editCommentText, setEditCommentText] = useState('');
+
+    console.log("ID de la receta:", recipeId);
+
+    /**
+     * Fetches the comments for the recipe when the component mounts or `recipeId` changes.
+     *
+     * @function useEffect
+     */
+    useEffect(() => {
+        const getComments = async () => {
+            try {
+                const data = await fetchCommentsForRecipe(recipeId);
+                console.log("Comentarios obtenidos:", data);
+                setComments(data);
+            } catch (error) {
+                console.error('Error al obtener los comentarios:', error);
+            }
+        };
+        getComments();
+    }, [recipeId]);
+
+    /**
+     * Adds a new comment to the recipe.
+     *
+     * @async
+     * @function handleAddComment
+     */
+    const handleAddComment = async () => {
+        if (!newComment.trim()) {
+            alert('El comentario no puede estar vacío.');
+            return;
+        }
+
+        try {
+            const commentData = { comment: newComment };
+            const addedComment = await addCommentToRecipe(recipeId, commentData);
+            setComments((prevComments) => [...prevComments, addedComment]);
+            setNewComment(''); // Clears the input field
+        } catch (error) {
+            console.error('Error al agregar el comentario:', error);
+        }
+    };
+
+    /**
+     * Edits an existing comment identified by its ID.
+     *
+     * @async
+     * @function handleEditComment
+     * @param {number} id - The ID of the comment being edited.
+     */
+    const handleEditComment = async (id) => {
+        if (!editCommentText.trim()) {
+            alert('El comentario no puede estar vacío.');
+            return;
+        }
+
+        try {
+            const commentData = { comment: editCommentText };
+            const updatedComment = await editComment(id, commentData);
+
+            // Updates the specific comment in the state
+            setComments((prevComments) =>
+                prevComments.map((comment) =>
+                    comment.id === id ? { ...comment, comment: updatedComment.comment } : comment
+                )
+            );
+
+            // Clears the editing state
+            setEditCommentId(null);
+            setEditCommentText('');
+        } catch (error) {
+            console.error('Error al editar el comentario:', error);
+            alert('Hubo un problema al editar el comentario.');
+        }
+    };
+
+    /**
+     * Deletes a comment identified by its ID.
+     *
+     * @async
+     * @function handleDeleteComment
+     * @param {number} id - The ID of the comment to delete.
+     */
+    const handleDeleteComment = async (id) => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este comentario?')) {
+            try {
+                await deleteComment(id);
+                setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+            } catch (error) {
+                console.error('Error al eliminar el comentario:', error);
+            }
+        }
+    };
+
+    /**
+     * Navigates back to the recipe editing page.
+     *
+     * @function handleBack
+     */
+    const handleBack = () => {
+        navigate(`/editRecipe/${recipeId}`);
+    };
+
+    return (
+        &lt;div className="comments-container">
+            &lt;h1>Editar Comentarios&lt;/h1>
+
+            {/* Section to add a new comment */}
+            &lt;div className="new-comment">
+                &lt;textarea
+                    placeholder="Añade un nuevo comentario"
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                />
+                &lt;button className="btn btn-add" onClick={handleAddComment}>
+                    Agregar Comentario
+                &lt;/button>
+            &lt;/div>
+
+            {/* List of comments */}
+            &lt;div className="comments-list">
+                {comments.map((comment) => (
+                    &lt;div key={comment.id} className="comment-item">
+                        {editCommentId === comment.id ? (
+                            &lt;textarea
+                                value={editCommentText}
+                                onChange={(e) => setEditCommentText(e.target.value)}
+                            />
+                        ) : (
+                            &lt;p>{comment.comment}&lt;/p>
+                        )}
+
+                        {/* Actions for editing and deleting comments */}
+                        &lt;div className="comment-actions">
+                            {editCommentId === comment.id ? (
+                                &lt;button
+                                    className="btn btn-save"
+                                    onClick={() => handleEditComment(comment.id)}
+                                >
+                                    Guardar
+                                &lt;/button>
+                            ) : (
+                                &lt;button
+                                    className="btn btn-edit"
+                                    onClick={() => {
+                                        setEditCommentId(comment.id);
+                                        setEditCommentText(comment.comment);
+                                    }}
+                                >
+                                    Editar
+                                &lt;/button>
+                            )}
+                            &lt;button
+                                className="btn btn-delete"
+                                onClick={() => handleDeleteComment(comment.id)}
+                            >
+                                Eliminar
+                            &lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                ))}
+            &lt;/div>
+
+            {/* Back button */}
+            &lt;button className="btn btn-back" onClick={handleBack}>
+                Volver
+            &lt;/button>
+        &lt;/div>
+    );
+};
+
+export default EditComments;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AboutView">AboutView</a></li><li><a href="global.html#AdminView">AdminView</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Button_home">Button_home</a></li><li><a href="global.html#Button_iniciar">Button_iniciar</a></li><li><a href="global.html#Button_login">Button_login</a></li><li><a href="global.html#Button_logout">Button_logout</a></li><li><a href="global.html#ContactView">ContactView</a></li><li><a href="global.html#EditComments">EditComments</a></li><li><a href="global.html#EditRecipe">EditRecipe</a></li><li><a href="global.html#EditUser">EditUser</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#GestorView">GestorView</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#RecipeTable">RecipeTable</a></li><li><a href="global.html#UserTable">UserTable</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#handleAddComment">handleAddComment</a></li><li><a href="global.html#handleBack">handleBack</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleDeleteComment">handleDeleteComment</a></li><li><a href="global.html#handleDeleteRecipe">handleDeleteRecipe</a></li><li><a href="global.html#handleEditComment">handleEditComment</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Dec 16 2024 19:49:10 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

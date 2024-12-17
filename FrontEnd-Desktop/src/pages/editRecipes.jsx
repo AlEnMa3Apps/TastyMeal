@@ -116,6 +116,11 @@ const EditRecipe = () => {
         }
     };
 
+    const handleNavigateComments = () => {
+        console.log("id receta es : " + recipeId);
+        navigate(`/editComents/${recipeId}`)
+    }
+
     return (
         <div className="form-container">
             <h1>Edit Recipe</h1>
@@ -206,6 +211,22 @@ const EditRecipe = () => {
                         onClick={() => handleDeleteRecipe(recipeId)}
                     >
                         Borrar Receta
+                    </button>
+                </div>
+                <div className='button-group'>
+                    <button
+                        type="button"
+                        className="btn btn-cancel"
+                        onClick={() => handleNavigateComments()}
+                    >
+                        Ver y editar comentarios
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-cancel"
+                        onClick={() => navigate(`/editReports/${recipeId}`)}
+                    >
+                        Ver y editar reportes
                     </button>
                 </div>
             </form>

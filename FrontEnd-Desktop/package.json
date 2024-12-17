@@ -17,7 +17,8 @@
     "start": "electron .",
     "build": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "dev": "concurrently \"npm:watch\" \"npm:start\""
+    "dev": "concurrently \"npm:watch\" \"npm:start\"",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
