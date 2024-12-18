@@ -1,0 +1,47 @@
+.favorites-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.favorites-list {
+    list-style: none;
+    padding: 0;
+}
+
+.favorite-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.btn-view {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-view:hover {
+    background-color: #45a049;
+}
+
+.btn-back {
+    margin-top: 20px;
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background-color: #333;
+}

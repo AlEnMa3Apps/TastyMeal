@@ -20,9 +20,14 @@ import axios from 'axios';
  * 
  * @author Enric Nanot Melchor
  */
+
+// Permitir certificados autofirmados solo en entorno de desarrollo
+// if (process.env.NODE_ENV === 'development') {
+//     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// }
 export const fetchlogin = async (loginData) => {
     console.log(loginData);
-    return axios.post('http://localhost:8080/auth/login', loginData)
+    return axios.post('https://localhost:8443/auth/login', loginData)
         .then((response) => {
             const { token } = response.data;
 

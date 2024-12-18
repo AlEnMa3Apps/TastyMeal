@@ -11,7 +11,7 @@ export const fetchUserById = async (id) => {
     const token = localStorage.getItem('authToken');
     console.log("Token ", token);
 
-    const response = await fetch(`http://localhost:8080/api/user/${id}`, {
+    const response = await fetch(`https://localhost:8443/api/user/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ export const updateUser = async (id, userData, authToken) => {
     };
 
     try {
-        const response = await axios.put(`http://localhost:8080/api/user/${id}`, userData, config);
+        const response = await axios.put(`https://localhost:8443/api/user/${id}`, userData, config);
         console.log('Datos enviados:', userData);
         console.log('Respuesta del servidor:', response.data);
         return response.data;
@@ -72,7 +72,7 @@ export const DeleteUser = async (id, authToken) => {
     };
 
     try {
-        const response = await axios.delete(`http://localhost:8080/api/user/${id}`, config);
+        const response = await axios.delete(`https://localhost:8443/api/user/${id}`, config);
         console.log('Respuesta del servidor:', response.data);
         return response.data;
     } catch (error) {

@@ -11,6 +11,7 @@ import EditUser from './pages/editUser.jsx'
 import EditRecipe from './pages/editRecipes.jsx';
 import EditComments from './pages/editComments.jsx';
 import EditReports from './pages/editReports.jsx';
+import FavoriteRecipesUser from './pages/favoriteRecipes.jsx';
 
 import { Header } from './components/header.jsx';
 import Footer from './components/footer.jsx'
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/editRecipe/:recipeId" element={<EditRecipe />} />
           <Route path="/editComents/:recipeId" element={<EditComments />} />
           <Route path="/editReports/:recipeId" element={<EditReports />} />
+          <Route path="/editUser/:userId/favorites" element={<FavoriteRecipesUser />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

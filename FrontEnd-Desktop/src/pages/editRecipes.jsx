@@ -1,40 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchRecipeById, updateRecipe, deleteRecipe } from '../services/recipeService';
+import {
+    fetchRecipeById,
+    updateRecipe,
+    deleteRecipe,
+} from '../services/recipeService';
+import {
+    addFavoriteRecipe,
+    removeFavoriteRecipe,
+    getFavoriteRecipes,
+} from '../services/favoriteRecipeService';
 
 import '../css/editRecipe.css';
 
 /**
- * EditRecipe component allows editing and deleting a specific recipe.
- *
- * This component fetches the recipe details based on the `recipeId` from the URL,
- * allows the user to update the details, or delete the recipe entirely.
+ * EditRecipe component allows editing, deleting, and managing favorites for a specific recipe.
  *
  * @component
- * @returns {JSX.Element} 
- * @example
- * // Example usage:
- * <EditRecipe />
- *
- * @author Enric Nanot Melchor
+ * @returns {JSX.Element}
  */
 const EditRecipe = () => {
     const { recipeId } = useParams();
     const navigate = useNavigate();
 
-    /**
-     * State to store the recipe details.
-     * @typedef {Object} Recipe
-     * @property {string} title - The title of the recipe.
-     * @property {string} description - The description of the recipe.
-     * @property {string} imageUrl - The image URL of the recipe.
-     * @property {number} cookingTime - The cooking time in minutes.
-     * @property {number} numPersons - The number of persons the recipe serves.
-     * @property {string} ingredients - The ingredients for the recipe.
-     * @property {Object} recipeCategory - The category of the recipe.
-     * @property {string} recipeCategory.id - The ID of the category.
-     * @property {string} recipeCategory.category - The name of the category.
-     */
     const [recipe, setRecipe] = useState({
         title: '',
         description: '',
@@ -45,47 +33,37 @@ const EditRecipe = () => {
         recipeCategory: { id: '', category: '' },
     });
 
-    /**
-     * Fetches the recipe details when the component mounts or when `recipeId` changes.
-     * Updates the state with the fetched recipe data.
-     *
-     * @function useEffect
-     */
+    const [isFavorite, setIsFavorite] = useState(false);
+
     useEffect(() => {
-        const getRecipe = async () => {
+        const loadRecipe = async () => {
             try {
                 const data = await fetchRecipeById(recipeId);
                 setRecipe(data);
+
+
+                const favorites = await getFavoriteRecipes();
+                setIsFavorite(favorites.includes(Number(recipeId)));
             } catch (error) {
-                console.error('Error al obtener la receta:', error);
+                console.error('Error al obtener la receta o favoritos:', error);
             }
         };
-        getRecipe();
+        loadRecipe();
     }, [recipeId]);
 
-    /**
-     * Handles changes in the form inputs and updates the recipe state.
-     *
-     * @function handleChange
-     * @param {Object} e 
-     * @param {string} e.target.name 
-     * @param {string} e.target.value 
-     */
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setRecipe((prevRecipe) => ({
-            ...prevRecipe,
-            [name]: value,
-        }));
+    const handleFavoriteToggle = async () => {
+        try {
+            if (isFavorite) {
+                await removeFavoriteRecipe(recipeId);
+            } else {
+                await addFavoriteRecipe(recipeId);
+            }
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            console.error('Error al actualizar el favorito:', error);
+        }
     };
 
-    /**
-     * Submits the updated recipe data to the backend.
-     * Displays a success or error message based on the result.
-     *
-     * @function handleSubmit
-     * @param {Object} e
-     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -94,17 +72,9 @@ const EditRecipe = () => {
             navigate('/gestor');
         } catch (error) {
             console.error('Error al actualizar la receta:', error);
-            alert('Hubo un problema al actualizar la receta.');
         }
     };
 
-    /**
-     * Deletes the recipe after user confirmation.
-     * Navigates back to the recipe manager page upon success.
-     *
-     * @function handleDeleteRecipe
-     * @param {number} id 
-     */
     const handleDeleteRecipe = async (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar esta receta?')) {
             try {
@@ -116,11 +86,6 @@ const EditRecipe = () => {
         }
     };
 
-    const handleNavigateComments = () => {
-        console.log("id receta es : " + recipeId);
-        navigate(`/editComents/${recipeId}`)
-    }
-
     return (
         <div className="form-container">
             <h1>Edit Recipe</h1>
@@ -131,7 +96,9 @@ const EditRecipe = () => {
                     type="text"
                     name="title"
                     value={recipe.title}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
+                    }
                 />
 
                 <label htmlFor="description">Descripción:</label>
@@ -139,7 +106,9 @@ const EditRecipe = () => {
                     id="description"
                     name="description"
                     value={recipe.description}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
+                    }
                 />
 
                 <label htmlFor="imageUrl">URL de Imagen:</label>
@@ -148,7 +117,9 @@ const EditRecipe = () => {
                     type="text"
                     name="imageUrl"
                     value={recipe.imageUrl}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
+                    }
                 />
 
                 <label htmlFor="cookingTime">Tiempo de Cocción:</label>
@@ -157,7 +128,9 @@ const EditRecipe = () => {
                     type="number"
                     name="cookingTime"
                     value={recipe.cookingTime}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
+                    }
                 />
 
                 <label htmlFor="numPersons">Número de Personas:</label>
@@ -166,7 +139,9 @@ const EditRecipe = () => {
                     type="number"
                     name="numPersons"
                     value={recipe.numPersons}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
+                    }
                 />
 
                 <label htmlFor="ingredients">Ingredientes:</label>
@@ -174,23 +149,8 @@ const EditRecipe = () => {
                     id="ingredients"
                     name="ingredients"
                     value={recipe.ingredients}
-                    onChange={handleChange}
-                />
-
-                <label htmlFor="recipeCategory">Categoría:</label>
-                <input
-                    id="recipeCategory"
-                    type="text"
-                    name="recipeCategory"
-                    value={recipe.recipeCategory?.category || ''}
                     onChange={(e) =>
-                        setRecipe((prevRecipe) => ({
-                            ...prevRecipe,
-                            recipeCategory: {
-                                ...prevRecipe.recipeCategory,
-                                category: e.target.value,
-                            },
-                        }))
+                        setRecipe({ ...recipe, [e.target.name]: e.target.value })
                     }
                 />
 
@@ -213,21 +173,16 @@ const EditRecipe = () => {
                         Borrar Receta
                     </button>
                 </div>
-                <div className='button-group'>
+
+                <div className="favorite-container">
                     <button
                         type="button"
-                        className="btn btn-cancel"
-                        onClick={() => handleNavigateComments()}
+                        className={`btn-favorite ${isFavorite ? 'filled' : ''}`}
+                        onClick={handleFavoriteToggle}
                     >
-                        Ver y editar comentarios
+                        {isFavorite ? '❤️' : '🤍'}
                     </button>
-                    <button
-                        type="button"
-                        className="btn btn-cancel"
-                        onClick={() => navigate(`/editReports/${recipeId}`)}
-                    >
-                        Ver y editar reportes
-                    </button>
+
                 </div>
             </form>
         </div>

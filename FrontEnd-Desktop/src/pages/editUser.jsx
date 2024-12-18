@@ -185,6 +185,7 @@ const EditUser = () => {
                         <option value={false}>No</option>
                     </select>
                 </div>
+
                 <div className="button-group">
                     <button type="submit">Guardar cambios</button>
                     <button type="button" onClick={() => navigate('/admin')}>
@@ -192,6 +193,15 @@ const EditUser = () => {
                     </button>
                     <button type="button" onClick={deleteUser}>
                         Borrar Usuario
+                    </button>
+
+                    <button
+                        type="button"
+                        className="btn btn-view-favorites"
+                        onClick={() => navigate(`/editUser/${userId}/favorites`)}
+
+                    >
+                        Ver Favoritas
                     </button>
                 </div>
             </form>

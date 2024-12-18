@@ -14,6 +14,12 @@ const createWindow = () => {
   win.loadFile('dist/index.html');
 };
 
+app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+  event.preventDefault();
+  callback(true); // Ignora el error del certificado
+});
+
+
 app.whenReady().then(() => {
   createWindow();
 
