@@ -101,6 +101,7 @@ public class CommentControllerTests {
         request.setComment("Insert comment here");
 
         category = new CategoryModel();
+        category.setId((long) 1);
         category.setCategory("Vegetarian");
 
         recipe = new RecipeModel();

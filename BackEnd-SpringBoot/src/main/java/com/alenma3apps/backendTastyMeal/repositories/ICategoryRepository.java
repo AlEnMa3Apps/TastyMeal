@@ -17,4 +17,5 @@ public interface ICategoryRepository extends JpaRepository<CategoryModel, Long>{
     
     @Query("SELECT c FROM CategoryModel c WHERE c.category = :categoryName")
     Optional<CategoryModel> findByCategory(String categoryName);
+    
 }

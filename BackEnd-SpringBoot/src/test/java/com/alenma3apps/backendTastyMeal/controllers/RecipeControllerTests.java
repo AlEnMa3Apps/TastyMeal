@@ -102,6 +102,7 @@ public class RecipeControllerTests {
         request.setRecipeCategory("Vegetarian");
 
         category = new CategoryModel();
+        category.setId((long)1);
         category.setCategory(request.getRecipeCategory());
 
         recipe = new RecipeModel();
