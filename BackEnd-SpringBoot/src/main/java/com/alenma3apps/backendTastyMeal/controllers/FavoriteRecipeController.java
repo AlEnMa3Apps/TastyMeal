@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class FavoriteRecipeController {
      * @param id Id de la recepta.
      * @return Missatge notificant si s'ha desat com a preferida o no la recepta.
      */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PostMapping("recipe/{id}/favorite")
     public ResponseEntity<?> saveFavoriteRecipe(HttpServletRequest header, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
@@ -75,6 +77,7 @@ public class FavoriteRecipeController {
      * @param header Capçalera de la petició http.
      * @return Llistat de les receptes preferides.
      */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("recipes/favorite")
     public ResponseEntity<?> getMyFavoriteRecipes(HttpServletRequest header) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
@@ -103,11 +106,38 @@ public class FavoriteRecipeController {
     }
 
     /**
+     * Endpoint per obtenir les receptes preferides d'un usuari específic per ID.
+     * @param id Id de l'usuari.
+     * @return Llistat de les receptes preferides de l'usuari.
+     */
+    @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
+    @GetMapping("user/{id}/recipes/favorite")
+    public ResponseEntity<?> getFavoriteRecipesByUserId(@PathVariable Long id) {
+        Optional<UserModel> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            return SpringResponse.userNotFound();
+        }
+
+        UserModel user = userOptional.get();
+
+        ResponseEntity<?> response;
+
+        try {
+            response = favoriteRecipeService.getMyFavoriteRecipes(user);
+        } catch (Exception e) {
+            response = SpringResponse.errorGettingFavoriteRecipes();
+        }
+        return response;
+    }
+
+    /**
      * Endpoint que permet eliminar com a preferida una recepta.
      * @param header Capçalera de la petició http.
      * @param id Id de la recepta.
      * @return Missatge notificant si s'ha eliminat com a preferida o no la recepta.
      */
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @DeleteMapping("recipe/{id}/favorite")
     public ResponseEntity<?> deleteFavoriteRecipe(HttpServletRequest header, @PathVariable Long id) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
