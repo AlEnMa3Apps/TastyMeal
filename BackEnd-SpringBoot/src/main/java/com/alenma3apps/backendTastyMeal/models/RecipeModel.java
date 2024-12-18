@@ -52,7 +52,6 @@ public class RecipeModel {
     @JoinColumn(name = "category_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIgnore
     private CategoryModel recipeCategory;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")

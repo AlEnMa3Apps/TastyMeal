@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = {"category"}))
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class CategoryModel {
 
     @Id
