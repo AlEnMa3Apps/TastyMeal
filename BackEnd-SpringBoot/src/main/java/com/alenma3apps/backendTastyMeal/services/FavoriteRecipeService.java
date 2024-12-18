@@ -27,7 +27,12 @@ public class FavoriteRecipeService {
     @Autowired
     private IRecipeRepository recipeRepository;
 
-
+    /**
+     * Guarda la recepta passada pel paràmetre id com a recepta preferida a l'usuari passat per paràmetre.
+     * @param recipeId Id de la recepta
+     * @param user Usuari a qui guardar la recepta com a preferida.
+     * @return Missatge confirmant si s'ha guardat o no la recepta com a preferida.
+     */
     public ResponseEntity<?> saveFavoriteRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
 
@@ -50,6 +55,11 @@ public class FavoriteRecipeService {
 
     }
 
+    /**
+     * Obté el llistat de receptes preferides de l'usuari passat per paràmetre.
+     * @param user Usuari a qui comprovar les seves receptes preferides.
+     * @return Llistat de les receptes preferides de l'usuari.
+     */
     public ResponseEntity<?> getMyFavoriteRecipes(UserModel user) {
         List<Long> favoritesRecipesId = new ArrayList<>();
         user.getRecipesFavorite().forEach( it ->
@@ -61,6 +71,12 @@ public class FavoriteRecipeService {
         return ResponseEntity.ok(favoritesRecipesId);
     }
 
+    /**
+     * Elimina la recepta passada pel paràmetre id com a recepta preferida a l'usuari passat per paràmetre.
+     * @param recipeId Id de la recepta
+     * @param user Usuari a qui eliminar la recepta com a preferida.
+     * @return Missatge confirmant si s'ha eliminat o no la recepta com a preferida.
+     */
     public ResponseEntity<?> deleteFavoriteRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
 
@@ -78,7 +94,7 @@ public class FavoriteRecipeService {
             recipeRepository.save(recipe);
             return SpringResponse.favoriteRecipeRemoved();
         } else {
-            return SpringResponse.favoriteRecipeNotFound();
+            return SpringResponse.errorRemovingFavoriteRecipe();
         }
 
     }
