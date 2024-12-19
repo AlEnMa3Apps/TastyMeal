@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Sabors del Mediterrani: Cuina Saludable i Tradicional",
+        "date": "12/01/2025",
+        "duration": "120",
+        "description": "Submergeix-te en la riquesa de la cuina mediterrània en aquest esdeveniment únic dedicat a explorar receptes tradicionals i saludables. Descobreix com combinar ingredients frescos com ara oli d'oliva, herbes aromàtiques, peix, vegetals i cereals integrals per preparar plats plens de sabor i nutrició.",
+        "eventCategory" : {
+            "id": "1",
+            "category": "Mediterranean Recipes"
+        }
+    },
+    {
+        "title": "Sabors Urbans: Receptes de Street Food Internacional",
+        "date": "02/02/2025",
+        "duration": "90",
+        "description": "Viatja pels carrers del món a través del menjar més autèntic! En aquest esdeveniment, explorarem les receptes més icòniques del street food internacional, des de les vibrants arpes veneçolanes fins als irresistibles tacs mexicans i l'exòtic pad thai tailandès.",
+        "eventCategory" : {
+            "id": "11",
+            "category": "Street Food"
+        }
+    }
+    
+]
