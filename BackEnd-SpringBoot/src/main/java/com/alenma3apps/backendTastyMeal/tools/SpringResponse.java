@@ -121,7 +121,7 @@ public class SpringResponse {
     }
 
     /**
-     * @return CODE 400 Bad Request
+     * @return CODE 404 Not Found
      */
     public static ResponseEntity<JsonResponse> recipeNotFound(){
         JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "RECIPE_NOT_FOUND");
@@ -305,7 +305,15 @@ public class SpringResponse {
     }
 
     /**
-     * @return CODE 400 BAD REQUEST
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorRemovingFavoriteRecipe(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REMOVING_FAVORITE_RECIPE");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
      */
     public static ResponseEntity<JsonResponse> favoriteRecipeAlreadyExist(){
         JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "FAVORITE_RECIPE_ALREADY_EXIST");
@@ -316,25 +324,154 @@ public class SpringResponse {
      * @return CODE 400 Bad Request
      */
     public static ResponseEntity<JsonResponse> errorSavingFavoriteRecipe(){
-        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_SAVING_FAVORITE_RECIPE");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_SAVING_FAVORITE_RECIPE");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     /**
      * @return CODE 400 Bad Request
      */
     public static ResponseEntity<JsonResponse> errorGettingFavoriteRecipes(){
-        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "ERROR_GETTING_FAVORITE_RECIPES");
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_GETTING_FAVORITE_RECIPES");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 404 Not Found
+     */
+    public static ResponseEntity<JsonResponse> favoriteRecipeNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "FAVORITE_RECIPE_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> eventCreated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "EVENT_CREATED");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
      * @return CODE 400 Bad Request
      */
-    public static ResponseEntity<JsonResponse> favoriteRecipeNotFound(){
-        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "FAVORITE_RECIPE_NOT_FOUND");
+    public static ResponseEntity<JsonResponse> errorCreatingEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_CREATING_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> eventAlreadyExist(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "EVENT_ALREADY_EXIST");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 404 Not Found
+     */
+    public static ResponseEntity<JsonResponse> eventNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "EVENT_NOT_FOUND");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    /**
+     * @return CODE 404 Not Found
+     */
+    public static ResponseEntity<JsonResponse> eventsNotFound(){
+        JsonResponse response = new JsonResponse(HttpStatus.NOT_FOUND.value(), "EVENTS_NOT_FOUND");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> eventUpdated(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "EVENT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorUpdatingEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_EVENT_NOT_UPDATED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> userRegisteredToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "USER_REGISTERED_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> userAlreadyRegisteredToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "USER_ALREADY_REGISTERED_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorRegisteringUserToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_REGISTERING_USER_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorUnregisteringUserToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_UNREGISTERING_USER_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> eventDeleted(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "EVENT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorDeletingEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_EVENT_NOT_DELETED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> errorGettingEventsRegistered(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "ERROR_GETTING_EVENTS_REGISTERED");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @return CODE 200 OK
+     */
+    public static ResponseEntity<JsonResponse> userUnregisteredToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.OK.value(), "USER_UNREGISTERED_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * @return CODE 400 Bad Request
+     */
+    public static ResponseEntity<JsonResponse> userNotRegisteredToEvent(){
+        JsonResponse response = new JsonResponse(HttpStatus.BAD_REQUEST.value(), "USER_NOT_REGISTERED_TO_EVENT");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 
     @Getter @Setter
     public static class JsonResponse {

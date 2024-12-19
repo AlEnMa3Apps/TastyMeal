@@ -11,10 +11,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.alenma3apps.backendTastyMeal.models.CategoryModel;
+import com.alenma3apps.backendTastyMeal.models.EventCategoryModel;
+import com.alenma3apps.backendTastyMeal.models.EventModel;
 import com.alenma3apps.backendTastyMeal.models.RecipeModel;
 import com.alenma3apps.backendTastyMeal.models.RoleModel;
 import com.alenma3apps.backendTastyMeal.models.UserModel;
 import com.alenma3apps.backendTastyMeal.repositories.ICategoryRepository;
+import com.alenma3apps.backendTastyMeal.repositories.IEventCategoryRepository;
+import com.alenma3apps.backendTastyMeal.repositories.IEventRepository;
 import com.alenma3apps.backendTastyMeal.repositories.IRecipeRepository;
 import com.alenma3apps.backendTastyMeal.repositories.IUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +43,12 @@ public class DataInitializer {
     @Autowired
     private ICategoryRepository categoryRepository;
 
+    @Autowired
+    private IEventCategoryRepository eventCategoryRepository;
+
+    @Autowired
+    private IEventRepository eventRepository;
+    
     @Autowired
     private ResourceLoader resourceLoader;
 
@@ -79,5 +89,25 @@ public class DataInitializer {
             List<RecipeModel> recipes = Arrays.asList(mapper.readValue(inputStream, RecipeModel[].class));
             recipeRepository.saveAll(recipes);
         }
+
+        if (eventCategoryRepository.count() == 0) {
+            String[] categories = {"Mediterranean Recipes", "Asian Recipes", "American Recipes", "European Recipes", "Party Recipes", 
+                "Seasonal Recipes", "Romantic Dinners", "Brunch", "Takeaway Food", "Ethnic Food", "Street Food"};
+            for (String categoryName : categories) {
+                EventCategoryModel category = new EventCategoryModel();
+                category.setCategory(categoryName);
+                eventCategoryRepository.save(category);
+            }
+        }
+
+        if(eventRepository.count()==0) {
+            InputStream inputStream = resourceLoader.getResource("classpath:eventos.json").getInputStream();
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            List<EventModel> events = Arrays.asList(mapper.readValue(inputStream, EventModel[].class));
+            eventRepository.saveAll(events);
+        }
+
     }
 }
