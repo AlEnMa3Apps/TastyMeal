@@ -51,4 +51,7 @@ public class UserModel {
 
     @ManyToMany(mappedBy = "username")
     private List<RecipeModel> recipesFavorite;
+
+    @ManyToMany(mappedBy = "attendee")
+    private List<EventModel> events;
 }
