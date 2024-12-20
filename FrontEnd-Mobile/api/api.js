@@ -18,10 +18,12 @@ import { Platform } from 'react-native'
  *
  * @constant {string} baseURL - La URL base para las solicitudes de API.
  */
-const baseURL =
-	Platform.OS === 'android'
-		? 'http://10.0.2.2:8080' // Android
-		: 'http://localhost:8080' // iOS
+
+const NGROK_URL = 'https://0573-79-157-162-4.ngrok-free.app'
+const baseURL = NGROK_URL
+	// Platform.OS === 'android'
+	// 	? 'https://10.0.2.2:8443' // Android
+	// 	: 'https://localhost:8443' // iOS
 
 /**
  * Instancia de Axios configurada con la URL base.
