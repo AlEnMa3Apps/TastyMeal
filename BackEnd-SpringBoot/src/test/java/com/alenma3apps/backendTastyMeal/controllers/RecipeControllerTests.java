@@ -250,7 +250,7 @@ public class RecipeControllerTests {
     public void RecipeControllerTest_deleteRecipeById() throws Exception {
         ResponseEntity<JsonResponse> responseExpect = new ResponseEntity<>(new JsonResponse(HttpStatus.OK.value(), "RECIPE_DELETED"), HttpStatus.OK);
 
-        given(recipeService.editMyRecipe(1L, user, request)).willAnswer(invocation -> responseExpect);
+        given(recipeService.deleteRecipeById(1L)).willAnswer(invocation -> responseExpect);
 
         ResultActions response = mockMvc.perform(delete("/api/recipe/a/1")
         .contentType(MediaType.APPLICATION_JSON)
