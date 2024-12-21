@@ -43,6 +43,7 @@ public class FavoriteRecipeController {
      * @param header Capçalera de la petició http.
      * @param id Id de la recepta.
      * @return Missatge notificant si s'ha desat com a preferida o no la recepta.
+     * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @PostMapping("recipe/{id}/favorite")
@@ -76,6 +77,7 @@ public class FavoriteRecipeController {
      * Endpoint per obtenir les receptes preferides de l'usuari que fa la petició.
      * @param header Capçalera de la petició http.
      * @return Llistat de les receptes preferides.
+     * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("recipes/favorite")
@@ -109,6 +111,7 @@ public class FavoriteRecipeController {
      * Endpoint per obtenir les receptes preferides d'un usuari específic per ID.
      * @param id Id de l'usuari.
      * @return Llistat de les receptes preferides de l'usuari.
+     * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
     @GetMapping("user/{id}/recipes/favorite")
@@ -136,6 +139,7 @@ public class FavoriteRecipeController {
      * @param header Capçalera de la petició http.
      * @param id Id de la recepta.
      * @return Missatge notificant si s'ha eliminat com a preferida o no la recepta.
+     * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @DeleteMapping("recipe/{id}/favorite")

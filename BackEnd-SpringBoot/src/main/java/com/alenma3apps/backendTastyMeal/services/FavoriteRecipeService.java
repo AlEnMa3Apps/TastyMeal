@@ -32,6 +32,7 @@ public class FavoriteRecipeService {
      * @param recipeId Id de la recepta
      * @param user Usuari a qui guardar la recepta com a preferida.
      * @return Missatge confirmant si s'ha guardat o no la recepta com a preferida.
+     * @author Albert Borras
      */
     public ResponseEntity<?> saveFavoriteRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
@@ -59,6 +60,7 @@ public class FavoriteRecipeService {
      * Obté el llistat de receptes preferides de l'usuari passat per paràmetre.
      * @param user Usuari a qui comprovar les seves receptes preferides.
      * @return Llistat de les receptes preferides de l'usuari.
+     * @author Albert Borras
      */
     public ResponseEntity<?> getMyFavoriteRecipes(UserModel user) {
         List<Long> favoritesRecipesId = new ArrayList<>();
@@ -76,6 +78,7 @@ public class FavoriteRecipeService {
      * @param recipeId Id de la recepta
      * @param user Usuari a qui eliminar la recepta com a preferida.
      * @return Missatge confirmant si s'ha eliminat o no la recepta com a preferida.
+     * @author Albert Borras
      */
     public ResponseEntity<?> deleteFavoriteRecipe(Long recipeId, UserModel user) {
         Optional<RecipeModel> recipeOptional = recipeRepository.findById(recipeId);
