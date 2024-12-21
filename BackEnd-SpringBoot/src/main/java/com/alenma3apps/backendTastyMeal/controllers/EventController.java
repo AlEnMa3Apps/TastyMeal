@@ -111,7 +111,7 @@ public class EventController {
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
     @PutMapping("/event/{id}")
     public ResponseEntity<?> editEventByid(@PathVariable Long id, @RequestBody EventRequest request) {
-        return eventService.editEventByid(id, request);
+        return eventService.editEventById(id, request);
     }
 
     /**
