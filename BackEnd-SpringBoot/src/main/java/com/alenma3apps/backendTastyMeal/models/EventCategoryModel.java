@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "eventCategories", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name = "eventCategory", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class EventCategoryModel {
 
     @Id
