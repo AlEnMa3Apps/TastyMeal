@@ -231,7 +231,7 @@ public class RecipeControllerTests {
 
         given(jwtService.validateTokenAndUser(ArgumentMatchers.any(HttpServletRequest.class))).willReturn(validationResponse);
         given(userRepository.findByUsername("UserTest")).willReturn(Optional.ofNullable(user));
-        given(recipeService.editMyRecipe(1L, user, request)).willAnswer(invocation -> responseExpect);
+        given(recipeService.deleteMyRecipe(1L, user)).willAnswer(invocation -> responseExpect);
 
         ResultActions response = mockMvc.perform(delete("/api/recipe/1")
         .contentType(MediaType.APPLICATION_JSON)
