@@ -86,7 +86,7 @@ public class EventService {
      * @param request Paràmetres de l'esdeveniment a editar.
      * @return Missatge confirmant 
      */
-    public ResponseEntity<?> editEventByid(long id, EventRequest request) {
+    public ResponseEntity<?> editEventById(long id, EventRequest request) {
         Optional<EventModel> eventOptional = eventRepository.findById(id);
         if (!eventOptional.isPresent()) {
             return SpringResponse.eventNotFound();
