@@ -227,7 +227,7 @@ public class EventControllerTests {
      * @author Albert Borras
      */
     @Test
-    public void EventControllerTest_getEventsRegisteredByUserId() throws Exception {
+    public void EventControllerTest_getEventsRegisteredOfUser() throws Exception {
         ResponseEntity<JsonResponse> responseExpect = new ResponseEntity<>(new JsonResponse(HttpStatus.OK.value(), "OK"), HttpStatus.OK);
 
         given(jwtService.validateTokenAndUser(ArgumentMatchers.any(HttpServletRequest.class))).willReturn(validationResponse);
