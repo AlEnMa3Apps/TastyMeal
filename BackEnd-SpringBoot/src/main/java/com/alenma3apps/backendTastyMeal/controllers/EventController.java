@@ -46,13 +46,12 @@ public class EventController {
     /**
      * Endpoint per crear un esdeveniment.
      * @param request Paràmetres del nou esdeveniment.
-     * @param header Capçalera de la petició http.
      * @return Codi de la petició i estat de la petició.
      * @author Albert Borras
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
     @PostMapping("/event/create")
-    public ResponseEntity<?> createEvent(@RequestBody EventRequest request, HttpServletRequest header) {
+    public ResponseEntity<?> createEvent(@RequestBody EventRequest request) {
         if (eventService.eventExists(request)) {
             return SpringResponse.eventAlreadyExist();
         }
@@ -168,7 +167,7 @@ public class EventController {
      */
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     @GetMapping("/events/registered")
-    public ResponseEntity<?> getEventsRegisteredByUserId(HttpServletRequest header) {
+    public ResponseEntity<?> getEventsRegisteredOfUser(HttpServletRequest header) {
         ValidationResponse validationResponse = jwtService.validateTokenAndUser(header);
         if (!validationResponse.isValid()) {
             return SpringResponse.invalidToken();
