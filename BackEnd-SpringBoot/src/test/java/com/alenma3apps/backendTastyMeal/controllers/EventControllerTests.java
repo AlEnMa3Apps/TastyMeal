@@ -158,6 +158,22 @@ public class EventControllerTests {
     }
 
     /**
+     * Test per comprovar el funcionament de l'endpoint per obtenir el 
+     * llistat d'assistents a un esdeveniment pel seu id.
+     * @throws Exception
+     * @author Albert Borras
+     */
+    @Test
+    public void EventControllerTest_getAttendeesFromEvent() throws Exception {
+        given(eventService.getEventById(ArgumentMatchers.anyLong())).willReturn(event);
+        
+        ResultActions response = mockMvc.perform(get("/api/event/1/attendees"));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk()); 
+    }
+
+
+    /**
      * Test per comprovar el funcionament de l'endpoint per obtenir tots els esdeveniments.
      * @throws Exception
      * @author Albert Borras
