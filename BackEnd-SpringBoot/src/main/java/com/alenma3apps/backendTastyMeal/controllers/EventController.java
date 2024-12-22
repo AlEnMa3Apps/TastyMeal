@@ -83,6 +83,24 @@ public class EventController {
     }
 
     /**
+     * Endpoint per obtenir els assistents d'un esdeveniment passat per id.
+     * @param id Id de l'esdeveniment.
+     * @return Llistat dels assistents a l'esdeveniment.
+     * @author Albert Borras
+     */
+    @PreAuthorize("hasAnyRole('ADMIN', 'GESTOR')")
+    @GetMapping("/event/{id}/attendees")
+    public ResponseEntity<?> getAttendeesFromEvent(@PathVariable Long id) {
+        EventModel event = eventService.getEventById(id);
+        if (event != null) {
+            List<UserModel> attendees = event.getAttendee();
+            return ResponseEntity.ok(attendees);
+        } else {
+            return SpringResponse.eventNotFound();
+        }
+    }
+
+    /**
      * Endpoint per obtenir tots els esdeveniments.
      * @return Llistat amb tots els esdeveniments o en cas d'error 
      * el missatge d'error.
