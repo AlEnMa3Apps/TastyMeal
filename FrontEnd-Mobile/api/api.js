@@ -19,7 +19,7 @@ import { Platform } from 'react-native'
  * @constant {string} baseURL - La URL base para las solicitudes de API.
  */
 
-const NGROK_URL = 'https://0573-79-157-162-4.ngrok-free.app'
+const NGROK_URL = 'https://aeaa-79-153-2-131.ngrok-free.app'
 const baseURL = NGROK_URL
 	// Platform.OS === 'android'
 	// 	? 'https://10.0.2.2:8443' // Android

@@ -37,6 +37,9 @@ export const RecipeDetails = () => {
 	const [editingCommentId, setEditingCommentId] = useState(null)
 	const [editingCommentText, setEditingCommentText] = useState('')
 
+	// Estado para indicar si la receta es favorita
+	const [isFavorite, setIsFavorite] = useState(false)
+
 	// useEffect para cargar los detalles de la receta al montar el componente
 	useEffect(() => {
 		/**
@@ -55,9 +58,25 @@ export const RecipeDetails = () => {
 			}
 		}
 
+		// Verifica si la receta está en la lista de favoritos
+		const checkIfFavorite = async () => {
+			try {
+				const response = await api.get('/api/recipes/favorite')
+				// response.data debería ser la lista de recetas favoritas
+				const favoriteRecipeIds = response.data
+
+			  // Chequea si el ID actual está en ese array
+				const found = favoriteRecipeIds.includes(Number(id))
+				setIsFavorite(found)
+			} catch (error) {
+				console.error(error)
+			}
+		}
+
 		// Ejecutar la función solo si id está disponible
 		if (id) {
 			fetchRecipeDetails()
+			checkIfFavorite()
 		}
 	}, [id])
 
@@ -143,6 +162,23 @@ export const RecipeDetails = () => {
 		}
 	}
 
+	// Función para manejar la adición o eliminación de una receta a la lista de favoritos
+	const handleToggleFavorite = async () => {
+		try {
+			if (!isFavorite) {
+				// Añadir a favoritos
+				await api.post(`/api/recipe/${id}/favorite`)
+				setIsFavorite(true)
+			} else {
+				// Eliminar de favoritos
+				await api.delete(`/api/recipe/${id}/favorite`)
+				setIsFavorite(false)
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	// Mostrar un indicador de carga mientras los datos se obtienen del backend
 	if (loading) {
 		return (
@@ -166,10 +202,10 @@ export const RecipeDetails = () => {
 	return (
 		<ScrollView className='flex-1 bg-lime-500 px-6'>
 			<Image source={{ uri: recipe.imageUrl }} className='w-full h-80 rounded-lg mb-4' />
-			<View className='flex-row justify-between items-center mt-0'>
+			<View className='flex-colum items-start mt-0'>
 				<Text className='text-4xl font-bold'>{recipe.title}</Text>
-				{/* <FontAwesome name='heart' size={24} color='red' /> */}
-				<FontAwesome name='heart-o' size={24} color='red' />
+				{/* Icono para favoritos */}
+				<FontAwesome name={isFavorite ? 'heart' : 'heart-o'} size={24} color='red' style={{ marginLeft: 10, marginTop: 10 }} onPress={handleToggleFavorite} />
 			</View>
 			<Text className='text-lg text-gray-950 mt-4'>{recipe.description}</Text>
 			<Text className='text-lg text-gray-950 mt-2'>

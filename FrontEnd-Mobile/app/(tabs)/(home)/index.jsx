@@ -143,10 +143,6 @@ const Home = () => {
 									<Text className='text-sm text-gray-100 text-center font-bold'>{item.categoryName}</Text>
 								</View>
 							</View>
-							{/* <View className='flex-row justify-end mt-4'>
-								<FontAwesome name='heart' size={24} color='red' />
-								<FontAwesome name='heart-o' size={24} color='red' />
-							</View> */}
 						</View>
 					</TouchableOpacity>
 				)}
