@@ -14,6 +14,7 @@ import api from '../../../api/api'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 import { UserContext } from '../../../context/UserContext'
+import Octicons from '@expo/vector-icons/Octicons'
 
 /**
  * Componente principal RecipeDetails.
@@ -65,7 +66,7 @@ export const RecipeDetails = () => {
 				// response.data debería ser la lista de recetas favoritas
 				const favoriteRecipeIds = response.data
 
-			  // Chequea si el ID actual está en ese array
+				// Chequea si el ID actual está en ese array
 				const found = favoriteRecipeIds.includes(Number(id))
 				setIsFavorite(found)
 			} catch (error) {
@@ -179,6 +180,16 @@ export const RecipeDetails = () => {
 		}
 	}
 
+	// Función para reportar una receta
+	const handleReport = async () => {
+		try {
+			await api.post(`/api/recipe/${id}/report`)
+			Alert.alert('Reported', 'The recipe has been reported successfully.')
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	// Mostrar un indicador de carga mientras los datos se obtienen del backend
 	if (loading) {
 		return (
@@ -204,8 +215,12 @@ export const RecipeDetails = () => {
 			<Image source={{ uri: recipe.imageUrl }} className='w-full h-80 rounded-lg mb-4' />
 			<View className='flex-colum items-start mt-0'>
 				<Text className='text-4xl font-bold'>{recipe.title}</Text>
-				{/* Icono para favoritos */}
-				<FontAwesome name={isFavorite ? 'heart' : 'heart-o'} size={24} color='red' style={{ marginLeft: 10, marginTop: 10 }} onPress={handleToggleFavorite} />
+				<View className='flex-row justify-between w-full'>
+					{/* Icono para favoritos */}
+					<FontAwesome name={isFavorite ? 'heart' : 'heart-o'} size={24} color='red' style={{ marginLeft: 10, marginTop: 10 }} onPress={handleToggleFavorite} />
+
+					<Octicons name='report' size={24} color='black' style={{ marginRight: 10, marginTop: 10 }} onPress={handleReport} />
+				</View>
 			</View>
 			<Text className='text-lg text-gray-950 mt-4'>{recipe.description}</Text>
 			<Text className='text-lg text-gray-950 mt-2'>

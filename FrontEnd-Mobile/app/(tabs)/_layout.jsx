@@ -10,6 +10,7 @@ import React from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Tabs } from 'expo-router'
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 const TabsLayout = () => {
 	const { userIsAuthenticated } = useAuth()
@@ -52,6 +53,14 @@ const TabsLayout = () => {
 						title: 'Likes',
 						headerShown: false,
 						tabBarIcon: ({ color }) => <Ionicons name='heart-sharp' size={28} color={color} />
+					}}
+				/>
+				<Tabs.Screen
+					name='events'
+					options={{
+						title: 'Events',
+						headerShown: false,
+						tabBarIcon: ({ color }) => <MaterialIcons name='event-available' size={28} color={color} />
 					}}
 				/>
 				<Tabs.Screen
