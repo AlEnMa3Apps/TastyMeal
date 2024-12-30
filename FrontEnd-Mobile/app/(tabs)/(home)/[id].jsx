@@ -21,6 +21,7 @@ import Octicons from '@expo/vector-icons/Octicons'
  * Obtiene y muestra los detalles de una receta basada en un ID dinámico.
  */
 export const RecipeDetails = () => {
+	const router = useRouter()
 	//Obtener el parámetro dinámico id de la ruta
 	const { id } = useLocalSearchParams()
 	const { username } = useContext(UserContext)
@@ -182,12 +183,7 @@ export const RecipeDetails = () => {
 
 	// Función para reportar una receta
 	const handleReport = async () => {
-		try {
-			await api.post(`/api/recipe/${id}/report`)
-			Alert.alert('Reported', 'The recipe has been reported successfully.')
-		} catch (error) {
-			console.error(error)
-		}
+		router.push(`/report-recipe?recipeId=${id}`)
 	}
 
 	// Mostrar un indicador de carga mientras los datos se obtienen del backend

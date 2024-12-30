@@ -22,6 +22,7 @@ const HomeLayout = () => {
 		<Stack screenOptions={{ headerShown: true }}>
 			<Stack.Screen name='index' options={{ title: 'Home', headerShown: false }} />
 			<Stack.Screen name='[id]' options={{ title: 'Recipe Details' }} />
+			<Stack.Screen name='report-recipe' options={{ title: 'Report Recipe' }} />
 		</Stack>
 	)
 }
