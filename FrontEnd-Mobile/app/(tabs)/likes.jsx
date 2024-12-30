@@ -1,5 +1,5 @@
 /**
- * Este componente no está implementado todavía.
+ * Pantalla de recetas favoritas
  * @author Manuel García Nieto
  */
 

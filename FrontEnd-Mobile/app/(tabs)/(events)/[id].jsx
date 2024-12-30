@@ -98,7 +98,7 @@ export default function EventDetails() {
 			</View>
 
 			{/* Icono para registrarse/des-registrarse */}
-			<TouchableOpacity onPress={handleToggleRegistration}>
+			<TouchableOpacity onPress={handleToggleRegistration} testID='registerButton'>
 				<Fontisto
 					// Cambiamos el icono según si está registrado o no
 					name={isRegistered ? 'checkbox-active' : 'checkbox-passive'}
