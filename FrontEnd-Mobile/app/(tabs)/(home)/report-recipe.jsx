@@ -1,218 +1,198 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, ActivityIndicator, FlatList, TextInput, Button, Alert } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
-import api from '../../../api/api' // Ajusta la ruta a tu archivo 'api'
+import { styled } from 'nativewind'
+import api from '../../../api/api'
+import { UserContext } from '../../../context/UserContext'
 
+// Ejemplo de componentes "styled" con NativeWind
+const StyledView = styled(View)
+const StyledText = styled(Text)
+const StyledTextInput = styled(TextInput)
+
+// Componente principal
 export default function ReportRecipe() {
-  const { recipeId } = useLocalSearchParams()
+	const { recipeId } = useLocalSearchParams()
+	const { username } = useContext(UserContext)
 
-  // Estado para almacenar los reports de esta receta
-  const [reports, setReports] = useState([])
-  // Controlar la carga
-  const [loading, setLoading] = useState(true)
+	// Estado para almacenar los reports de esta receta
+	const [reports, setReports] = useState([])
+	// Controlar la carga
+	const [loading, setLoading] = useState(true)
 
-  // Estados para crear un nuevo report
-  const [newReportTitle, setNewReportTitle] = useState('')
-  const [newReportDescription, setNewReportDescription] = useState('')
+	// Estados para crear un nuevo report
+	const [newReportDescription, setNewReportDescription] = useState('')
 
-  // Estados para editar un report existente
-  const [editingReportId, setEditingReportId] = useState(null)
-  const [editingReportTitle, setEditingReportTitle] = useState('')
-  const [editingReportDescription, setEditingReportDescription] = useState('')
+	// Estados para editar un report existente
+	const [editingReportId, setEditingReportId] = useState(null)
+	const [editingReportDescription, setEditingReportDescription] = useState('')
 
-  // Cargar los reports al montar o cuando cambie recipeId
-  useEffect(() => {
-    if (recipeId) {
-      fetchReports()
-    }
-  }, [recipeId])
+	useEffect(() => {
+		if (recipeId) {
+			fetchReports()
+		}
+	}, [recipeId])
 
-  /**
-   * GET /api/recipe/{recipeId}/reports
-   * Obtiene todos los reports de la receta
-   */
-  const fetchReports = async () => {
-    setLoading(true)
-    try {
-      const response = await api.get(`/api/recipe/${recipeId}/reports`)
-      // Asumiendo que `response.data` es un array de reports
-      setReports(response.data)
-    } catch (error) {
-      console.error('Error obteniendo reports:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+	/**
+	 * GET /api/recipe/{recipeId}/reports
+	 * Obtiene todos los reports de la receta
+	 */
+	const fetchReports = async () => {
+		setLoading(true)
+		try {
+			const response = await api.get(`/api/recipe/${recipeId}/reports`)
+			setReports(response.data) // Asumiendo array de { id, report, author, ... }
+		} catch (error) {
+			console.error('Error obteniendo reports:', error)
+		} finally {
+			setLoading(false)
+		}
+	}
 
-  /**
-   * POST /api/recipe/{recipeId}/report
-   * Crea un nuevo report para esta receta
-   */
-  const handleCreateReport = async () => {
-    if (!newReportTitle.trim() || !newReportDescription.trim()) {
-      Alert.alert('Error', 'Debes completar los campos de título y descripción')
-      return
-    }
+	/**
+	 * POST /api/recipe/{recipeId}/report
+	 * Crea un nuevo report para esta receta
+	 */
+	const handleCreateReport = async () => {
+		if (!newReportDescription.trim()) {
+			Alert.alert('Error', 'Debes completar la descripción del reporte.')
+			return
+		}
 
-    try {
-      const body = {
-        title: newReportTitle,
-        description: newReportDescription
-      }
-      await api.post(`/api/recipe/${recipeId}/report`, body)
-      // Limpiamos el formulario
-      setNewReportTitle('')
-      setNewReportDescription('')
-      // Refrescamos la lista
-      fetchReports()
-    } catch (error) {
-      console.error('Error creando report:', error)
-    }
-  }
+		try {
+			const body = { report: newReportDescription }
+			await api.post(`/api/recipe/${recipeId}/report`, body)
+			setNewReportDescription('')
+			fetchReports()
+		} catch (error) {
+			console.error('Error creando report:', error)
+		}
+	}
 
-  /**
-   * PUT /api/report/{id}
-   * Edita un report propio
-   */
-  const handleEditReport = async () => {
-    if (!editingReportTitle.trim() || !editingReportDescription.trim()) {
-      Alert.alert('Error', 'Debes completar los campos de título y descripción')
-      return
-    }
+	/**
+	 * PUT /api/report/{id}
+	 * Edita un report propio
+	 */
+	const handleEditReport = async () => {
+		if (!editingReportDescription.trim()) {
+			Alert.alert('Error', 'Debes completar la descripción del reporte.')
+			return
+		}
 
-    try {
-      const body = {
-        title: editingReportTitle,
-        description: editingReportDescription
-      }
+		try {
+      const body = { report: editingReportDescription }
       await api.put(`/api/report/${editingReportId}`, body)
-      // Limpiamos estado de edición
       cancelEditReport()
-      // Refrescamos la lista
       fetchReports()
     } catch (error) {
-      console.error('Error editando report:', error)
+      // Aquí capturamos el error
+      if (error.response && error.response.status === 400) {
+        Alert.alert('Error', 'No estás autorizado para editar este reporte.')
+      } else {
+        console.error('Error editando report:', error)
+        Alert.alert('Error', 'Ocurrió un error inesperado al editar el reporte.')
+      }
     }
-  }
+	}
 
-  /**
-   * DELETE /api/report/{id}
-   * Elimina un report propio
-   */
-  const handleDeleteReport = async (reportId) => {
-    Alert.alert('Confirmar eliminación', '¿Estás seguro que quieres eliminar este report?', [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Eliminar',
-        style: 'destructive',
-        onPress: async () => {
+	/**
+	 * DELETE /api/report/{id}
+	 * Elimina un report propio
+	 */
+	const handleDeleteReport = async (reportId) => {
+		Alert.alert('Confirmar eliminación', '¿Estás seguro que quieres eliminar este report?', [
+			{ text: 'Cancelar', style: 'cancel' },
+			{
+				text: 'Eliminar',
+				style: 'destructive',
+				onPress: async () => {
           try {
             await api.delete(`/api/report/${reportId}`)
-            fetchReports() // Recargar la lista
+            fetchReports()
           } catch (error) {
-            console.error('Error eliminando report:', error)
+            if (error.response && error.response.status === 400) {
+              Alert.alert('Error', 'No estás autorizado para eliminar este reporte.')
+            } else {
+              console.error('Error eliminando report:', error)
+              Alert.alert('Error', 'Ocurrió un error inesperado al eliminar el reporte.')
+            }
           }
-        }
-      }
-    ])
-  }
+				}
+			}
+		])
+	}
 
-  // Iniciar edición de un report
-  const startEditReport = (report) => {
-    setEditingReportId(report.id)
-    setEditingReportTitle(report.title)
-    setEditingReportDescription(report.description)
-  }
+	// Iniciar edición de un report
+	const startEditReport = (report) => {
+    console.log(report.id)
+		setEditingReportId(report.id)
+		setEditingReportDescription(report.report)
+	}
 
-  // Cancelar la edición
-  const cancelEditReport = () => {
-    setEditingReportId(null)
-    setEditingReportTitle('')
-    setEditingReportDescription('')
-  }
+	// Cancelar la edición
+	const cancelEditReport = () => {
+		setEditingReportId(null)
+		setEditingReportDescription('')
+	}
 
-  // Render de cada report en la FlatList
-  const renderReportItem = ({ item }) => {
-    // Si el report está en edición
-    if (editingReportId === item.id) {
-      return (
-        <View style={{ backgroundColor: '#ccc', marginBottom: 10, padding: 10 }}>
-          <Text>Modo edición:</Text>
-          <TextInput
-            placeholder="Título"
-            value={editingReportTitle}
-            onChangeText={setEditingReportTitle}
-            style={{ backgroundColor: '#fff', marginVertical: 5, padding: 8 }}
-          />
-          <TextInput
-            placeholder="Descripción"
-            value={editingReportDescription}
-            onChangeText={setEditingReportDescription}
-            multiline
-            style={{ backgroundColor: '#fff', marginVertical: 5, padding: 8 }}
-          />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button title="Guardar" onPress={handleEditReport} />
-            <Button title="Cancelar" onPress={cancelEditReport} />
-          </View>
-        </View>
-      )
-    }
+	/**
+	 * Renderiza cada "report" en el FlatList
+	 */
+	const renderReportItem = ({ item }) => {
+		// MODO EDICIÓN
+		if (editingReportId === item.id) {
+			return (
+				<StyledView className='mb-3 bg-gray-300 p-3 rounded'>
+					<StyledText className='text-base font-bold text-gray-700'>Modo edición:</StyledText>
+					<StyledTextInput className='mt-2 bg-white p-2 text-gray-800 rounded' placeholder='Report' value={editingReportDescription} onChangeText={setEditingReportDescription} multiline />
+					<StyledView className='flex-row justify-between mt-3'>
+						<Button title='Guardar' onPress={handleEditReport} />
+						<Button title='Cancelar' onPress={cancelEditReport} />
+					</StyledView>
+				</StyledView>
+			)
+		}
 
-    // Modo lectura normal
-    return (
-      <View style={{ backgroundColor: '#fff', marginBottom: 10, padding: 10 }}>
-        <Text className='font-bold'>{item.report}</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 5 }}>
-          <Button title="Editar" onPress={() => startEditReport(item)} />
-          <Button title="Eliminar" onPress={() => handleDeleteReport(item.id)} />
-        </View>
-      </View>
-    )
-  }
+		// MODO LECTURA
+		return (
+			<StyledView className='mb-3 bg-white p-3 rounded'>
+				<StyledText className='text-base font-semibold text-gray-800'>{item.report}</StyledText>
 
-  // Mostrar mientras carga
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" />
-        <Text>Cargando reports...</Text>
-      </View>
-    )
-  }
+				{/* Solo si item.author === username mostramos Editar/Eliminar */}
+				{/* {item.author === username && ( */}
+					<StyledView className='flex-row justify-evenly mt-2'>
+						<Button title='Editar' onPress={() => startEditReport(item)} />
+						<Button title='Eliminar' onPress={() => handleDeleteReport(item.id)} />
+					</StyledView>
+				{/* )} */}
+			</StyledView>
+		)
+	}
 
-  return (
-    <View style={{ flex: 1, padding: 10, backgroundColor: '#eee' }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>
-        Reports de la receta con ID: {recipeId}
-      </Text>
+	// Mostrar mientras carga
+	if (loading) {
+		return (
+			<StyledView className='flex-1 items-center justify-center bg-gray-200'>
+				<ActivityIndicator size='large' />
+				<StyledText className='mt-2 text-base text-gray-700'>Cargando reports...</StyledText>
+			</StyledView>
+		)
+	}
 
-      {/* FlatList para mostrar la lista de reports */}
-      <FlatList
-        data={reports}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderReportItem}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      />
+	// Layout principal
+	return (
+		<StyledView className='flex-1 bg-gray-300 p-4'>
+			<StyledText className='mb-10 mt-4 text-2xl font-bold text-gray-950 text-center'>Reportes de la receta</StyledText>
 
-      {/* Formulario para crear un nuevo report */}
-      <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 8 }}>
-        <Text style={{ fontWeight: 'bold' }}>Crear nuevo report:</Text>
-        <TextInput
-          placeholder="Título del report"
-          value={newReportTitle}
-          onChangeText={setNewReportTitle}
-          style={{ backgroundColor: '#f9f9f9', marginVertical: 5, padding: 8 }}
-        />
-        <TextInput
-          placeholder="Descripción"
-          value={newReportDescription}
-          onChangeText={setNewReportDescription}
-          multiline
-          style={{ backgroundColor: '#f9f9f9', marginVertical: 5, padding: 8 }}
-        />
-        <Button title="Crear Report" onPress={handleCreateReport} />
-      </View>
-    </View>
-  )
+			{/* FlatList para mostrar la lista de reports */}
+			<FlatList data={reports} keyExtractor={(item) => item.id.toString()} renderItem={renderReportItem} contentContainerStyle={{ paddingBottom: 20 }} />
+
+			{/* Formulario para crear un nuevo reporte */}
+			<StyledView className='bg-white p-4 rounded'>
+				<StyledText className='text-base font-semibold text-gray-800'>Crear nuevo reporte:</StyledText>
+				<StyledTextInput className='mt-2 mb-3 bg-gray-100 p-2 text-gray-800 rounded' placeholder='Descripción del reporte...' value={newReportDescription} onChangeText={setNewReportDescription} multiline />
+				<Button title='Crear Report' onPress={handleCreateReport} />
+			</StyledView>
+		</StyledView>
+	)
 }
